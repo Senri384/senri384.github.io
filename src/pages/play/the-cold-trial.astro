@@ -1,0 +1,144 @@
+---
+import gameStylesUrl from "../../styles/cold-trial-game.css?url";
+
+const assetBase = "/games/the-cold-trial/assets";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="The Cold Trial：一部基于 United States v. Holmes（1842）的黑白互动审判游戏。调查三份档案，并投下你的裁决。"
+    />
+    <meta name="theme-color" content="#080908" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:title" content="The Cold Trial — Interactive Trial | Senri's Personal Homepage" />
+    <meta
+      property="og:description"
+      content="在四份档案中选择三份调查。没有标准答案，只有你愿意承担的裁决。"
+    />
+    <meta property="og:image" content="/games/the-cold-trial/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Cold Trial — Interactive Trial | Senri's Personal Homepage" />
+    <meta
+      name="twitter:description"
+      content="在四份档案中选择三份调查。没有标准答案，只有你愿意承担的裁决。"
+    />
+    <meta name="twitter:image" content="/games/the-cold-trial/og.png" />
+    <link rel="preload" as="image" href={`${assetBase}/cover-the-cold-trial.webp`} />
+    <link rel="stylesheet" href={gameStylesUrl} />
+    <title>The Cold Trial — Interactive Trial | Senri's Personal Homepage</title>
+  </head>
+  <body>
+    <main id="cold-trial-game" data-asset-base={assetBase}>
+      <section class="start-screen" id="start-screen" aria-labelledby="game-title">
+        <img
+          class="start-cover"
+          src={`${assetBase}/cover-the-cold-trial.webp`}
+          alt="黑白钢版画风格的法庭、海难与约翰·霍尔姆斯肖像"
+        />
+        <div class="start-vignette"></div>
+        <div class="start-copy">
+          <p class="eyebrow">UNITED STATES v. HOLMES · 1842</p>
+          <h1 id="game-title">THE COLD TRIAL</h1>
+          <p class="start-deck">十四人葬身北大西洋。所有水手都活了下来。现在，你坐在陪审席上。</p>
+          <div class="start-meta" aria-label="游戏信息">
+            <span>互动推理</span><span>约 10–15 分钟</span><span>建议佩戴耳机</span>
+          </div>
+          <div class="start-actions">
+            <button class="primary-action" type="button" data-start="new">进入法庭</button>
+            <button class="secondary-action" id="resume-button" type="button" data-start="resume" hidden>
+              继续上次审理
+            </button>
+          </div>
+          <p class="historical-note">改编自真实判例。游戏允许你作出历史上从未存在的裁决。</p>
+        </div>
+      </section>
+
+      <section class="game-stage" id="game-stage" aria-live="polite" hidden>
+        <div class="scene-media" id="scene-media">
+          <img id="scene-image" src="" alt="" />
+          <div class="scene-shade"></div>
+          <div class="film-grain" aria-hidden="true"></div>
+        </div>
+
+        <header class="top-bar">
+          <div class="case-progress">
+            <span id="act-label">ACT I</span>
+            <span class="progress-line"><i id="progress-fill"></i></span>
+            <span id="progress-label">0%</span>
+          </div>
+          <div class="top-actions" aria-label="游戏控制">
+            <button type="button" id="journal-button" aria-label="打开证据册" title="证据册 (J)">档案</button>
+            <button type="button" id="audio-button" aria-label="关闭环境音" title="环境音 (M)">声音：开</button>
+            <button type="button" id="fullscreen-button" aria-label="全屏" title="全屏 (F)">全屏</button>
+            <button type="button" id="help-button" aria-label="帮助">?</button>
+          </div>
+        </header>
+
+        <aside class="attitude-hud" aria-label="态度值">
+          <img src={`${assetBase}/attitude-hud-plaque-v3.webp`} alt="" />
+          <div class="attitude-value sympathy-value"><strong id="sympathy-score">0</strong><i id="sympathy-bar"></i></div>
+          <div class="attitude-value reproach-value"><strong id="reproach-score">0</strong><i id="reproach-bar"></i></div>
+        </aside>
+
+        <div class="dossier-hotspots" id="dossier-hotspots" hidden aria-label="选择调查档案"></div>
+
+        <section class="narrative-panel" id="narrative-panel">
+          <p class="scene-kicker" id="scene-kicker"></p>
+          <h2 id="scene-title"></h2>
+          <p class="scene-text" id="scene-text"></p>
+          <blockquote id="scene-quote" hidden></blockquote>
+          <div class="choice-list" id="choice-list"></div>
+          <button class="continue-action" id="continue-button" type="button">
+            <span id="continue-label">继续</span><kbd>SPACE</kbd>
+          </button>
+        </section>
+
+        <div class="ending-card" id="ending-card" hidden>
+          <p class="eyebrow" id="ending-kicker">YOUR VERDICT</p>
+          <h2 id="ending-title"></h2>
+          <p id="ending-copy"></p>
+          <div class="verdict-ledger">
+            <div><span>SYMPATHY</span><strong id="ending-sympathy">0</strong></div>
+            <div><span>REPROACH</span><strong id="ending-reproach">0</strong></div>
+          </div>
+          <p class="ending-reflection" id="ending-reflection"></p>
+          <div class="ending-actions">
+            <button type="button" class="primary-action" id="epilogue-button">观看共同尾声</button>
+            <button type="button" class="secondary-action" id="restart-button">重新审理</button>
+          </div>
+        </div>
+      </section>
+
+      <dialog id="journal-dialog" class="archive-dialog">
+        <form method="dialog" class="dialog-shell">
+          <header><div><p class="eyebrow">COMMONWEALTH ARCHIVE</p><h2>证据册</h2></div><button value="close" aria-label="关闭">×</button></header>
+          <p class="dialog-lead">你只能深入调查四份档案中的三份。未被翻开的那一页，也会成为你的裁决的一部分。</p>
+          <div class="journal-grid" id="journal-grid"></div>
+        </form>
+      </dialog>
+
+      <dialog id="help-dialog" class="archive-dialog compact-dialog">
+        <form method="dialog" class="dialog-shell">
+          <header><div><p class="eyebrow">COURT PROCEDURE</p><h2>操作说明</h2></div><button value="close" aria-label="关闭">×</button></header>
+          <ul>
+            <li><kbd>SPACE</kbd> 或 <kbd>ENTER</kbd>：继续</li>
+            <li><kbd>1</kbd>–<kbd>4</kbd>：选择选项或档案</li>
+            <li><kbd>J</kbd>：打开证据册</li>
+            <li><kbd>M</kbd>：开关环境音</li>
+            <li><kbd>F</kbd>：进入或退出全屏</li>
+          </ul>
+          <p>进度会自动保存在当前设备。态度值的两个维度独立累积，不会互相抵消。</p>
+        </form>
+      </dialog>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <noscript>本游戏需要启用 JavaScript 才能运行。</noscript>
+    </main>
+    <script src="../../scripts/coldTrialGame.ts"></script>
+  </body>
+</html>

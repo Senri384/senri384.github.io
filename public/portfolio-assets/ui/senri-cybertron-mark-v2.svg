@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Mechanical planet emblem</title>
+  <g fill="#fff">
+    <path d="M6 28C8 14 19 5 34 4c8 0 16 3 22 9l-9 8c-4-4-9-6-15-6-8 0-14 5-17 13z"/>
+    <path d="M6 34h12c2 8 8 13 17 16l-3 11C18 59 8 49 6 34z"/>
+    <path d="m50 23 10-4c3 7 4 15 1 23l-12-4c2-5 2-10 1-15z"/>
+    <path d="m42 46 10 7c-5 5-12 8-19 8l2-11c3 0 5-2 7-4z"/>
+    <path d="m18 7-3-5 6 4zM8 20l-6-2 5 5zm50-1 5-2-3 5zm2 23 4 3-6 1zM48 56l1 7 4-6zm-29 0-5 6 7-3z"/>
+    <path d="m28 27 7-3 6 5-1 8-7 4-7-4-1-7z"/>
+  </g>
+  <g fill="none" stroke="#fff" stroke-linecap="square" stroke-width="2.6">
+    <path d="m37 17 8-8m-3 13 10-6M43 27l13-4M44 33l13 1M42 39l13 6M38 45l9 9"/>
+    <path d="M25 12 18 7m4 13-10-5m8 17L8 29m13 20-9 5"/>
+    <path d="m31 20 3-7m-10 12-6-4m7 22-6 5"/>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="176" viewBox="0 0 1000 176" role="img" aria-labelledby="title">
+  <title id="title">游戏拆解与研究</title>
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5ffff"/><stop offset=".22" stop-color="#a7fff5"/><stop offset=".58" stop-color="#4fe7dd"/><stop offset=".82" stop-color="#1eb5bd"/><stop offset="1" stop-color="#0b7185"/>
+    </linearGradient>
+    <filter id="rough" x="-8%" y="-18%" width="120%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".45" numOctaves="1" seed="12" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale=".75"/></filter>
+    <text id="glyph" x="500" y="97" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="94" font-weight="900" text-anchor="middle">游戏拆解与研究</text>
+  </defs>
+  <g filter="url(#rough)" paint-order="stroke" stroke-linejoin="round">
+    <use href="#glyph" x="15" y="18" fill="#52001f" stroke="#050003" stroke-width="15"/>
+    <use href="#glyph" x="14" y="17" fill="#72002a"/><use href="#glyph" x="13" y="16" fill="#7f002f"/><use href="#glyph" x="12" y="15" fill="#8c0034"/><use href="#glyph" x="11" y="14" fill="#990039"/><use href="#glyph" x="10" y="13" fill="#a8003f"/><use href="#glyph" x="9" y="12" fill="#b60045"/><use href="#glyph" x="8" y="11" fill="#c5004b"/><use href="#glyph" x="7" y="10" fill="#d20a53"/><use href="#glyph" x="6" y="8" fill="#dd125b"/><use href="#glyph" x="5" y="7" fill="#e91a64"/><use href="#glyph" x="4" y="6" fill="#f0206a"/><use href="#glyph" x="3" y="4" fill="#f52a72"/><use href="#glyph" x="2" y="3" fill="#fa3379"/><use href="#glyph" x="1" y="1.5" fill="#ff3c82"/>
+    <use href="#glyph" fill="url(#face)" stroke="#050003" stroke-width="10"/>
+  </g>
+</svg>

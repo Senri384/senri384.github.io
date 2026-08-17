@@ -1,0 +1,290 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import resumeStylesUrl from "../../styles/resume.css?url";
+import { Mail, MapPin, MessageCircle, Phone } from "@lucide/astro";
+---
+
+<BaseLayout
+  title="个人简历 | Senri's Personal Homepage"
+  description="周翔的个人简历：教育背景、实习与项目经历、技能及个人实践。"
+  styles={[resumeStylesUrl]}
+>
+  <main class="resume-page resume-document">
+    <div class="resume-grid" aria-hidden="true"></div>
+
+    <header class="resume-hero" aria-labelledby="resume-title">
+      <div class="resume-portrait-frame">
+        <img
+          class="resume-portrait"
+          src="/portfolio-assets/resume/zhou-xiang.jpg"
+          alt="周翔证件照"
+          width="826"
+          height="1169"
+        />
+      </div>
+      <div class="resume-intro">
+        <p class="resume-eyebrow">PROFILE ARCHIVE // 2026</p>
+        <h1 id="resume-title">周翔</h1>
+        <ul class="resume-contact-list" aria-label="个人信息">
+          <li><Phone size={15} stroke-width={1.8} aria-hidden="true" /><a href="tel:13951866086">13951866086</a></li>
+          <li><Mail size={15} stroke-width={1.8} aria-hidden="true" /><span>3074024735@qq.com</span></li>
+          <li><MessageCircle size={15} stroke-width={1.8} aria-hidden="true" /><span>s3074024735</span></li>
+          <li><MapPin size={15} stroke-width={1.8} aria-hidden="true" /><span>深圳</span></li>
+        </ul>
+      </div>
+      <nav class="resume-jump-nav" aria-label="简历分区">
+        <a href="#education">教育背景</a>
+        <a href="#internships">实习经历</a>
+        <a href="#projects">项目经历</a>
+        <a href="#skills">技能</a>
+        <a href="#games">游戏经历</a>
+        <a href="#campus">校园经历</a>
+        <a href="#culture">文娱实践</a>
+        <a href="#honors">荣誉奖项</a>
+      </nav>
+    </header>
+
+    <div class="resume-content">
+      <section class="resume-section" id="education" aria-labelledby="education-title">
+        <div class="resume-section-heading">
+          <span>01</span>
+          <h2 id="education-title">教育背景</h2>
+          <p>EDUCATION</p>
+        </div>
+        <article class="resume-entry resume-entry-education">
+          <div class="resume-entry-head">
+            <div>
+              <span class="resume-school-tag">【211】</span>
+              <h3>南京师范大学 - 广播电视编导</h3>
+              <p>本科　新闻与传播学院　全日制</p>
+            </div>
+            <time>2023.09 - 至今（2027毕业）</time>
+          </div>
+          <p><strong>主修课程：</strong>戏剧理论、影视美学、影视剧本创作、视听语言、视觉艺术原理运用</p>
+        </article>
+      </section>
+
+      <section class="resume-section" id="internships" aria-labelledby="internships-title">
+        <div class="resume-section-heading">
+          <span>02</span>
+          <h2 id="internships-title">实习经历</h2>
+          <p>WORK EXPERIENCE</p>
+        </div>
+        <article class="resume-entry">
+          <div class="resume-entry-head">
+            <div>
+              <h3>深圳灵动时刻科技有限公司</h3>
+              <p>AI互动游戏策划</p>
+            </div>
+            <div class="resume-entry-meta">
+              <span>AI产品部门 · 深圳</span>
+              <time>2026.06–至今</time>
+            </div>
+          </div>
+          <div class="resume-subgrid">
+            <div>
+              <h4>游戏创作与玩法设计</h4>
+              <ul>
+                <li>通过公司AI互动影游平台完成游戏内容创作，梳理内容配置、交互及生成链路问题，输出功能优化方案。</li>
+                <li>基于Next.js、React与TypeScript，借助Codex独立开发邀请码问卷互动影游；通过有限状态机、视频Marker触发与LocalStorage存档实现分支问答、剧情推进及个性化通行证生成，完成原型开发与多分支流程验证。</li>
+                <li>面向自研视频模型的流式交互演进方向，搭建互动叙事概念原型，设计“玩家输入—剧情响应—视频反馈”的即时交互循环，验证生成式视频与即时互动叙事结合的可行性。</li>
+              </ul>
+            </div>
+            <div>
+              <h4>模型产品与应用</h4>
+              <ul>
+                <li>参与自研视频模型测评集建设，围绕多层性能维度开展测试，针对异常结果进行控制变量排查，整理问题样本、复现路径及对照数据并反馈研发，协助问题定位与效果复测。</li>
+                <li>调研数字人、视频生成及世界模型产品，建立生成质量、响应速度、内容可控性与交互机制的对比框架，结合自研模型实测表现识别优势能力与关键约束，构思适配模型能力边界的互动产品方案</li>
+                <li>牵头平台宣发素材制作，使用自研模型完成宣传视频创作，并沉淀内容生产流程与模型优化反馈。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="resume-entry">
+          <div class="resume-entry-head">
+            <div>
+              <h3>江苏广播电视总台集团</h3>
+              <p>编导助理</p>
+            </div>
+            <div class="resume-entry-meta">
+              <span>纪录片工作部 · 南京</span>
+              <time>2025.07–2026.01</time>
+            </div>
+          </div>
+          <div class="resume-entry-body resume-split-summary">
+            <p>参与《抗日战争启示录》《寻找张纯如》等纪录片的前期策划、资料研究与后期制作。</p>
+            <ul>
+              <li><strong>内容策划：</strong>主持策划座谈并梳理分集结构与叙事方案，协助完成上下集共2万余字脚本。</li>
+              <li><strong>资料研究：</strong>收集200余张历史图片及数十条影像史料，整理近20组、合计50小时以上人物访谈，为内容创作提供史实与素材支撑。</li>
+              <li><strong>后期协作：</strong>处理英、日、德语访谈，输出剪辑修改意见及关键信息文本，完成约90分钟成片字幕校对。</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="resume-section" id="projects" aria-labelledby="projects-title">
+        <div class="resume-section-heading">
+          <span>03</span>
+          <h2 id="projects-title">项目经历</h2>
+          <p>PROJECT EXPERIENCE</p>
+        </div>
+        <article class="resume-entry">
+          <div class="resume-entry-head">
+            <div>
+              <h3>腾讯互娱i-MUR Friendslop类游戏桌面研究-研究助手</h3>
+              <p>线上</p>
+            </div>
+            <time>2026.03 - 2026.07</time>
+          </div>
+          <div class="resume-entry-body resume-split-summary">
+            <p><strong>工作内容：</strong>拆解代表性游戏玩法机制，系统梳理各款Friendslop游戏发展历程，结合其研发管线与留存数据进行交叉比较，以掌握爆款Friendslop游戏设计核心要素</p>
+            <ul>
+              <li>从玩法机制、地图怪物设计、养成系统等维度全面拆解《内容警告》《PEAK》等Friendslop类游戏，提炼核心玩法机制特点，汇总制成研究小结</li>
+              <li>组织访谈了解玩家核心体验乐趣，参与脑暴会交换创意灵感，协作进行脑洞方案后续优化，整理完成最终报告写作</li>
+              <li>制作任务制PVE撤离Friendslop游戏策划方案，设计自定义装备系统的组合框架、性能机制，结合接取任务、探索地图、安全撤离核心循环，制定基本对局流程规划</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="resume-entry">
+          <div class="resume-entry-head">
+            <div>
+              <h3>腾讯互娱i-MUR未来信号空间站线上研究训练营第15期文娱方向-高校研究员</h3>
+              <p>线上</p>
+            </div>
+            <div class="resume-entry-meta">
+              <time>2025.11 - 2026.07</time>
+              <span>M1-M3文化观察方向社群排名第4</span>
+            </div>
+          </div>
+          <div class="resume-subgrid">
+            <div>
+              <h4>【热点趋势捕捉】</h4>
+              <p>识别具备破圈潜力的文娱现象，产出游戏文娱信号，预判可转化为游戏内容/IP联动/社区运营的增量方向，为游戏内容设计与玩法创新提供需求侧依据</p>
+              <ul>
+                <li>游戏拆解研究——宝可梦形象设计分析、IP改编游戏分析、《洛克王国：世界》剧情任务设计解析</li>
+                <li>游戏运营观察——分析《绝地潜兵2》社媒动态叙事设计，总结游戏运营协同游戏内容为社群造势的方法</li>
+                <li>文娱趋势分析——海外Z世代顶流歌手破圈方式，挖掘背后的文娱消费趋势</li>
+                <li>作品内容创作——动漫作品“电影感”成因分析、《电锯人2》争议内容创作弊病梳理</li>
+              </ul>
+            </div>
+            <div>
+              <h4>【商业课题分析】</h4>
+              <p><strong>游戏社交方面新设计洞察</strong>——抓取新兴游戏社交现象，分析社交设计创新，提炼游戏策划方法</p>
+              <p>以《Peak》为观察对象，全面拆解游戏玩法机制，分析对玩家社交行为的影响，产出30页研究报告，课题成果获得A级评分</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="resume-section" id="skills" aria-labelledby="skills-title">
+        <div class="resume-section-heading">
+          <span>04</span>
+          <h2 id="skills-title">技能</h2>
+          <p>SKILLS / TOOLS</p>
+        </div>
+        <div class="resume-skill-stack">
+          <article class="resume-entry resume-skill-entry">
+            <h3>【个人能力】</h3>
+            <dl>
+              <div><dt>游戏策划</dt><dd>游戏系统拆解、核心循环设计、互动叙事、玩法原型、竞品研究、玩家访谈与体验分析。</dd></div>
+              <div><dt>AI模型与产品</dt><dd>Prompt调试、模型能力测评、控制变量测试、生成问题排查、问题样本集整理及AIGC工作流搭建。</dd></div>
+              <div><dt>内容创作</dt><dd>文案及脚本创作、分镜设计、剧情演出、视频拍摄、后期剪辑与视听语言设计。</dd></div>
+              <div><dt>语言能力</dt><dd>英语CET-4、CET-6</dd></div>
+            </dl>
+          </article>
+          <article class="resume-entry resume-skill-entry">
+            <h3>【AI工具】</h3>
+            <dl>
+              <div><dt>AI编程与Agent</dt><dd>Codex、Cursor、Workbuddy。</dd></div>
+              <div><dt>通用大模型</dt><dd>ChatGPT/GPT、Claude、Gemini、DeepSeek、通义千问、豆包、Kimi。</dd></div>
+              <div><dt>图像视频生成</dt><dd>Seedance、Seedream、Kling、Veo、Vidu、PixVerse、Nano Banana、GPT-Image等。</dd></div>
+              <div><dt>语音与音频</dt><dd>ElevenLabs、Qwen TTS、Seed-TTS、Seed-Audio、MiniMax。</dd></div>
+            </dl>
+          </article>
+          <article class="resume-entry resume-skill-entry">
+            <h3>【专业软件】</h3>
+            <dl>
+              <div><dt>剪辑与影像</dt><dd>Premiere、达芬奇、剪映、Gyroflow、Photoshop。</dd></div>
+              <div><dt>办公工具</dt><dd>Excel、XMind、Canva。</dd></div>
+              <div><dt>三维工具</dt><dd>MAYA、3ds Max。</dd></div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="resume-section" id="games" aria-labelledby="games-title">
+        <div class="resume-section-heading">
+          <span>05</span>
+          <h2 id="games-title">游戏经历</h2>
+          <p>GAME EXPERIENCE</p>
+        </div>
+        <div class="resume-entry resume-game-entry">
+          <p class="resume-section-note">更多见作品集处表格</p>
+          <ul class="resume-game-list">
+            <li>【洛克王国：世界】2026，66级，图鉴收集400+，首席决斗家</li>
+            <li>【PokeMMO】2022-2025,1000H+，全地区多周目通关</li>
+            <li>【明日方舟：终末地】2026，400H，60级</li>
+            <li>【崩坏：星穹铁道】2023，50级</li>
+            <li>【守望先锋】2016-至今，2000H，重装位白金</li>
+            <li>【绝地潜兵2】2025-至今，100H</li>
+            <li>【求生之路2】2020-2024，400H+</li>
+            <li>【收获日2】2021-2023，300H+</li>
+            <li>【迈阿密热线1&2】两代关卡全A通关，100H</li>
+            <li>【龙珠Z：卡卡罗特】100H 一周目通关　成就进度60%</li>
+            <li>【空洞骑士】150H　一周目三结局通关　成就进度82%</li>
+            <li>【索尼克：未知边境】一周目+DLC结局通关　关卡全S通关</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="resume-section" id="campus" aria-labelledby="campus-title">
+        <div class="resume-section-heading">
+          <span>06</span>
+          <h2 id="campus-title">校园经历</h2>
+          <p>CAMPUS EXPERIENCE</p>
+        </div>
+        <div class="resume-dual-cards">
+          <article class="resume-entry">
+            <h3>院影视部｜干事</h3>
+            <p>负责校院大型活动的摄像与后期剪辑，参与多次跨学院创意影片制作，完成分镜脚本、现场拍摄方案及成片交付；协作开展部门影视制作培训。</p>
+          </article>
+          <article class="resume-entry">
+            <h3>学院实践项目｜主创成员</h3>
+            <p>独立负责“湾河同脉”短片章节的素材管理、剪辑及调色，并完成系列宣传片头制作；作品经学院公众号发布并通过校内先进项目评选。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resume-section" id="culture" aria-labelledby="culture-title">
+        <div class="resume-section-heading">
+          <span>07</span>
+          <h2 id="culture-title">文娱实践</h2>
+          <p>CREATIVE PRACTICE</p>
+        </div>
+        <div class="resume-entry resume-practice-grid">
+          <p>长期关注游戏、影视与动漫内容，阅片量1500+，具备影评及二创经验，个人视频作品单条播放量超10万。</p>
+          <p>具备丰富摄影与模型制作经验，摄影作品曾获全国青年摄影比赛一等奖，长期关注IP衍生品及玩家社群生态。</p>
+        </div>
+      </section>
+
+      <section class="resume-section" id="honors" aria-labelledby="honors-title">
+        <div class="resume-section-heading">
+          <span>08</span>
+          <h2 id="honors-title">荣誉奖项</h2>
+          <p>HONORS / AWARDS</p>
+        </div>
+        <div class="resume-entry">
+          <ul class="resume-honor-list">
+            <li><span>2026</span>中国电视艺术家协会高等院校视听艺术委员会2026年度视听艺术会议暨青年视听艺术作品与理论评论文章推优活动 学生组优秀作品</li>
+            <li><span>2026</span>第十一届海峡两岸青年网络视听优秀作品展 评委会特别推荐作品</li>
+            <li><span>2025</span>第六届江苏省大学生视听智能影像创新大赛“vivo杯”人工智能影像创新大赛 铜奖</li>
+            <li><span>2025</span>第六届江苏省大学生视听智能影像创新大赛“巨鲨杯”摄影与影像大赛 铜奖</li>
+            <li><span>2023</span>壹摄网全国青年摄影大赛 一等奖</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

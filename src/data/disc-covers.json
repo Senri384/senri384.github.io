@@ -1,0 +1,292 @@
+{
+  "dwarf-lost-in-the-dark-forest": {
+    "coverArt": "/portfolio-assets/disc-covers/game-design-dwarf-lost-in-the-dark-forest.webp",
+    "caseImage": "/portfolio-assets/disc-openings/dwarf-lost-in-the-dark-forest/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/dwarf-lost-in-the-dark-forest/frame-0.webp",
+      "/portfolio-assets/disc-openings/dwarf-lost-in-the-dark-forest/frame-1.webp",
+      "/portfolio-assets/disc-openings/dwarf-lost-in-the-dark-forest/frame-2.webp",
+      "/portfolio-assets/disc-openings/dwarf-lost-in-the-dark-forest/frame-3.webp"
+    ]
+  },
+  "stones-feast": {
+    "coverArt": "/portfolio-assets/disc-covers/game-design-stones-feast.webp",
+    "caseImage": "/portfolio-assets/disc-openings/stones-feast/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/stones-feast/frame-0.webp",
+      "/portfolio-assets/disc-openings/stones-feast/frame-1.webp",
+      "/portfolio-assets/disc-openings/stones-feast/frame-2.webp",
+      "/portfolio-assets/disc-openings/stones-feast/frame-3.webp"
+    ]
+  },
+  "the-cold-trial": {
+    "coverArt": "/portfolio-assets/disc-covers/game-design-the-cold-trial.webp",
+    "caseImage": "/portfolio-assets/disc-openings/the-cold-trial/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/the-cold-trial/frame-0.webp",
+      "/portfolio-assets/disc-openings/the-cold-trial/frame-1.webp",
+      "/portfolio-assets/disc-openings/the-cold-trial/frame-2.webp",
+      "/portfolio-assets/disc-openings/the-cold-trial/frame-3.webp"
+    ]
+  },
+  "peak-social-design": {
+    "coverArt": "/portfolio-assets/disc-covers/game-research-peak-social-design.webp",
+    "caseImage": "/portfolio-assets/disc-openings/peak-social-design/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/peak-social-design/frame-0.webp",
+      "/portfolio-assets/disc-openings/peak-social-design/frame-1.webp",
+      "/portfolio-assets/disc-openings/peak-social-design/frame-2.webp",
+      "/portfolio-assets/disc-openings/peak-social-design/frame-3.webp"
+    ]
+  },
+  "rock-kingdom-world-breakdown": {
+    "coverArt": "/portfolio-assets/disc-covers/game-research-rock-kingdom-world-breakdown.webp",
+    "caseImage": "/portfolio-assets/disc-openings/rock-kingdom-world-breakdown/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/rock-kingdom-world-breakdown/frame-0.webp",
+      "/portfolio-assets/disc-openings/rock-kingdom-world-breakdown/frame-1.webp",
+      "/portfolio-assets/disc-openings/rock-kingdom-world-breakdown/frame-2.webp",
+      "/portfolio-assets/disc-openings/rock-kingdom-world-breakdown/frame-3.webp"
+    ]
+  },
+  "transformers-ip-games": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-transformers-ip-games.webp",
+    "caseImage": "/portfolio-assets/disc-openings/transformers-ip-games/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/transformers-ip-games/frame-0.webp",
+      "/portfolio-assets/disc-openings/transformers-ip-games/frame-1.webp",
+      "/portfolio-assets/disc-openings/transformers-ip-games/frame-2.webp",
+      "/portfolio-assets/disc-openings/transformers-ip-games/frame-3.webp"
+    ]
+  },
+  "rock-kingdom-farewell": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-rock-kingdom-farewell.webp",
+    "caseImage": "/portfolio-assets/disc-openings/rock-kingdom-farewell/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/rock-kingdom-farewell/frame-0.webp",
+      "/portfolio-assets/disc-openings/rock-kingdom-farewell/frame-1.webp",
+      "/portfolio-assets/disc-openings/rock-kingdom-farewell/frame-2.webp",
+      "/portfolio-assets/disc-openings/rock-kingdom-farewell/frame-3.webp"
+    ]
+  },
+  "pokemon-character-design": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-pokemon-character-design.webp",
+    "caseImage": "/portfolio-assets/disc-openings/pokemon-character-design/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/pokemon-character-design/frame-0.webp",
+      "/portfolio-assets/disc-openings/pokemon-character-design/frame-1.webp",
+      "/portfolio-assets/disc-openings/pokemon-character-design/frame-2.webp",
+      "/portfolio-assets/disc-openings/pokemon-character-design/frame-3.webp"
+    ]
+  },
+  "helldivers2-community-ops": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-helldivers2-community-ops.webp",
+    "caseImage": "/portfolio-assets/disc-openings/helldivers2-community-ops/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/helldivers2-community-ops/frame-0.webp",
+      "/portfolio-assets/disc-openings/helldivers2-community-ops/frame-1.webp",
+      "/portfolio-assets/disc-openings/helldivers2-community-ops/frame-2.webp",
+      "/portfolio-assets/disc-openings/helldivers2-community-ops/frame-3.webp"
+    ]
+  },
+  "alien-meme-culture": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-alien-meme-culture.webp",
+    "caseImage": "/portfolio-assets/disc-openings/alien-meme-culture/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/alien-meme-culture/frame-0.webp",
+      "/portfolio-assets/disc-openings/alien-meme-culture/frame-1.webp",
+      "/portfolio-assets/disc-openings/alien-meme-culture/frame-2.webp",
+      "/portfolio-assets/disc-openings/alien-meme-culture/frame-3.webp"
+    ]
+  },
+  "chainsaw-man-dream": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-chainsaw-man-dream.webp",
+    "caseImage": "/portfolio-assets/disc-openings/chainsaw-man-dream/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/chainsaw-man-dream/frame-0.webp",
+      "/portfolio-assets/disc-openings/chainsaw-man-dream/frame-1.webp",
+      "/portfolio-assets/disc-openings/chainsaw-man-dream/frame-2.webp",
+      "/portfolio-assets/disc-openings/chainsaw-man-dream/frame-3.webp"
+    ]
+  },
+  "fujimoto-cinematic-sense": {
+    "coverArt": "/portfolio-assets/disc-covers/articles-fujimoto-cinematic-sense.webp",
+    "caseImage": "/portfolio-assets/disc-openings/fujimoto-cinematic-sense/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/fujimoto-cinematic-sense/frame-0.webp",
+      "/portfolio-assets/disc-openings/fujimoto-cinematic-sense/frame-1.webp",
+      "/portfolio-assets/disc-openings/fujimoto-cinematic-sense/frame-2.webp",
+      "/portfolio-assets/disc-openings/fujimoto-cinematic-sense/frame-3.webp"
+    ]
+  },
+  "disappear": {
+    "coverArt": "/portfolio-assets/disc-covers/scripts-disappear.webp",
+    "caseImage": "/portfolio-assets/disc-openings/disappear/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/disappear/frame-0.webp",
+      "/portfolio-assets/disc-openings/disappear/frame-1.webp",
+      "/portfolio-assets/disc-openings/disappear/frame-2.webp",
+      "/portfolio-assets/disc-openings/disappear/frame-3.webp"
+    ]
+  },
+  "iron-superman": {
+    "coverArt": "/portfolio-assets/disc-covers/scripts-iron-superman.webp",
+    "caseImage": "/portfolio-assets/disc-openings/iron-superman/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/iron-superman/frame-0.webp",
+      "/portfolio-assets/disc-openings/iron-superman/frame-1.webp",
+      "/portfolio-assets/disc-openings/iron-superman/frame-2.webp",
+      "/portfolio-assets/disc-openings/iron-superman/frame-3.webp"
+    ]
+  },
+  "rain-alley-pagoda-tree": {
+    "coverArt": "/portfolio-assets/disc-covers/scripts-rain-alley-pagoda-tree.webp",
+    "caseImage": "/portfolio-assets/disc-openings/rain-alley-pagoda-tree/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/rain-alley-pagoda-tree/frame-0.webp",
+      "/portfolio-assets/disc-openings/rain-alley-pagoda-tree/frame-1.webp",
+      "/portfolio-assets/disc-openings/rain-alley-pagoda-tree/frame-2.webp",
+      "/portfolio-assets/disc-openings/rain-alley-pagoda-tree/frame-3.webp"
+    ]
+  },
+  "caines-mutiny-stage-review": {
+    "coverArt": "/portfolio-assets/disc-covers/reviews-caines-mutiny-stage-review.webp",
+    "caseImage": "/portfolio-assets/disc-openings/caines-mutiny-stage-review/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/caines-mutiny-stage-review/frame-0.webp",
+      "/portfolio-assets/disc-openings/caines-mutiny-stage-review/frame-1.webp",
+      "/portfolio-assets/disc-openings/caines-mutiny-stage-review/frame-2.webp",
+      "/portfolio-assets/disc-openings/caines-mutiny-stage-review/frame-3.webp"
+    ]
+  },
+  "rango-review": {
+    "coverArt": "/portfolio-assets/disc-covers/reviews-rango-review.webp",
+    "caseImage": "/portfolio-assets/disc-openings/rango-review/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/rango-review/frame-0.webp",
+      "/portfolio-assets/disc-openings/rango-review/frame-1.webp",
+      "/portfolio-assets/disc-openings/rango-review/frame-2.webp",
+      "/portfolio-assets/disc-openings/rango-review/frame-3.webp"
+    ]
+  },
+  "twelve-angry-men-review": {
+    "coverArt": "/portfolio-assets/disc-covers/reviews-twelve-angry-men-review.webp",
+    "caseImage": "/portfolio-assets/disc-openings/twelve-angry-men-review/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/twelve-angry-men-review/frame-0.webp",
+      "/portfolio-assets/disc-openings/twelve-angry-men-review/frame-1.webp",
+      "/portfolio-assets/disc-openings/twelve-angry-men-review/frame-2.webp",
+      "/portfolio-assets/disc-openings/twelve-angry-men-review/frame-3.webp"
+    ]
+  },
+  "2001-space-odyssey-review": {
+    "coverArt": "/portfolio-assets/disc-covers/reviews-2001-space-odyssey-review.webp",
+    "caseImage": "/portfolio-assets/disc-openings/2001-space-odyssey-review/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/2001-space-odyssey-review/frame-0.webp",
+      "/portfolio-assets/disc-openings/2001-space-odyssey-review/frame-1.webp",
+      "/portfolio-assets/disc-openings/2001-space-odyssey-review/frame-2.webp",
+      "/portfolio-assets/disc-openings/2001-space-odyssey-review/frame-3.webp"
+    ]
+  },
+  "film-ranking-analysis": {
+    "coverArt": "/portfolio-assets/disc-covers/reviews-film-ranking-analysis.webp",
+    "caseImage": "/portfolio-assets/disc-openings/film-ranking-analysis/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/film-ranking-analysis/frame-0.webp",
+      "/portfolio-assets/disc-openings/film-ranking-analysis/frame-1.webp",
+      "/portfolio-assets/disc-openings/film-ranking-analysis/frame-2.webp",
+      "/portfolio-assets/disc-openings/film-ranking-analysis/frame-3.webp"
+    ]
+  },
+  "game-experience-table": {
+    "coverArt": "/portfolio-assets/disc-covers/experience-game-experience-table.webp",
+    "caseImage": "/portfolio-assets/disc-openings/game-experience-table/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/game-experience-table/frame-0.webp",
+      "/portfolio-assets/disc-openings/game-experience-table/frame-1.webp",
+      "/portfolio-assets/disc-openings/game-experience-table/frame-2.webp",
+      "/portfolio-assets/disc-openings/game-experience-table/frame-3.webp"
+    ]
+  },
+  "wangu": {
+    "coverArt": "/portfolio-assets/disc-covers/photography-wangu.webp",
+    "caseImage": "/portfolio-assets/disc-openings/wangu/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/wangu/frame-0.webp",
+      "/portfolio-assets/disc-openings/wangu/frame-1.webp",
+      "/portfolio-assets/disc-openings/wangu/frame-2.webp",
+      "/portfolio-assets/disc-openings/wangu/frame-3.webp"
+    ]
+  },
+  "liuguang": {
+    "coverArt": "/portfolio-assets/disc-covers/photography-liuguang.webp",
+    "caseImage": "/portfolio-assets/disc-openings/liuguang/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/liuguang/frame-0.webp",
+      "/portfolio-assets/disc-openings/liuguang/frame-1.webp",
+      "/portfolio-assets/disc-openings/liuguang/frame-2.webp",
+      "/portfolio-assets/disc-openings/liuguang/frame-3.webp"
+    ]
+  },
+  "cangmang": {
+    "coverArt": "/portfolio-assets/disc-covers/photography-cangmang.webp",
+    "caseImage": "/portfolio-assets/disc-openings/cangmang/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/cangmang/frame-0.webp",
+      "/portfolio-assets/disc-openings/cangmang/frame-1.webp",
+      "/portfolio-assets/disc-openings/cangmang/frame-2.webp",
+      "/portfolio-assets/disc-openings/cangmang/frame-3.webp"
+    ]
+  },
+  "shenhai": {
+    "coverArt": "/portfolio-assets/disc-covers/photography-shenhai.webp",
+    "caseImage": "/portfolio-assets/disc-openings/shenhai/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/shenhai/frame-0.webp",
+      "/portfolio-assets/disc-openings/shenhai/frame-1.webp",
+      "/portfolio-assets/disc-openings/shenhai/frame-2.webp",
+      "/portfolio-assets/disc-openings/shenhai/frame-3.webp"
+    ]
+  },
+  "zhejin": {
+    "coverArt": "/portfolio-assets/disc-covers/photography-zhejin.webp",
+    "caseImage": "/portfolio-assets/disc-openings/zhejin/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/zhejin/frame-0.webp",
+      "/portfolio-assets/disc-openings/zhejin/frame-1.webp",
+      "/portfolio-assets/disc-openings/zhejin/frame-2.webp",
+      "/portfolio-assets/disc-openings/zhejin/frame-3.webp"
+    ]
+  },
+  "short-film-iron-superman": {
+    "coverArt": "/portfolio-assets/disc-covers/short-films-short-film-iron-superman.webp",
+    "caseImage": "/portfolio-assets/disc-openings/short-film-iron-superman/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/short-film-iron-superman/frame-0.webp",
+      "/portfolio-assets/disc-openings/short-film-iron-superman/frame-1.webp",
+      "/portfolio-assets/disc-openings/short-film-iron-superman/frame-2.webp",
+      "/portfolio-assets/disc-openings/short-film-iron-superman/frame-3.webp"
+    ]
+  },
+  "short-film-sanction": {
+    "coverArt": "/portfolio-assets/disc-covers/short-films-short-film-sanction.webp",
+    "caseImage": "/portfolio-assets/disc-openings/short-film-sanction/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/short-film-sanction/frame-0.webp",
+      "/portfolio-assets/disc-openings/short-film-sanction/frame-1.webp",
+      "/portfolio-assets/disc-openings/short-film-sanction/frame-2.webp",
+      "/portfolio-assets/disc-openings/short-film-sanction/frame-3.webp"
+    ]
+  },
+  "short-film-disappear": {
+    "coverArt": "/portfolio-assets/disc-covers/short-films-short-film-disappear.webp",
+    "caseImage": "/portfolio-assets/disc-openings/short-film-disappear/frame-0.webp",
+    "openingFrames": [
+      "/portfolio-assets/disc-openings/short-film-disappear/frame-0.webp",
+      "/portfolio-assets/disc-openings/short-film-disappear/frame-1.webp",
+      "/portfolio-assets/disc-openings/short-film-disappear/frame-2.webp",
+      "/portfolio-assets/disc-openings/short-film-disappear/frame-3.webp"
+    ]
+  }
+}

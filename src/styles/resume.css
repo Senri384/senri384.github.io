@@ -1,0 +1,609 @@
+.resume-page.resume-document {
+  --resume-panel: rgba(8, 10, 34, 0.82);
+  --resume-panel-strong: rgba(10, 12, 42, 0.94);
+  --resume-line: rgba(93, 252, 255, 0.24);
+  display: block;
+  min-height: 100svh;
+  overflow: clip;
+  padding: clamp(106px, 11vw, 154px) clamp(18px, 4.6vw, 72px) 88px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(93, 252, 255, 0.13), transparent 26rem),
+    radial-gradient(circle at 82% 20%, rgba(255, 79, 216, 0.14), transparent 30rem),
+    linear-gradient(180deg, #07081c 0%, #0b0a27 55%, #12071d 100%);
+}
+
+body:has(.resume-document) .site-header {
+  position: absolute;
+  right: calc(var(--site-header-edge) - (100vw - 100%));
+}
+
+.resume-document .resume-grid {
+  position: fixed;
+  inset: auto -20vw -38vh;
+  z-index: 0;
+  height: 72vh;
+  opacity: 0.32;
+}
+
+.resume-hero,
+.resume-content {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  margin-inline: auto;
+}
+
+.resume-hero {
+  display: grid;
+  grid-template-columns: 138px minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(22px, 3vw, 42px);
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid rgba(93, 252, 255, 0.44);
+  background:
+    linear-gradient(120deg, rgba(93, 252, 255, 0.07), transparent 42%, rgba(255, 79, 216, 0.08)),
+    var(--resume-panel-strong);
+  box-shadow: 0 0 34px rgba(93, 252, 255, 0.09), inset 0 0 28px rgba(255, 79, 216, 0.05);
+}
+
+.resume-portrait-frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid rgba(93, 252, 255, 0.58);
+  box-shadow: 8px 8px 0 rgba(255, 79, 216, 0.16);
+}
+
+.resume-portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+
+.resume-portrait {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 44%;
+}
+
+.resume-eyebrow {
+  margin: 0 0 10px;
+  color: var(--cyan);
+  font: 600 0.72rem/1.4 "Courier New", ui-monospace, monospace;
+  letter-spacing: 0.16em;
+}
+
+.resume-intro {
+  transform: translateY(-12px);
+}
+
+.resume-intro h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(3.2rem, 7vw, 6.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-shadow: 0 0 18px rgba(93, 252, 255, 0.58), 0 0 38px rgba(255, 79, 216, 0.3);
+}
+
+.resume-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 18px;
+  margin: 22px 0 0;
+  padding: 0;
+  color: rgba(249, 244, 255, 0.78);
+  font-family: "Courier New", "Microsoft YaHei", monospace;
+  font-size: 0.88rem;
+  list-style: none;
+}
+
+.resume-contact-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.resume-contact-list svg {
+  flex: 0 0 auto;
+  color: var(--cyan);
+}
+
+.resume-contact-list li:not(:last-child)::after {
+  content: "|";
+  margin-left: 18px;
+  color: var(--hot);
+}
+
+.resume-contact-list a:hover,
+.resume-contact-list a:focus-visible,
+.resume-jump-nav a:hover,
+.resume-jump-nav a:focus-visible {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(93, 252, 255, 0.86);
+}
+
+.resume-jump-nav {
+  display: grid;
+  min-width: 118px;
+  max-height: 186px;
+  gap: 3px;
+  overflow: auto;
+  font: 600 0.72rem/1.2 "Courier New", "Microsoft YaHei", monospace;
+  letter-spacing: 0.06em;
+  text-align: right;
+}
+
+@media (min-width: 801px) {
+  .resume-page.resume-document {
+    padding-right: clamp(176px, 14vw, 220px);
+  }
+
+  .resume-jump-nav {
+    position: fixed;
+    top: 50%;
+    right: clamp(16px, 2.6vw, 42px);
+    z-index: 12;
+    width: 134px;
+    min-width: 0;
+    max-height: none;
+    padding: 12px 10px;
+    overflow: visible;
+    border: 1px solid rgba(93, 252, 255, 0.22);
+    background: rgba(6, 8, 28, 0.82);
+    box-shadow: 0 0 24px rgba(93, 252, 255, 0.09);
+    backdrop-filter: blur(10px);
+    transform: translateY(-50%);
+  }
+
+  .resume-jump-nav a {
+    padding-block: 7px;
+  }
+}
+
+.resume-jump-nav a {
+  padding: 5px 10px;
+  border-right: 2px solid var(--cyan);
+  color: rgba(249, 244, 255, 0.58);
+}
+
+.resume-content {
+  display: grid;
+  gap: 24px;
+  margin-top: 26px;
+}
+
+.resume-section {
+  scroll-margin-top: 104px;
+}
+
+.resume-section-heading {
+  display: grid;
+  grid-template-columns: 38px auto 1fr;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.resume-section-heading span {
+  color: var(--hot);
+  font: 600 0.68rem/1 "Courier New", monospace;
+}
+
+.resume-section-heading h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  line-height: 1;
+}
+
+.resume-section-heading p {
+  margin: 0;
+  overflow: hidden;
+  color: rgba(93, 252, 255, 0.54);
+  font: 600 0.64rem/1 "Courier New", monospace;
+  letter-spacing: 0.14em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.resume-section-heading p::before {
+  content: "";
+  display: inline-block;
+  width: min(20vw, 260px);
+  height: 1px;
+  margin: 0 16px 3px 0;
+  background: linear-gradient(90deg, transparent, var(--resume-line));
+}
+
+.resume-entry {
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--resume-line);
+  background: var(--resume-panel);
+  box-shadow: inset 3px 0 0 rgba(255, 79, 216, 0.4);
+}
+
+.resume-entry + .resume-entry {
+  margin-top: 12px;
+}
+
+.resume-entry-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(93, 252, 255, 0.16);
+}
+
+.resume-entry-head h3,
+.resume-entry-head p,
+.resume-entry p,
+.resume-entry-meta,
+.resume-entry ul {
+  margin-top: 0;
+}
+
+.resume-entry-head h3 {
+  margin-bottom: 7px;
+  color: #fff;
+  font-size: clamp(1.02rem, 1.7vw, 1.26rem);
+  line-height: 1.35;
+}
+
+.resume-school-tag {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--cyan);
+  font: 700 0.7rem/1.2 "Courier New", "Microsoft YaHei", monospace;
+  letter-spacing: 0.08em;
+}
+
+.resume-entry-head p,
+.resume-entry-meta,
+.resume-entry-head time {
+  margin-bottom: 0;
+  color: var(--cyan);
+  font: 600 0.76rem/1.5 "Courier New", "Microsoft YaHei", monospace;
+}
+
+.resume-entry-meta {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 2px;
+  text-align: right;
+}
+
+.resume-entry-education > p {
+  margin: 18px 0 0;
+}
+
+.resume-entry-body {
+  margin-top: 20px;
+}
+
+.resume-split-summary {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.36fr) minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 46px);
+}
+
+.resume-split-summary > p {
+  margin-bottom: 0;
+  padding-right: clamp(22px, 4vw, 46px);
+  border-right: 1px solid rgba(93, 252, 255, 0.18);
+}
+
+.resume-subgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 4vw, 50px);
+  margin-top: 20px;
+}
+
+.resume-subgrid > div + div {
+  border-left: 1px solid rgba(93, 252, 255, 0.18);
+  padding-left: clamp(22px, 4vw, 50px);
+}
+
+.resume-entry h4 {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 79, 216, 0.34);
+  color: #fff;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.resume-entry p,
+.resume-entry li {
+  color: rgba(249, 244, 255, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.resume-entry strong {
+  color: #fff;
+}
+
+.resume-entry ul {
+  margin-bottom: 0;
+  padding-left: 1.15rem;
+}
+
+.resume-entry li + li {
+  margin-top: 8px;
+}
+
+.resume-entry li::marker {
+  color: var(--hot);
+}
+
+.resume-skill-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.resume-skill-entry {
+  display: grid;
+  grid-template-columns: minmax(126px, 0.2fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 50px);
+}
+
+.resume-skill-entry h3,
+.resume-dual-cards h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.resume-skill-entry dl {
+  margin: 0;
+}
+
+.resume-skill-entry dl div {
+  display: grid;
+  grid-template-columns: minmax(116px, 0.22fr) minmax(0, 1fr);
+  gap: 14px;
+}
+
+.resume-skill-entry dl div + div {
+  margin-top: 8px;
+}
+
+.resume-skill-entry dt,
+.resume-skill-entry dd {
+  margin: 0;
+  color: rgba(249, 244, 255, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.resume-skill-entry dt {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.resume-section-note {
+  margin: 0 0 12px !important;
+  color: var(--dim) !important;
+  font: 0.72rem/1.4 "Courier New", "Microsoft YaHei", monospace !important;
+  text-align: right;
+}
+
+.resume-game-list,
+.resume-honor-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-game-list li {
+  margin: 0 !important;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(93, 252, 255, 0.13);
+}
+
+.resume-game-list li:nth-child(odd) {
+  border-right: 1px solid rgba(93, 252, 255, 0.13);
+}
+
+.resume-dual-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.resume-dual-cards .resume-entry + .resume-entry {
+  margin-top: 0;
+}
+
+.resume-dual-cards p {
+  margin: 14px 0 0;
+}
+
+.resume-practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 4vw, 50px);
+}
+
+.resume-practice-grid p {
+  margin: 0;
+}
+
+.resume-practice-grid p + p {
+  padding-left: clamp(22px, 4vw, 50px);
+  border-left: 1px solid rgba(93, 252, 255, 0.18);
+}
+
+.resume-honor-list {
+  gap: 0 28px;
+}
+
+.resume-honor-list li {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 10px;
+  margin: 0 !important;
+  padding: 10px 0;
+  border-top: 1px solid rgba(93, 252, 255, 0.13);
+}
+
+.resume-honor-list span {
+  color: var(--hot);
+  font: 600 0.72rem/1.8 "Courier New", monospace;
+}
+
+@media (max-width: 800px) {
+  .resume-hero {
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .resume-jump-nav {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: none;
+    text-align: left;
+  }
+
+  .resume-jump-nav a {
+    border-right: 0;
+    border-left: 2px solid var(--cyan);
+  }
+
+  .resume-subgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-subgrid > div + div {
+    border-top: 1px solid rgba(93, 252, 255, 0.18);
+    border-left: 0;
+    padding-top: 22px;
+    padding-left: 0;
+  }
+
+  .resume-split-summary,
+  .resume-skill-entry,
+  .resume-practice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-split-summary > p {
+    padding-right: 0;
+    padding-bottom: 18px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(93, 252, 255, 0.18);
+  }
+
+  .resume-practice-grid p + p {
+    padding-top: 18px;
+    padding-left: 0;
+    border-top: 1px solid rgba(93, 252, 255, 0.18);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .resume-page.resume-document {
+    padding: 104px 14px 58px;
+  }
+
+  .resume-hero {
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .resume-intro h1 {
+    font-size: clamp(2.8rem, 15vw, 4.2rem);
+  }
+
+  .resume-intro {
+    transform: translateY(-4px);
+  }
+
+  .resume-eyebrow {
+    font-size: 0.62rem;
+  }
+
+  .resume-contact-list {
+    gap: 5px 10px;
+    margin-top: 14px;
+    font-size: 0.76rem;
+  }
+
+  .resume-contact-list li:not(:last-child)::after {
+    margin-left: 10px;
+  }
+
+  .resume-jump-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resume-section-heading {
+    grid-template-columns: 28px auto 1fr;
+    gap: 8px;
+  }
+
+  .resume-section-heading p {
+    font-size: 0.52rem;
+  }
+
+  .resume-section-heading p::before {
+    display: none;
+  }
+
+  .resume-entry {
+    padding: 18px 16px;
+  }
+
+  .resume-entry-head {
+    display: grid;
+    gap: 10px;
+  }
+
+  .resume-entry-meta {
+    text-align: left;
+  }
+
+  .resume-entry p,
+  .resume-entry li {
+    font-size: 0.84rem;
+    line-height: 1.7;
+  }
+
+  .resume-skill-entry dl div,
+  .resume-game-list,
+  .resume-dual-cards,
+  .resume-honor-list {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-skill-entry {
+    gap: 14px;
+  }
+
+  .resume-skill-entry dl div {
+    gap: 2px;
+  }
+
+  .resume-game-list li:nth-child(odd) {
+    border-right: 0;
+  }
+
+  .resume-honor-list li {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+}

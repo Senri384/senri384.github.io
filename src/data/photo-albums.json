@@ -1,0 +1,132 @@
+{
+  "categories": [
+    {
+      "slug": "photography",
+      "title": "摄影",
+      "kicker": "PHOTOGRAPHY",
+      "description": "以城市、光影、空间与日常片段构成的原创摄影集。"
+    }
+  ],
+  "works": [
+    {
+      "category": "photography",
+      "slug": "wangu",
+      "title": "顽古",
+      "kind": "摄影集 / 旧物与城市空间",
+      "format": "photo",
+      "tags": ["摄影", "旧物", "城市空间", "光影"],
+      "source": "photo/顽古",
+      "image": "/portfolio-assets/photography/wangu/cover.webp",
+      "blocks": [
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/01.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/02.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/03.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/04.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/05.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/06.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/wangu/07.webp" }
+      ],
+      "paragraphs": [],
+      "paragraphCount": 0,
+      "imageCount": 7,
+      "tableCount": 0,
+      "pageCount": 0
+    },
+    {
+      "category": "photography",
+      "slug": "liuguang",
+      "title": "流光",
+      "kind": "摄影集 / 城市光影与瞬间",
+      "format": "photo",
+      "tags": ["摄影", "城市", "光影", "瞬间"],
+      "source": "photo/流光",
+      "image": "/portfolio-assets/photography/liuguang/cover.webp",
+      "blocks": [
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/01.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/02.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/03.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/04.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/05.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/06.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/07.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/liuguang/08.webp" }
+      ],
+      "paragraphs": [],
+      "paragraphCount": 0,
+      "imageCount": 8,
+      "tableCount": 0,
+      "pageCount": 0
+    },
+    {
+      "category": "photography",
+      "slug": "cangmang",
+      "title": "苍茫",
+      "kind": "摄影集 / 空间、地景与留白",
+      "format": "photo",
+      "tags": ["摄影", "空间", "地景", "留白"],
+      "source": "photo/苍茫",
+      "image": "/portfolio-assets/photography/cangmang/cover.webp",
+      "blocks": [
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/01.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/02.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/03.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/04.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/05.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/06.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/07.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/08.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/09.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/cangmang/10.webp" }
+      ],
+      "paragraphs": [],
+      "paragraphCount": 0,
+      "imageCount": 10,
+      "tableCount": 0,
+      "pageCount": 0
+    },
+    {
+      "category": "photography",
+      "slug": "shenhai",
+      "title": "深海",
+      "kind": "摄影集 / 夜色与城市人群",
+      "format": "photo",
+      "tags": ["摄影", "夜色", "城市", "纪实"],
+      "source": "photo/深海",
+      "image": "/portfolio-assets/photography/shenhai/cover.webp",
+      "blocks": [
+        { "type": "image", "src": "/portfolio-assets/photography/shenhai/01.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/shenhai/02.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/shenhai/03.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/shenhai/04.webp" }
+      ],
+      "paragraphs": [],
+      "paragraphCount": 0,
+      "imageCount": 4,
+      "tableCount": 0,
+      "pageCount": 0
+    },
+    {
+      "category": "photography",
+      "slug": "zhejin",
+      "title": "蛰今",
+      "kind": "摄影集 / 日常静物与暖光",
+      "format": "photo",
+      "tags": ["摄影", "日常", "静物", "暖光"],
+      "source": "photo/蛰今",
+      "image": "/portfolio-assets/photography/zhejin/cover.webp",
+      "blocks": [
+        { "type": "image", "src": "/portfolio-assets/photography/zhejin/01.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/zhejin/02.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/zhejin/03.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/zhejin/04.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/zhejin/05.webp" },
+        { "type": "image", "src": "/portfolio-assets/photography/zhejin/06.webp" }
+      ],
+      "paragraphs": [],
+      "paragraphCount": 0,
+      "imageCount": 6,
+      "tableCount": 0,
+      "pageCount": 0
+    }
+  ]
+}

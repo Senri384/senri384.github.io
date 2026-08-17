@@ -1,0 +1,21 @@
+---
+import portfolio from "../../../data/portfolio-content.json";
+import photoPortfolio from "../../../data/photo-albums.json";
+import filmPortfolio from "../../../data/film-works.json";
+
+export function getStaticPaths() {
+  const categories = [
+    ...portfolio.categories,
+    ...filmPortfolio.categories,
+    ...photoPortfolio.categories,
+  ];
+  return categories.map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+return Astro.redirect(`/works/?category=${category.slug}`);
+---

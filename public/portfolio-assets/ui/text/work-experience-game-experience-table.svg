@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="150" viewBox="0 0 980 150">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"/></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="none"/>
+  <g filter="url(#rough)" font-family="Microsoft YaHei, SimHei, sans-serif" font-weight="900" letter-spacing="0">
+    <text x="16" y="24" font-family="Courier New, monospace" font-size="21" fill="#ffe66c" stroke="#050003" stroke-width="4" paint-order="stroke">PLAY HISTORY</text>
+    
+    <text class="main shadow" x="18" y="105">游戏经历完整表</text>
+    <text class="main cyan" x="14" y="105">游戏经历完整表</text>
+  </g>
+  <style>
+    .main{font-size:68px;paint-order:stroke;stroke:#020003;stroke-width:8px;}
+    .cyan{fill:#82fff1;text-shadow:0 0 10px #5dfcff;}
+    .shadow{fill:#ff126c;transform:translate(8px,10px);opacity:.95;}
+  </style>
+</svg>

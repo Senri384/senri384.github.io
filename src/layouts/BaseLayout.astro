@@ -1,0 +1,85 @@
+---
+import globalStylesUrl from "../styles/global.css?url";
+import SoundwavePlayer from "../components/SoundwavePlayer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  styles?: string[];
+}
+
+const {
+  title,
+  description = "Senri's Personal Homepage — 周翔的个人作品集。",
+  styles = [],
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+const activeSection = pathname.startsWith("/works")
+  ? "works"
+  : pathname.startsWith("/resume")
+    ? "resume"
+    : "game";
+const isScrollableWorkPage = /^\/works\/[^/]+\/[^/]+\/?$/.test(pathname);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#07081c" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script is:inline>
+      (() => {
+        const storageKey = "neon-drive-opening-seen-v1";
+        const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        const navigationEntry = window.performance.getEntriesByType("navigation")[0];
+        const isReload =
+          navigationEntry instanceof PerformanceNavigationTiming &&
+          navigationEntry.type === "reload";
+        const shouldReplayOpening = window.location.pathname === "/" && isReload;
+        let hasSeenOpening = false;
+
+        try {
+          hasSeenOpening = window.sessionStorage.getItem(storageKey) === "1";
+        } catch {}
+
+        if (!hasSeenOpening && window.location.pathname !== "/") {
+          document.documentElement.dataset.siteGate = "redirecting";
+          window.location.replace(`/?introTarget=${encodeURIComponent(currentPath)}`);
+          return;
+        }
+
+        document.documentElement.dataset.siteGate =
+          hasSeenOpening && !shouldReplayOpening ? "open" : "opening";
+      })();
+    </script>
+    <link rel="stylesheet" href={globalStylesUrl} />
+    {styles.map((href) => <link rel="stylesheet" href={href} />)}
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class:list={["site-header", { "site-header-scrolls": isScrollableWorkPage }]}>
+      <div class="site-brand">
+        <img
+          src="/portfolio-assets/ui/senri-sunset-mark-v1.svg"
+          alt=""
+          width="64"
+          height="64"
+        />
+        <span>Senri's Personal Homepage</span>
+      </div>
+      <div class="site-controls">
+        <SoundwavePlayer section={activeSection} />
+        <nav class="site-nav" aria-label="全站导航">
+          <a href="/" aria-current={activeSection === "game" ? "page" : undefined}>小游戏</a>
+          <a href="/works/" aria-current={activeSection === "works" ? "page" : undefined}>作品集</a>
+          <a href="/resume/" aria-current={activeSection === "resume" ? "page" : undefined}>个人简历</a>
+        </nav>
+      </div>
+    </header>
+    <slot />
+  </body>
+</html>
