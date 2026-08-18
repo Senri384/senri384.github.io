@@ -23,7 +23,8 @@ const activeSection = pathname.startsWith("/works")
     : "game";
 const isScrollableWorkPage =
   /^\/works\/[^/]+\/[^/]+\/?$/.test(pathname) &&
-  !pathname.startsWith("/works/short-films/");
+  !pathname.startsWith("/works/short-films/") &&
+  !pathname.startsWith("/works/photography/");
 ---
 
 <!doctype html>
