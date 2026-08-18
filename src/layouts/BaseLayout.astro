@@ -32,9 +32,29 @@ const isScrollableWorkPage =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="周翔的个人主页" />
     <meta name="theme-color" content="#07081c" />
     <ClientRouter />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    {
+      activeSection === "works" ? (
+        <link
+          rel="preload"
+          as="image"
+          href="/portfolio-assets/ui/city-skyline-near.webp"
+          fetchpriority="high"
+        />
+      ) : (
+        <link
+          rel="prefetch"
+          as="image"
+          href="/portfolio-assets/ui/city-skyline-near.webp"
+        />
+      )
+    }
     <script is:inline>
       (() => {
         const storageKey = "neon-drive-opening-seen-v1";
