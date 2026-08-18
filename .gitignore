@@ -9,3 +9,6 @@ dist/
 .DS_Store
 npm-debug.log*
 *.log
+
+.vercel/
+.env.local
