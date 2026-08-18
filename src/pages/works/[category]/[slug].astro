@@ -329,20 +329,22 @@ const photoMediaItems = isPhotoAlbum
           </figure>
 
           <div class="photo-media-rail" data-photo-rail aria-label={`${work.title}照片卷轴`}>
-            {photoMediaItems.map((item: any, index: number) => (
-              <button
-                class="photo-media-thumb"
-                type="button"
-                aria-label={`查看第 ${index + 1} 张照片`}
-                aria-pressed={index === 0 ? "true" : "false"}
-                data-photo-thumb
-                data-photo-index={index}
-                data-photo-src={item.src}
-                data-photo-alt={item.alt}
-              >
-                <img src={item.src} alt="" loading={index < 5 ? "eager" : "lazy"} />
-              </button>
-            ))}
+            <div class="photo-media-track">
+              {photoMediaItems.map((item: any, index: number) => (
+                <button
+                  class="photo-media-thumb"
+                  type="button"
+                  aria-label={`查看第 ${index + 1} 张照片`}
+                  aria-pressed={index === 0 ? "true" : "false"}
+                  data-photo-thumb
+                  data-photo-index={index}
+                  data-photo-src={item.src}
+                  data-photo-alt={item.alt}
+                >
+                  <img src={item.src} alt="" loading={index < 5 ? "eager" : "lazy"} />
+                </button>
+              ))}
+            </div>
           </div>
         </section>
       ) : work.table ? (
@@ -692,7 +694,7 @@ const photoMediaItems = isPhotoAlbum
           });
         };
 
-        const showPhoto = (nextIndex) => {
+        const showPhoto = (nextIndex, alignRail = true) => {
           const index = (nextIndex + thumbs.length) % thumbs.length;
           const thumb = thumbs[index];
           if (!(thumb instanceof HTMLButtonElement)) return;
@@ -705,7 +707,10 @@ const photoMediaItems = isPhotoAlbum
           thumbs.forEach((item, itemIndex) => {
             item.setAttribute("aria-pressed", String(itemIndex === index));
           });
-          thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          if (alignRail && rail instanceof HTMLElement) {
+            const targetLeft = thumb.offsetLeft + thumb.offsetWidth / 2 - rail.clientWidth / 2;
+            rail.scrollTo({ left: targetLeft, behavior: "smooth" });
+          }
 
           const incoming = new Image();
           incoming.decoding = "async";
@@ -732,17 +737,17 @@ const photoMediaItems = isPhotoAlbum
           event.preventDefault();
           if (wheelLocked || Math.abs(delta) < 8) return;
           wheelLocked = true;
-          showPhoto(activeIndex + (delta > 0 ? 1 : -1));
+          showPhoto(activeIndex + (delta > 0 ? 1 : -1), false);
           window.setTimeout(() => { wheelLocked = false; }, 240);
         }, { passive: false });
 
         stage.addEventListener("keydown", (event) => {
           if (event.key === "ArrowRight" || event.key === "ArrowDown") {
             event.preventDefault();
-            showPhoto(activeIndex + 1);
+            showPhoto(activeIndex + 1, false);
           } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
             event.preventDefault();
-            showPhoto(activeIndex - 1);
+            showPhoto(activeIndex - 1, false);
           }
         });
 
