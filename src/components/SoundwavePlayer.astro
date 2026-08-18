@@ -1,0 +1,445 @@
+---
+interface Props {
+  section: "game" | "works" | "resume";
+}
+
+const { section } = Astro.props;
+---
+
+<aside
+  id="soundwave-player"
+  class="soundwave-player"
+  data-section={section}
+  data-deck-state="empty"
+  data-playing="false"
+  data-loading="false"
+  transition:persist={`soundwave-player-${section}`}
+  aria-label="全站音乐播放器"
+>
+  <div class="soundwave-wave-field" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </div>
+  <div class="soundwave-deck">
+    <img
+      class="soundwave-deck-image"
+      src="/portfolio-assets/audio-player/walkman-empty.webp"
+      width="1536"
+      height="1536"
+      alt="声波配色 Walkman 音乐播放器"
+      draggable="false"
+    />
+    <div class="soundwave-reels" aria-hidden="true"><i></i><i></i></div>
+    <button class="soundwave-hotspot soundwave-load" type="button" data-player-action="load" data-player-tooltip="装入" aria-label="打开舱盖并装入当前页面磁带"></button>
+    <button class="soundwave-hotspot soundwave-previous" type="button" data-player-action="previous" data-player-tooltip="上一首" aria-label="上一首"></button>
+    <button class="soundwave-hotspot soundwave-toggle" type="button" data-player-action="toggle" data-player-tooltip="播放" aria-label="播放"></button>
+    <button class="soundwave-hotspot soundwave-next" type="button" data-player-action="next" data-player-tooltip="下一首" aria-label="下一首"></button>
+    <button class="soundwave-hotspot soundwave-volume-control" type="button" data-player-action="volume" data-player-tooltip="滚轮调节音量" aria-label="滚轮调节音量"></button>
+  </div>
+  <output class="soundwave-volume" aria-live="polite">VOL 50</output>
+</aside>
+
+<script is:inline data-astro-rerun>
+  (() => {
+    const root = document.querySelector("#soundwave-player");
+    if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+
+    const image = root.querySelector(".soundwave-deck-image");
+    const loadButton = root.querySelector('[data-player-action="load"]');
+    const toggleButton = root.querySelector('[data-player-action="toggle"]');
+    const volumeButton = root.querySelector('[data-player-action="volume"]');
+    const volumeOutput = root.querySelector(".soundwave-volume");
+    const section = root.dataset.section || "game";
+    const stateKey = "soundwave-player-state-v3";
+    const audioSettingsKey = "neon-drive-audio-settings";
+    const assets = {
+      empty: "/portfolio-assets/audio-player/walkman-empty.webp",
+      open: "/portfolio-assets/audio-player/walkman-open-empty.webp",
+      game: "/portfolio-assets/audio-player/walkman-cassette-game-v3.webp",
+      works: "/portfolio-assets/audio-player/walkman-cassette-works.webp",
+      resume: "/portfolio-assets/audio-player/walkman-cassette-resume.webp",
+      openLoaded: {
+        game: "/portfolio-assets/audio-player/walkman-open-cassette-game.webp",
+        works: "/portfolio-assets/audio-player/walkman-open-cassette-works.webp",
+        resume: "/portfolio-assets/audio-player/walkman-open-cassette-resume.webp",
+      },
+    };
+    const playlists = {
+      game: [
+        "/audio/music/game/Perturbator - Miami Disco.mp3",
+        "/audio/music/game/Perturbator - Sexualizer.mp3",
+        "/audio/music/game/Scattle - Inner Animal.mp3",
+        "/audio/music/game/Vestron Vulture - New Wave Hookers.mp3",
+      ],
+      works: [
+        "/audio/music/works/Jasper Byrne - Miami.mp3",
+        "/audio/music/works/M.O.O.N. - Dust.mp3",
+        "/audio/music/works/The Green Kingdom - Untitled.mp3",
+      ],
+      resume: [
+        "/audio/music/resume/Modulogeek - Around.mp3",
+        "/audio/music/resume/Old Future Fox Gang - Guided Meditation.mp3",
+        "/audio/music/resume/Sun Araw - Horse Steppin.mp3",
+      ],
+    };
+    const defaultTrackIndices = { game: 0, works: 2, resume: 0 };
+    const playlist = playlists[section] || playlists.game;
+    const localAudio = section === "game" ? null : new Audio();
+    if (localAudio) {
+      localAudio.preload = "metadata";
+      localAudio.loop = true;
+    }
+
+    let stored = {};
+    try {
+      stored = JSON.parse(window.sessionStorage.getItem(stateKey) || "{}");
+    } catch {}
+    let savedAudio = {};
+    try {
+      savedAudio = JSON.parse(window.localStorage.getItem(audioSettingsKey) || "{}");
+    } catch {}
+
+    let loaded = Boolean(stored.loaded);
+    let loadedSection = loaded && typeof stored.loadedSection === "string"
+      ? stored.loadedSection
+      : loaded && typeof stored.section === "string"
+        ? stored.section
+        : "";
+    const hadStoredSection = typeof stored.section === "string";
+    const previousSection = typeof stored.section === "string" ? stored.section : section;
+    const trackIndices = stored.trackIndices && typeof stored.trackIndices === "object"
+      ? stored.trackIndices
+      : {};
+    const currentTimes = stored.currentTimes && typeof stored.currentTimes === "object"
+      ? stored.currentTimes
+      : {};
+    let trackIndex = Number.isInteger(trackIndices[section])
+      ? trackIndices[section]
+      : defaultTrackIndices[section] ?? 0;
+    trackIndex = ((trackIndex % playlist.length) + playlist.length) % playlist.length;
+    let volume = typeof stored.volume === "number"
+      ? stored.volume
+      : typeof savedAudio.volume === "number"
+        ? savedAudio.volume
+        : 0.5;
+    volume = Math.max(0, Math.min(1, volume));
+    const shouldResumeSameSection = stored.playing === true && previousSection === section && loaded;
+    let playing = shouldResumeSameSection;
+    let transition = Promise.resolve();
+    let toastTimer = 0;
+    let volumeTooltipTimer = 0;
+    const lidSounds = {
+      open: new Audio("/audio/effects/walkman-lid-open.mp3"),
+      close: new Audio("/audio/effects/walkman-lid-close.mp3"),
+    };
+    Object.values(lidSounds).forEach((sound) => {
+      sound.preload = "auto";
+      sound.load();
+    });
+
+    const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
+    const currentTrack = () => playlist[trackIndex];
+    const imagePreloads = new Map();
+    const preloadImage = (source) => {
+      if (!source) return Promise.resolve();
+      if (imagePreloads.has(source)) return imagePreloads.get(source);
+      const promise = new Promise((resolve) => {
+        const preload = new Image();
+        const finish = () => {
+          if (typeof preload.decode === "function") void preload.decode().catch(() => {}).finally(resolve);
+          else resolve();
+        };
+        preload.addEventListener("load", finish, { once: true });
+        preload.addEventListener("error", resolve, { once: true });
+        preload.src = source;
+        if (preload.complete) finish();
+      });
+      imagePreloads.set(source, promise);
+      return promise;
+    };
+    const allDeckImages = [
+      assets.empty,
+      assets.open,
+      assets.game,
+      assets.works,
+      assets.resume,
+      ...Object.values(assets.openLoaded),
+    ];
+    allDeckImages.forEach((source) => void preloadImage(source));
+
+    const save = () => {
+      root.dataset.trackIndex = String(trackIndex);
+      root.dataset.volume = volume.toFixed(2);
+      trackIndices[section] = trackIndex;
+      if (localAudio && Number.isFinite(localAudio.currentTime)) {
+        currentTimes[section] = localAudio.currentTime;
+      }
+      try {
+        window.sessionStorage.setItem(stateKey, JSON.stringify({
+          loaded,
+          section,
+          loadedSection: loaded ? loadedSection || section : "",
+          trackIndices,
+          currentTimes,
+          volume,
+          playing,
+        }));
+      } catch {}
+      try {
+        window.localStorage.setItem(audioSettingsKey, JSON.stringify({ muted: false, volume }));
+      } catch {}
+    };
+
+    const updateLoadTooltip = (deckState = root.dataset.deckState) => {
+      if (!(loadButton instanceof HTMLButtonElement)) return;
+      const hasCassette = deckState === "cassette" || (deckState === "open" && loaded);
+      loadButton.dataset.playerTooltip = hasCassette ? "弹出" : "装入";
+      loadButton.setAttribute("aria-label", hasCassette ? "弹出当前磁带" : "打开舱盖并装入当前页面磁带");
+    };
+
+    const setImage = (source, deckState) => {
+      if (image instanceof HTMLImageElement) image.src = source;
+      root.dataset.deckState = deckState;
+      updateLoadTooltip(deckState);
+    };
+
+    const openLoadedImage = (targetSection) => assets.openLoaded[targetSection] || assets.open;
+
+    const setPlaying = (value) => {
+      playing = value;
+      root.dataset.playing = String(value);
+      if (toggleButton instanceof HTMLButtonElement) {
+        const label = value ? "暂停" : "播放";
+        toggleButton.setAttribute("aria-label", label);
+        toggleButton.setAttribute("aria-pressed", String(value));
+        toggleButton.dataset.playerTooltip = label;
+      }
+    };
+
+    const mechanicalFx = async (kind) => {
+      const sound = lidSounds[kind];
+      if (!(sound instanceof HTMLAudioElement) || volume <= 0) return;
+      sound.pause();
+      sound.currentTime = 0;
+      sound.volume = Math.min(1, volume * 1.35);
+      try {
+        await sound.play();
+      } catch {}
+    };
+
+    const showVolume = () => {
+      const label = `VOL ${String(Math.round(volume * 100)).padStart(2, "0")}`;
+      if (volumeOutput instanceof HTMLOutputElement) {
+        volumeOutput.value = label;
+      }
+      if (volumeButton instanceof HTMLButtonElement) {
+        volumeButton.dataset.playerTooltip = label;
+        volumeButton.classList.add("is-showing-volume-value");
+      }
+      window.clearTimeout(toastTimer);
+      window.clearTimeout(volumeTooltipTimer);
+      toastTimer = window.setTimeout(() => root.classList.remove("is-showing-volume"), 900);
+      volumeTooltipTimer = window.setTimeout(() => {
+        if (volumeButton instanceof HTMLButtonElement) {
+          volumeButton.dataset.playerTooltip = "滚轮调节音量";
+          volumeButton.classList.remove("is-showing-volume-value");
+        }
+      }, 900);
+    };
+
+    const emit = (name, detail = {}) => {
+      window.dispatchEvent(new CustomEvent(`soundwave:${name}`, { detail }));
+    };
+
+    const swapCassette = (autoplay = false) => {
+      transition = transition.then(async () => {
+        if (root.dataset.loading === "true") return;
+        root.dataset.loading = "true";
+        const openingImage = loaded ? openLoadedImage(loadedSection || previousSection || section) : assets.open;
+        await Promise.all([preloadImage(openingImage), preloadImage(assets[section])]);
+        setImage(openingImage, "open");
+        setPlaying(false);
+        if (localAudio) localAudio.pause();
+        emit("pause");
+        await mechanicalFx("open");
+        await wait(475);
+        mechanicalFx("close");
+        setImage(assets[section], "cassette");
+        loaded = true;
+        loadedSection = section;
+        save();
+        await wait(390);
+        root.dataset.loading = "false";
+        if (autoplay) await play();
+      });
+      return transition;
+    };
+
+    const ejectCassette = () => {
+      transition = transition.then(async () => {
+        const visuallyLoaded = root.dataset.deckState === "cassette";
+        if (root.dataset.loading === "true" || (!loaded && !visuallyLoaded)) return;
+        if (!loaded && visuallyLoaded) {
+          loaded = true;
+          loadedSection = section;
+        }
+        root.dataset.loading = "true";
+        const openingImage = openLoadedImage(loadedSection || section);
+        await Promise.all([preloadImage(openingImage), preloadImage(assets.empty)]);
+        setImage(openingImage, "open");
+        pause();
+        await mechanicalFx("open");
+        await wait(720);
+        mechanicalFx("close");
+        setImage(assets.empty, "empty");
+        loaded = false;
+        loadedSection = "";
+        save();
+        await wait(260);
+        root.dataset.loading = "false";
+      });
+      return transition;
+    };
+
+    const play = async () => {
+      if (!loaded) {
+        await swapCassette(false);
+      }
+      if (section === "game") {
+        emit("play", { src: currentTrack(), volume, trackIndex });
+        setPlaying(true);
+        save();
+        return;
+      }
+      if (!localAudio) return;
+      if (localAudio.src !== new URL(currentTrack(), window.location.href).href) {
+        localAudio.src = currentTrack();
+      }
+      localAudio.volume = volume;
+      try {
+        await localAudio.play();
+        setPlaying(true);
+      } catch {
+        setPlaying(false);
+      }
+      save();
+    };
+
+    const pause = () => {
+      if (localAudio) localAudio.pause();
+      emit("pause");
+      setPlaying(false);
+      save();
+    };
+
+    const changeTrack = async (direction) => {
+      if (!loaded) await swapCassette(false);
+      trackIndex = (trackIndex + direction + playlist.length) % playlist.length;
+      if (localAudio) {
+        localAudio.pause();
+        localAudio.src = currentTrack();
+        localAudio.currentTime = 0;
+      }
+      emit("track", { src: currentTrack(), volume, trackIndex, autoplay: true });
+      save();
+      if (localAudio) await play();
+      else setPlaying(true);
+    };
+
+    const loadOnly = () => {
+      if (!loaded && root.dataset.deckState !== "cassette") return swapCassette(false);
+      if (!loaded) {
+        loaded = true;
+        loadedSection = section;
+      }
+      return ejectCassette();
+    };
+
+    root.addEventListener("click", (event) => {
+      const button = event.target instanceof Element ? event.target.closest("[data-player-action]") : null;
+      if (!(button instanceof HTMLButtonElement) || root.dataset.loading === "true") return;
+      const action = button.dataset.playerAction;
+      if (action === "load") void loadOnly();
+      if (action === "toggle") void (playing ? Promise.resolve(pause()) : play());
+      if (action === "previous") void changeTrack(-1);
+      if (action === "next") void changeTrack(1);
+    });
+
+    volumeButton?.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      volume = Math.max(0, Math.min(1, volume + (event.deltaY < 0 ? 0.05 : -0.05)));
+      if (localAudio) localAudio.volume = volume;
+      emit("volume", { volume });
+      save();
+      showVolume();
+    }, { passive: false });
+
+    window.addEventListener("pagehide", save);
+    const handleBeforeSwap = (event) => {
+      const nextRoot = event.newDocument?.querySelector?.("#soundwave-player");
+      const nextSection = nextRoot instanceof HTMLElement ? nextRoot.dataset.section : "";
+      save();
+      if (!nextSection || nextSection === section) return;
+      if (localAudio) localAudio.pause();
+      Object.values(lidSounds).forEach((sound) => sound.pause());
+      setPlaying(false);
+      save();
+      document.removeEventListener("astro:before-swap", handleBeforeSwap);
+    };
+    document.addEventListener("astro:before-swap", handleBeforeSwap);
+
+    window.__soundwavePlayer = {
+      play,
+      playFromGame: async () => {
+        if (!loaded) await swapCassette(false);
+        setPlaying(true);
+        save();
+      },
+      pause,
+      getState: () => ({ loaded, playing, section, trackIndex, volume }),
+    };
+
+    if (loaded && previousSection !== section) {
+      setImage(assets[previousSection] || assets.empty, "cassette");
+      loadedSection = previousSection;
+      const autoplayAfterSwap = section === "works" || section === "resume";
+      const startSwap = () => void swapCassette(autoplayAfterSwap);
+      if (section === "game" && document.documentElement.dataset.siteGate !== "open") {
+        window.addEventListener("opening-complete", startSwap, { once: true });
+      } else {
+        window.setTimeout(startSwap, 120);
+      }
+    } else if (!loaded && hadStoredSection && previousSection !== section) {
+      setImage(assets.empty, "empty");
+      const autoplayAfterSwap = section === "works" || section === "resume";
+      const startSwap = () => void swapCassette(autoplayAfterSwap);
+      if (section === "game" && document.documentElement.dataset.siteGate !== "open") {
+        window.addEventListener("opening-complete", startSwap, { once: true });
+      } else {
+        window.setTimeout(startSwap, 120);
+      }
+    } else if (loaded) {
+      setImage(assets[section], "cassette");
+      loadedSection = section;
+    } else {
+      setImage(assets.empty, "empty");
+    }
+    if (localAudio) localAudio.volume = volume;
+    setPlaying(playing);
+    save();
+    if (localAudio && shouldResumeSameSection) {
+      localAudio.src = currentTrack();
+      const resumeAt = Number(currentTimes[section]);
+      if (Number.isFinite(resumeAt) && resumeAt > 0) {
+        const restoreTime = () => {
+          try {
+            localAudio.currentTime = resumeAt;
+          } catch {}
+        };
+        if (localAudio.readyState >= 1) restoreTime();
+        else localAudio.addEventListener("loadedmetadata", restoreTime, { once: true });
+      }
+      void play();
+    }
+  })();
+</script>

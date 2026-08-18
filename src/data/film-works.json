@@ -1,0 +1,99 @@
+{
+  "categories": [
+    {
+      "slug": "short-films",
+      "title": "短片",
+      "kicker": "SHORT FILM",
+      "description": "原创剧情短片、影像叙事与导演作品。"
+    }
+  ],
+  "works": [
+    {
+      "slug": "short-film-iron-superman",
+      "category": "short-films",
+      "title": "铁超人安在",
+      "kind": "短片 / 剧情",
+      "format": "video",
+      "tags": ["短片", "剧情", "成长", "友情"],
+      "source": "film/铁超人安在",
+      "image": "/portfolio-assets/films/iron-superman/poster.webp",
+      "showcaseImage": "/portfolio-assets/films/iron-superman/showcase-poster.webp",
+      "videoBlurPoster": "/portfolio-assets/films/iron-superman/video-poster-blur.webp",
+      "videoPoster": "/portfolio-assets/films/iron-superman/player-poster.webp",
+      "video": "/portfolio-assets/films/iron-superman/film.mp4",
+      "videoWidth": 1280,
+      "videoHeight": 520,
+      "duration": "10:29",
+      "summary": "这是一个关于追寻初心与友情的故事。失意编剧刘伟在童年旧物中发现一个泡泡糖盒，里面藏着儿时伙伴“陆顺飞”的电话和“铁超人”字样。追寻过程中，他发现了现实与回忆的落差，但也因此坚定了自己创作的决心。影片调用了“梦核”以及古早特摄片元素，在建起童年泡影的同时，揭开人与人随岁月流转而渐行渐远的现实。影片希望开启一场思考和探讨：时过境迁，过去对我们来说，究竟意味着什么？",
+      "images": [
+        "/portfolio-assets/films/iron-superman/still-01.webp",
+        "/portfolio-assets/films/iron-superman/still-02.webp",
+        "/portfolio-assets/films/iron-superman/still-03.webp",
+        "/portfolio-assets/films/iron-superman/still-04.webp",
+        "/portfolio-assets/films/iron-superman/still-05.webp",
+        "/portfolio-assets/films/iron-superman/still-06.webp",
+        "/portfolio-assets/films/iron-superman/still-07.webp",
+        "/portfolio-assets/films/iron-superman/still-08.webp",
+        "/portfolio-assets/films/iron-superman/still-09.webp",
+        "/portfolio-assets/films/iron-superman/still-10.webp"
+      ]
+    },
+    {
+      "slug": "short-film-sanction",
+      "category": "short-films",
+      "title": "制裁",
+      "kind": "短片 / 剧情",
+      "format": "video",
+      "tags": ["短片", "剧情", "正义", "社会寓言"],
+      "source": "film/制裁",
+      "image": "/portfolio-assets/films/sanction/poster.webp",
+      "showcaseImage": "/portfolio-assets/films/sanction/showcase-poster-v8.webp",
+      "videoBlurPoster": "/portfolio-assets/films/sanction/video-poster-blur-v8.webp",
+      "videoPoster": "/portfolio-assets/films/sanction/player-poster.webp",
+      "video": "/portfolio-assets/films/sanction/film.mp4",
+      "videoWidth": 1280,
+      "videoHeight": 520,
+      "duration": "10:00",
+      "summary": "这是一个关于如何行使“正义”的故事。片中的主人公象征着某种社会上流行的意识缩影，他“嫉恶如仇”，代替社会“惩奸除恶”。事实似乎远不止于此，他也将面对自己的主义与行为所带来的后果。",
+      "images": [
+        "/portfolio-assets/films/sanction/still-01.webp",
+        "/portfolio-assets/films/sanction/still-02.webp",
+        "/portfolio-assets/films/sanction/still-03.webp",
+        "/portfolio-assets/films/sanction/still-04.webp",
+        "/portfolio-assets/films/sanction/still-05.webp",
+        "/portfolio-assets/films/sanction/still-06.webp",
+        "/portfolio-assets/films/sanction/still-07.webp",
+        "/portfolio-assets/films/sanction/still-08.webp",
+        "/portfolio-assets/films/sanction/still-09.webp",
+        "/portfolio-assets/films/sanction/still-10.webp"
+      ]
+    },
+    {
+      "slug": "short-film-disappear",
+      "category": "short-films",
+      "title": "消失",
+      "kind": "短片 / 影像作品",
+      "format": "video",
+      "tags": ["短片", "影像作品"],
+      "source": "film/消失",
+      "image": "/portfolio-assets/films/disappear/poster.webp",
+      "showcaseImage": "/portfolio-assets/films/disappear/showcase-poster-v1.webp",
+      "videoBlurPoster": "/portfolio-assets/films/disappear/video-poster-blur-v1.webp",
+      "videoPoster": "/portfolio-assets/films/disappear/player-poster.webp",
+      "video": "/portfolio-assets/films/disappear/film.mp4",
+      "videoWidth": 1280,
+      "videoHeight": 694,
+      "duration": "08:35",
+      "summary": "一名在补差课中昏昏欲睡的学生忽然从所有人眼中“消失”。他逃离课堂、穿过依旧按照既定秩序运转的校园与城市，在短暂自由之后逐渐感到空洞惶恐。故事以时间循环和隐身设定，提出对被监管、被约束与存在本身的重新审视。",
+      "images": [
+        "/portfolio-assets/films/disappear/still-01.webp",
+        "/portfolio-assets/films/disappear/still-02.webp",
+        "/portfolio-assets/films/disappear/still-03.webp",
+        "/portfolio-assets/films/disappear/still-04.webp",
+        "/portfolio-assets/films/disappear/still-05.webp",
+        "/portfolio-assets/films/disappear/still-06.webp",
+        "/portfolio-assets/films/disappear/still-07.webp"
+      ]
+    }
+  ]
+}

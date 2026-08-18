@@ -1,0 +1,153 @@
+---
+interface Props {
+  variant: "dead-forest" | "fog-swamp" | "state-machine" | "chapter-map";
+}
+
+const { variant } = Astro.props;
+
+const chapterFlows = {
+  "dead-forest": {
+    label: "枯骨树林章节流程",
+    entry: "林前入口",
+    firstFork: "枯林第一岔路",
+    firstSafeChoice: "Take the lit path",
+    firstSafe: "迷宫中段空地",
+    firstDangerChoice: "Take the dark path",
+    firstDanger: "温迪戈袭击",
+    advance: "Press deeper",
+    secondFork: "枯林第二岔路",
+    secondSafeChoice: "Take the lower detour",
+    secondSafe: "第一关通关",
+    secondDangerChoice: "Take the direct path",
+    secondDanger: "天蛾人袭击",
+    retry: "返回林前入口",
+  },
+  "fog-swamp": {
+    label: "腐雾沼泽章节流程",
+    entry: "沼泽入口",
+    firstFork: "腐木桥岔路",
+    firstSafeChoice: "Cross the intact bridge",
+    firstSafe: "安全过桥",
+    firstDangerChoice: "Cross the broken bridge",
+    firstDanger: "牛头人袭击",
+    advance: "Follow the stone path",
+    secondFork: "沼泽深处岔路",
+    secondSafeChoice: "Take the open path",
+    secondSafe: "游戏通关",
+    secondDangerChoice: "Take the dense forest path",
+    secondDanger: "天蛾人再现",
+    retry: "返回沼泽入口",
+  },
+} as const;
+
+const chapter = variant === "dead-forest" || variant === "fog-swamp"
+  ? chapterFlows[variant]
+  : null;
+
+const routes = [
+  {
+    title: "Dead Forest",
+    subtitle: "枯骨树林",
+    entry: "林前入口",
+    firstFork: "枯林第一岔路",
+    safeOne: "亮路 -> 迷宫中段",
+    dangerOne: "暗路 -> 温迪戈 / RETRY",
+    secondFork: "枯林第二岔路",
+    safeTwo: "绕路 -> 第一关通关",
+    dangerTwo: "直路 -> 天蛾人 / RETRY",
+  },
+  {
+    title: "Fog Swamp",
+    subtitle: "腐雾沼泽",
+    entry: "沼泽入口",
+    firstFork: "腐木桥岔路",
+    safeOne: "完整桥 -> 安全过桥",
+    dangerOne: "破损桥 -> 牛头人 / RETRY",
+    secondFork: "沼泽深处岔路",
+    safeTwo: "开阔路 -> 游戏通关",
+    dangerTwo: "密林路 -> 天蛾人再现 / RETRY",
+  },
+] as const;
+---
+
+{chapter ? (
+  <div class="dwarf-flow dwarf-flow--chapter" role="img" aria-label={chapter.label}>
+    <div class="dwarf-flow-spine">
+      <span class="dwarf-flow-node is-entry">{chapter.entry}</span>
+      <span class="dwarf-flow-arrow" aria-hidden="true">ENTER</span>
+      <span class="dwarf-flow-node is-junction">{chapter.firstFork}</span>
+    </div>
+
+    <div class="dwarf-flow-branches">
+      <section class="dwarf-flow-branch is-safe">
+        <span class="dwarf-flow-choice">{chapter.firstSafeChoice}</span>
+        <span class="dwarf-flow-node">{chapter.firstSafe}</span>
+        <span class="dwarf-flow-arrow" aria-hidden="true">{chapter.advance}</span>
+        <span class="dwarf-flow-node is-junction">{chapter.secondFork}</span>
+        <div class="dwarf-flow-outcomes">
+          <div>
+            <span class="dwarf-flow-choice">{chapter.secondSafeChoice}</span>
+            <span class="dwarf-flow-node is-clear">{chapter.secondSafe}</span>
+            <span class="dwarf-flow-result">GAME CLEAR</span>
+          </div>
+          <div>
+            <span class="dwarf-flow-choice">{chapter.secondDangerChoice}</span>
+            <span class="dwarf-flow-node is-danger">{chapter.secondDanger}</span>
+            <span class="dwarf-flow-result is-retry">RETRY -> {chapter.retry}</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dwarf-flow-branch is-danger">
+        <span class="dwarf-flow-choice">{chapter.firstDangerChoice}</span>
+        <span class="dwarf-flow-node is-danger">{chapter.firstDanger}</span>
+        <span class="dwarf-flow-result is-retry">RETRY -> {chapter.retry}</span>
+      </section>
+    </div>
+  </div>
+) : (
+  <div
+    class={`dwarf-flow dwarf-flow--map ${variant === "state-machine" ? "is-compact" : ""}`}
+    role="img"
+    aria-label={variant === "state-machine" ? "游戏流程状态机" : "章节地图总览"}
+  >
+    <div class="dwarf-flow-root">
+      <span class="dwarf-flow-node is-entry">迷途岔路口</span>
+      <span class="dwarf-flow-root-code">ch00-crossroad</span>
+    </div>
+    <div class="dwarf-flow-route-grid">
+      {routes.map((route) => (
+        <section class="dwarf-flow-route">
+          <header>
+            <strong>{route.title}</strong>
+            <span>{route.subtitle}</span>
+          </header>
+          <ol>
+            <li><span class="dwarf-flow-node">{route.entry}</span></li>
+            <li><span class="dwarf-flow-node is-junction">{route.firstFork}</span></li>
+            <li class="dwarf-flow-route-split">
+              <span class="is-safe">{route.safeOne}</span>
+              <span class="is-danger">{route.dangerOne}</span>
+            </li>
+            {variant === "chapter-map" && (
+              <>
+                <li><span class="dwarf-flow-node is-junction">{route.secondFork}</span></li>
+                <li class="dwarf-flow-route-split">
+                  <span class="is-safe">{route.safeTwo}</span>
+                  <span class="is-danger">{route.dangerTwo}</span>
+                </li>
+              </>
+            )}
+            {variant === "state-machine" && (
+              <li class="dwarf-flow-route-split">
+                <span class="is-clear">通关 -> GAME CLEAR</span>
+                <span class="is-danger">死亡 -> RETRY</span>
+              </li>
+            )}
+          </ol>
+        </section>
+      ))}
+    </div>
+    <p class="dwarf-flow-return">GAME CLEAR -> 返回迷途岔路口</p>
+  </div>
+)}

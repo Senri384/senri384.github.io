@@ -1,0 +1,381 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import portfolio from "../../data/portfolio-content.json";
+import photoPortfolio from "../../data/photo-albums.json";
+import filmPortfolio from "../../data/film-works.json";
+import discCovers from "../../data/disc-covers.json";
+import workCardCopy from "../../data/work-card-copy.json";
+import { Undo2 } from "@lucide/astro";
+import worksFinalStylesUrl from "../../styles/works-final.css?url";
+
+const workMeta = (work: any) => {
+  if (work.format === "video") return `短片 / ${work.duration}`;
+  if (work.table) return `${work.table.rows.length} 条表格记录`;
+  if (work.pageCount) return `${work.pageCount} 页 PDF`;
+
+  const parts = [`${work.paragraphCount} 段原文`];
+  if (work.imageCount) parts.push(`${work.imageCount} 张图片`);
+  if (work.tableCount) parts.push(`${work.tableCount} 个表格`);
+  return parts.join(" / ");
+};
+
+const portfolioCategories: any[] = [
+  ...portfolio.categories,
+  ...filmPortfolio.categories,
+  ...photoPortfolio.categories,
+];
+const portfolioWorks: any[] = [
+  ...portfolio.works,
+  ...filmPortfolio.works,
+  ...photoPortfolio.works,
+].filter((work) => work.slug !== "film-ranking-analysis");
+
+const categoryOrder = [
+  "experience",
+  "game-design",
+  "game-research",
+  "articles",
+  "short-films",
+  "scripts",
+  "reviews",
+  "photography",
+];
+
+const categoryKickerOverrides: Record<string, string> = {
+  experience: "GAME EXPERIENCE",
+  scripts: "SCRIPT",
+  reviews: "REVIEW",
+  "short-films": "SHORT FILM",
+};
+
+const categories = portfolioCategories.map((category) => {
+  const works = portfolioWorks.filter((work) => work.category === category.slug);
+  const tags = Array.from(new Set(works.flatMap((work) => work.tags))).slice(0, 5);
+
+  return {
+    ...category,
+    kicker: categoryKickerOverrides[category.slug] ?? category.kicker,
+    works,
+    tags,
+  };
+}).sort((a, b) => categoryOrder.indexOf(a.slug) - categoryOrder.indexOf(b.slug));
+
+const toDisplayKicker = (value: string) =>
+  value
+    .toLocaleLowerCase("en")
+    .replace(/(^|[\s/&-])([a-z])/g, (_match, separator, letter) => `${separator}${letter.toUpperCase()}`);
+
+const titleUnits = (value: string) =>
+  Array.from(value).reduce((total, character) => {
+    if (/\s/u.test(character)) return total + 0.36;
+    if (/[\u3400-\u9fff\uf900-\ufaff]/u.test(character)) return total + 1;
+    if (/[A-Z]/u.test(character)) return total + 0.76;
+    if (/[a-z0-9]/u.test(character)) return total + 0.61;
+    return total + 0.46;
+  }, 0);
+
+const isLatinOnlyTitle = (value: string) =>
+  /[A-Za-z]/u.test(value) && !/[\u3400-\u9fff\uf900-\ufaff]/u.test(value);
+
+const mainTitleUnits = (value: string) =>
+  titleUnits(value) * (isLatinOnlyTitle(value) ? 0.68 : 1);
+
+const titleAspect = (value: string) =>
+  Number((Math.max(520, Math.ceil(mainTitleUnits(value) * 220 + 190)) / 310).toFixed(4));
+
+const hintAspect = (value: string) =>
+  Number((Math.max(420, Math.ceil(titleUnits(value) * 66 + 100)) / 126).toFixed(4));
+
+const titleAssetRevision = "20260816-layout-copy-v21";
+const generatedTitleAsset = (filename: string) =>
+  `/portfolio-assets/ui/text/generated-3d/${filename}?v=${titleAssetRevision}`;
+
+const categoryHintText = "使用滚轮滚动作品集";
+const categoryHintImage = generatedTitleAsset("category-hint-scroll-unified.webp");
+const categoryHintAspect = hintAspect(categoryHintText);
+
+const gameCardAssetBase = "/portfolio-assets/ui/game-card-system-v12";
+const gameCardRackAssetBase = "/portfolio-assets/ui/game-card-system-v7/racks";
+const gameCardGeometry = {
+  openWidth: 1536,
+  openHeight: 1024,
+  closedCanvasWidth: 900,
+  closedCanvasHeight: 1100,
+  closedAlphaLeft: 104,
+  closedAlphaTop: 38,
+  closedAlphaRight: 795,
+  closedAlphaBottom: 1061,
+  openRightAlphaLeft: 768,
+  openRightAlphaTop: 41,
+  openRightAlphaRight: 1404,
+  openRightAlphaBottom: 983,
+  slotCenterX: 1098,
+  slotCenterY: 765,
+  slotDisplayWidth: 214,
+};
+const gameCardCategoryAssets: Record<string, string> = {
+  "game-design": `${gameCardRackAssetBase}/rack-game-design.webp`,
+  "game-research": `${gameCardRackAssetBase}/rack-game-research.webp`,
+  articles: `${gameCardRackAssetBase}/rack-articles.webp`,
+  scripts: `${gameCardRackAssetBase}/rack-scripts.webp`,
+  reviews: `${gameCardRackAssetBase}/rack-reviews.webp`,
+  experience: `${gameCardRackAssetBase}/rack-experience.webp`,
+  "short-films": `${gameCardRackAssetBase}/rack-short-films.webp`,
+  photography: `${gameCardRackAssetBase}/rack-photography.webp`,
+};
+const gameCardWorkSlugs = [
+  ...portfolioWorks.map((work) => work.slug),
+  "bbno-internet-playbook",
+];
+const gameCardWorkAssets: Record<string, {
+  caseImage: string;
+  openCaseImage: string;
+  cartridgeImage: string;
+}> = Object.fromEntries(gameCardWorkSlugs.map((slug) => [slug, {
+    caseImage: `${gameCardAssetBase}/cases/${slug}.webp`,
+    openCaseImage: `${gameCardAssetBase}/insides/${slug}.webp`,
+    cartridgeImage: `${gameCardAssetBase}/cartridges/${slug}.webp`,
+}]));
+
+const cassetteData = categories.map((category) => ({
+  slug: category.slug,
+  title: category.title,
+  kicker: toDisplayKicker(category.kicker),
+  description: category.description,
+  titleImage: generatedTitleAsset(`category-main-unified-${category.slug}.webp`),
+  faceMaskImage: generatedTitleAsset(`category-face-unified-${category.slug}.webp`),
+  volumeMaskImage: generatedTitleAsset(`category-volume-unified-${category.slug}.webp`),
+  titleAspect: titleAspect(category.title),
+  gameCardRackImage: gameCardCategoryAssets[category.slug] ?? "",
+  works: category.works.map((work: any) => {
+    const workTitleAspect = titleAspect(work.title);
+    const gameCardAssets = gameCardWorkAssets[work.slug];
+    const cardCopy = workCardCopy[work.slug as keyof typeof workCardCopy];
+    return {
+      slug: work.slug,
+      title: work.title,
+      href: `/works/${category.slug}/${work.slug}/`,
+      image: work.image ?? "",
+      caseImage: gameCardAssets?.caseImage ?? discCovers[work.slug as keyof typeof discCovers]?.caseImage ?? "",
+      openingFrames: discCovers[work.slug as keyof typeof discCovers]?.openingFrames ?? [],
+      gameCardOpenCaseImage: gameCardAssets?.openCaseImage ?? "",
+      gameCardCartridgeImage: gameCardAssets?.cartridgeImage ?? "",
+      titleImage: generatedTitleAsset(`work-main-${category.slug}-${work.slug}.webp`),
+      faceMaskImage: generatedTitleAsset(`work-face-${category.slug}-${work.slug}.webp`),
+      volumeMaskImage: generatedTitleAsset(`work-volume-${category.slug}-${work.slug}.webp`),
+      titleAspect: workTitleAspect,
+      kicker: toDisplayKicker(category.kicker),
+      overview: cardCopy?.overview ?? "",
+      description: cardCopy?.description ?? "",
+      kind: work.kind,
+      meta: workMeta(work),
+      tags: work.tags.slice(0, 4),
+    };
+  }),
+}));
+
+const cassettePayload = {
+  categories: cassetteData,
+  gameCardGeometry,
+};
+
+---
+
+<BaseLayout
+  title="作品集 | Senri's Personal Homepage"
+  styles={[worksFinalStylesUrl]}
+  description="周翔作品集分类入口：游戏策划、游戏拆解、信号文章、原创剧本、短片、影评剧评、游戏经历与摄影。"
+>
+  <main class="works-page portfolio-hub city-select-page" data-city-select>
+    <canvas
+      class="city-select-canvas"
+      data-city-select-canvas
+      aria-hidden="true"
+    ></canvas>
+    <div class="city-select-vhs" aria-hidden="true"></div>
+
+    <div class="city-select-content">
+      <section class="cassette-carousel disc-archive-carousel" data-cassette-carousel aria-label="作品分类光碟档案匣">
+        <button
+          class="cassette-back"
+          type="button"
+          data-cassette-back
+          aria-label="返回卷轴"
+          title="返回卷轴"
+        >
+          <Undo2 size={27} stroke-width={1.8} aria-hidden="true" />
+        </button>
+        <div class="cassette-rail" data-cassette-rail>
+          {categories.map((category, index) => {
+            const firstWork = category.works[0];
+            const firstHref = firstWork ? `/works/${category.slug}/${firstWork.slug}/` : `/works/${category.slug}/`;
+            const gameCardCategory = cassetteData[index];
+            const firstGameCardWork = gameCardCategory?.works[0];
+
+            return (
+              <article
+                class="cassette-case disc-archive-case"
+                data-cassette-case
+                data-open="false"
+                data-category-index={index}
+                data-game-card-category={gameCardCategory?.gameCardRackImage ? "true" : "false"}
+                data-game-card-active={firstGameCardWork?.gameCardOpenCaseImage ? "true" : "false"}
+              >
+                <button
+                  class="cassette-shell disc-archive-shell"
+                  type="button"
+                  data-cassette-open
+                  aria-expanded="false"
+                  aria-label={`打开分类光碟匣：${category.title}`}
+                >
+                  {gameCardCategory?.gameCardRackImage && (
+                    <img
+                      class="game-card-category-rack"
+                      src={gameCardCategory.gameCardRackImage}
+                      alt=""
+                      loading="eager"
+                    />
+                  )}
+                  <span class="cassette-face">
+                    <span class="cassette-top"></span>
+                    <span class="cassette-label">
+                      <span class="cassette-kicker">{category.kicker}</span>
+                      <strong>{category.title}</strong>
+                    </span>
+                    <span class="cassette-lines">
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                    </span>
+                    <span class="cassette-meta">{category.works.length} 件作品</span>
+                  </span>
+                  <span class="cassette-side" aria-hidden="true"></span>
+                  <span class="cassette-bottom" aria-hidden="true"></span>
+                </button>
+                <a
+                  class="cassette-tape disc-work-case"
+                  data-cassette-tape
+                  href={firstHref}
+                  data-game-card-work={firstGameCardWork?.gameCardOpenCaseImage ? "true" : "false"}
+                  aria-label={firstWork ? `打开作品：${firstWork.title}` : `进入分类：${category.title}`}
+                >
+                  <span class="tape-art">
+                    {firstWork && (
+                      <img
+                        data-cassette-image
+                        src={firstGameCardWork?.caseImage}
+                        alt=""
+                        loading="eager"
+                      />
+                    )}
+                    {!firstWork && <img data-cassette-image alt="" hidden />}
+                  </span>
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+      <aside
+        class="work-description-stage"
+        data-work-description-stage
+        aria-live="polite"
+        hidden
+      >
+        <p class="work-description-summary" data-work-description-summary></p>
+        <p class="work-description-body" data-work-description-body></p>
+      </aside>
+      <div
+        class="category-title-stage"
+        data-category-title-stage
+        aria-live="polite"
+      >
+        <div class="category-title-bands" aria-hidden="true"></div>
+        <p class="category-title-kicker">
+          <span data-category-title-kicker>{cassetteData[0]?.kicker}</span>
+        </p>
+        <div
+          class="category-title-main-motion miami-title-motion"
+          data-miami-face-mask={cassetteData[0]?.faceMaskImage}
+          data-miami-volume-mask={cassetteData[0]?.volumeMaskImage}
+          style={`--miami-title-mask: url("${cassetteData[0]?.titleImage}"); --miami-title-aspect: ${cassetteData[0]?.titleAspect ?? 1}`}
+        >
+          <img
+            class="category-title-main miami-title-image"
+            data-category-title-main
+            src={cassetteData[0]?.titleImage}
+            alt={cassetteData[0]?.title ?? ""}
+            loading="eager"
+          />
+          <canvas class="miami-title-flow-canvas" data-miami-title-flow-canvas aria-hidden="true"></canvas>
+        </div>
+        <p
+          class="category-title-hint miami-yellow-motion"
+          style={`--miami-yellow-mask: url("${categoryHintImage}"); --miami-yellow-aspect: ${categoryHintAspect}`}
+        >
+          <img
+            class="category-title-hint-image miami-yellow-image"
+            src={categoryHintImage}
+            alt={categoryHintText}
+            loading="eager"
+          />
+        </p>
+      </div>
+      <a
+        class="work-title-stage"
+        data-work-title-stage
+        href={cassetteData[0]?.works[0]?.href}
+        aria-label={cassetteData[0]?.works[0] ? `打开作品：${cassetteData[0].works[0].title}` : "打开作品"}
+        aria-live="polite"
+        hidden
+      >
+        <span
+          class="work-title-main-motion miami-title-motion"
+          data-work-title-main-motion
+          data-miami-face-mask={cassetteData[0]?.works[0]?.faceMaskImage}
+          data-miami-volume-mask={cassetteData[0]?.works[0]?.volumeMaskImage}
+          style={`--miami-title-mask: url("${cassetteData[0]?.works[0]?.titleImage}"); --miami-title-aspect: ${cassetteData[0]?.works[0]?.titleAspect ?? 1}`}
+        >
+          <img
+            class="work-title-main-image miami-title-image"
+            data-work-title-main
+            src={cassetteData[0]?.works[0]?.titleImage}
+            alt={cassetteData[0]?.works[0]?.title ?? ""}
+            loading="eager"
+          />
+          <canvas class="miami-title-flow-canvas" data-miami-title-flow-canvas aria-hidden="true"></canvas>
+        </span>
+        <span
+          class="work-title-kicker miami-yellow-motion"
+          style={`--miami-yellow-mask: url("${categoryHintImage}"); --miami-yellow-aspect: ${categoryHintAspect}`}
+        >
+          <img
+            class="miami-yellow-image"
+            src={categoryHintImage}
+            alt={categoryHintText}
+            loading="eager"
+          />
+        </span>
+      </a>
+    </div>
+
+    <div class="disc-opening-transition" data-disc-opening-transition hidden aria-hidden="true">
+      <div class="disc-opening-scanlines" aria-hidden="true"></div>
+      <img class="disc-opening-legacy-image" data-disc-opening-image alt="" />
+      <div class="game-card-opening-stage" data-game-card-opening-stage hidden aria-hidden="true">
+        <img class="game-card-opening-open game-card-opening-open-right" data-game-card-opening-open-right alt="" />
+        <img class="game-card-opening-open game-card-opening-open-left" data-game-card-opening-open-left alt="" />
+        <img class="game-card-opening-cartridge" data-game-card-opening-cartridge alt="" />
+      </div>
+      <p data-opening-status>READING DISC</p>
+    </div>
+
+    <script id="cassette-select-data" type="application/json" set:html={JSON.stringify(cassettePayload)}></script>
+  </main>
+
+  <script>
+    import "../../scripts/citySelect";
+    import "../../scripts/cassetteSelect";
+    import "../../scripts/miamiTitleFlow";
+  </script>
+</BaseLayout>

@@ -1,0 +1,17 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "src/**/*"],
+  "exclude": [
+    "deploy-dist-*",
+    "dist",
+    "dist-*",
+    "node_modules",
+    "output",
+    "outputs",
+    "preview",
+    "public"
+  ],
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}

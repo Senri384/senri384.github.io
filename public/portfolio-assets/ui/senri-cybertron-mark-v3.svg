@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Mechanical planet emblem</title>
+  <defs>
+    <mask id="planet-cutouts">
+      <rect width="64" height="64" fill="#000"/>
+      <circle cx="32" cy="32" r="29" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-linecap="round">
+        <circle cx="21" cy="21" r="9" stroke-width="3.8"/>
+        <circle cx="21" cy="21" r="4" stroke-width="2.8"/>
+        <circle cx="43" cy="41" r="11" stroke-width="4"/>
+        <circle cx="43" cy="41" r="5" stroke-width="2.8"/>
+        <circle cx="45" cy="17" r="5" stroke-width="3"/>
+        <path d="M8 36c9-2 14-6 18-12M28 14c6-3 12-3 18-1M29 51c-7-2-12-6-16-12M50 27c4 4 6 8 6 13" stroke-width="3.2"/>
+        <path d="M28 25c5 1 9 4 12 8M27 38c3-4 6-6 10-7M16 48c7 3 14 4 21 2" stroke-width="2.4"/>
+      </g>
+      <g fill="#000">
+        <circle cx="21" cy="21" r="1.8"/>
+        <circle cx="43" cy="41" r="2.2"/>
+        <circle cx="45" cy="17" r="1.5"/>
+        <circle cx="12" cy="29" r="1.7"/>
+        <circle cx="31" cy="10" r="1.4"/>
+        <circle cx="53" cy="31" r="1.6"/>
+      </g>
+    </mask>
+  </defs>
+  <circle cx="32" cy="32" r="29" fill="#fff" mask="url(#planet-cutouts)"/>
+</svg>

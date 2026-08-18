@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NEON DRIVE ARCHIVE Countach Rear Options</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #f9f4ff;
+        --muted: rgba(249, 244, 255, 0.64);
+        --cyan: #5dfcff;
+        --hot: #ff4fd8;
+        --amber: #ffb347;
+        --violet: #8e5cff;
+        --bg: #07081c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 52% 16%, rgba(255, 79, 216, 0.17), transparent 30rem),
+          #07081c;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      }
+
+      main {
+        width: min(1440px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 34px 0 44px;
+      }
+
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 24px;
+        margin-bottom: 22px;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 620px;
+        font-size: clamp(30px, 4vw, 60px);
+        line-height: 1;
+      }
+
+      .title p,
+      .caption,
+      .option h2 {
+        font-family: "Courier New", ui-monospace, monospace;
+      }
+
+      .title p,
+      .caption,
+      .option p {
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .option {
+        min-height: 430px;
+        border: 1px solid rgba(255, 79, 216, 0.34);
+        background:
+          repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.04) 0,
+            rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px,
+            transparent 5px
+          ),
+          linear-gradient(180deg, rgba(10, 12, 44, 0.92), rgba(7, 8, 28, 0.72));
+        overflow: hidden;
+      }
+
+      .option header {
+        padding: 18px 20px 0;
+      }
+
+      .option h2 {
+        margin: 0;
+        color: var(--cyan);
+        font-size: 20px;
+      }
+
+      .option p {
+        margin: 4px 0 0;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .scene {
+        position: relative;
+        height: 300px;
+        margin-top: 8px;
+        overflow: hidden;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(160deg, transparent 48%, rgba(255, 79, 216, 0.5) 49%, transparent 50%),
+          linear-gradient(200deg, transparent 48%, rgba(255, 79, 216, 0.5) 49%, transparent 50%),
+          repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 23px,
+            rgba(142, 92, 255, 0.26) 24px
+          );
+      }
+
+      .road {
+        position: absolute;
+        left: 50%;
+        top: 42px;
+        width: 58%;
+        height: 330px;
+        transform: translateX(-50%);
+        clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+        background:
+          linear-gradient(90deg, transparent 49.3%, rgba(255, 179, 71, 0.78) 49.3% 50.7%, transparent 50.7%),
+          rgba(17, 17, 44, 0.84);
+      }
+
+      .road::before,
+      .road::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(93, 252, 255, 0.2));
+      }
+
+      .road::before {
+        left: 34%;
+        transform: rotate(5deg);
+      }
+
+      .road::after {
+        right: 34%;
+        transform: rotate(-5deg);
+      }
+
+      .rear-car {
+        --body: #dfe8f4;
+        --shade: #93a0b6;
+        --accent: #ff4fd8;
+        --lamp: #ff4b3e;
+        --glass: #07081c;
+        position: absolute;
+        left: 50%;
+        bottom: 18px;
+        width: 314px;
+        height: 162px;
+        transform: translateX(-50%);
+        filter:
+          drop-shadow(0 0 16px color-mix(in srgb, var(--accent), transparent 20%))
+          drop-shadow(0 16px 12px rgba(0, 0, 0, 0.48));
+      }
+
+      .rear-car::before,
+      .rear-car::after {
+        content: "";
+        position: absolute;
+        display: block;
+        z-index: 8;
+      }
+
+      .rear-car::before {
+        left: -1%;
+        right: -1%;
+        top: 24%;
+        height: 6%;
+        background: var(--glass);
+        border-top: 2px solid color-mix(in srgb, var(--body), white 18%);
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.42);
+      }
+
+      .rear-car::after {
+        left: 13%;
+        right: 13%;
+        top: 30%;
+        height: 25%;
+        background:
+          linear-gradient(90deg, transparent 0 11%, var(--glass) 11% 15%, transparent 15% 85%, var(--glass) 85% 89%, transparent 89% 100%);
+        opacity: 0.9;
+      }
+
+      .enemy-car {
+        width: 160px;
+        height: 82px;
+        bottom: 162px;
+        opacity: 0.95;
+        filter:
+          drop-shadow(0 0 10px color-mix(in srgb, var(--accent), transparent 30%))
+          drop-shadow(0 8px 8px rgba(0, 0, 0, 0.42));
+      }
+
+      .rear-car > i {
+        position: absolute;
+        display: block;
+      }
+
+      .body,
+      .upper,
+      .upper-shadow,
+      .center-vent,
+      .side-vent,
+      .tail-panel,
+      .plate,
+      .tail-light,
+      .bumper,
+      .diffuser,
+      .exhaust {
+        z-index: 3;
+      }
+
+      .body {
+        left: 3%;
+        right: 3%;
+        top: 44%;
+        bottom: 17%;
+        background: var(--body);
+        clip-path: polygon(4% 24%, 19% 0, 81% 0, 96% 24%, 100% 62%, 91% 100%, 9% 100%, 0 62%);
+      }
+
+      .upper {
+        left: 18%;
+        right: 18%;
+        top: 6%;
+        height: 48%;
+        background:
+          linear-gradient(to bottom, color-mix(in srgb, var(--body), white 18%), color-mix(in srgb, var(--body), black 4%));
+        clip-path: polygon(10% 100%, 22% 10%, 78% 10%, 90% 100%);
+      }
+
+      .upper-shadow {
+        left: 27%;
+        right: 27%;
+        top: 10%;
+        height: 10%;
+        background: var(--glass);
+      }
+
+      .center-vent {
+        left: 39%;
+        right: 39%;
+        top: 25%;
+        height: 24%;
+        background: repeating-linear-gradient(
+          to right,
+          var(--shade) 0,
+          var(--shade) 4px,
+          var(--glass) 4px,
+          var(--glass) 8px
+        );
+        clip-path: polygon(16% 0, 84% 0, 100% 100%, 0 100%);
+      }
+
+      .side-vent {
+        top: 33%;
+        width: 19%;
+        height: 24%;
+        background:
+          repeating-linear-gradient(
+            var(--louver-angle),
+            var(--glass) 0,
+            var(--glass) 5px,
+            color-mix(in srgb, var(--body), white 16%) 5px,
+            color-mix(in srgb, var(--body), white 16%) 10px
+          ),
+          linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--body), white 18%),
+            color-mix(in srgb, var(--body), black 6%)
+          );
+        box-shadow:
+          inset 0 2px 0 color-mix(in srgb, var(--body), white 34%),
+          inset 0 -2px 0 color-mix(in srgb, var(--body), black 18%);
+      }
+
+      .side-vent.left {
+        left: 9%;
+        --louver-angle: 100deg;
+        clip-path: polygon(0 68%, 19% 26%, 100% 0, 78% 100%, 10% 94%);
+      }
+
+      .side-vent.right {
+        right: 9%;
+        --louver-angle: 80deg;
+        clip-path: polygon(0 0, 81% 26%, 100% 68%, 90% 94%, 22% 100%);
+      }
+
+      .tail-panel {
+        left: 12%;
+        right: 12%;
+        top: 64%;
+        height: 14%;
+        background: color-mix(in srgb, var(--body), black 5%);
+        border-top: 4px solid var(--shade);
+      }
+
+      .plate {
+        left: 42%;
+        right: 42%;
+        top: 67%;
+        height: 7%;
+        background: color-mix(in srgb, var(--body), black 12%);
+      }
+
+      .tail-light {
+        top: 67%;
+        width: 27%;
+        height: 9%;
+        background:
+          linear-gradient(to right, #b8352f 0 32%, #6b1b24 32% 66%, #d56936 66% 100%);
+        border: 3px solid #192033;
+      }
+
+      .tail-light.left {
+        left: 8%;
+      }
+
+      .tail-light.right {
+        right: 8%;
+      }
+
+      .bumper {
+        left: 8%;
+        right: 8%;
+        top: 77%;
+        height: 11%;
+        background: color-mix(in srgb, var(--body), black 8%);
+        clip-path: polygon(0 0, 100% 0, 96% 100%, 4% 100%);
+      }
+
+      .diffuser {
+        left: 23%;
+        right: 23%;
+        top: 83%;
+        height: 12.5%;
+        background:
+          linear-gradient(to bottom, #14162c 0 18%, #07081c 18% 100%),
+          repeating-linear-gradient(
+            to right,
+            #07081c 0,
+            #07081c 10px,
+            #14162c 10px,
+            #14162c 17px
+          );
+        clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
+      }
+
+      .exhaust {
+        top: 85.7%;
+        width: 17%;
+        height: 8.5%;
+        background: transparent;
+      }
+
+      .exhaust.left {
+        left: 31.5%;
+      }
+
+      .exhaust.right {
+        right: 31.5%;
+      }
+
+      .exhaust::before,
+      .exhaust::after {
+        content: "";
+        position: absolute;
+        top: 22%;
+        width: 24%;
+        height: 56%;
+        border: 2px solid color-mix(in srgb, var(--body), white 32%);
+        border-radius: 50%;
+        background: #07081c;
+      }
+
+      .exhaust::before {
+        left: 22%;
+      }
+
+      .exhaust::after {
+        right: 22%;
+      }
+
+      .wheel {
+        top: 72%;
+        width: 11%;
+        height: 30%;
+        background: #050512;
+        border-left: 4px solid #24283f;
+        border-right: 4px solid #24283f;
+        z-index: 1;
+      }
+
+      .wheel.left {
+        left: 3%;
+      }
+
+      .wheel.right {
+        right: 3%;
+      }
+
+      .a .rear-car {
+        --body: #d8dee9;
+        --shade: #758294;
+        --accent: #ff4fd8;
+        --lamp: #ff4b3e;
+      }
+
+      .a .body {
+        background:
+          linear-gradient(
+            90deg,
+            rgba(86, 96, 112, 0.72) 0 8%,
+            rgba(255, 255, 255, 0.42) 17%,
+            rgba(167, 178, 194, 0.36) 35%,
+            rgba(255, 255, 255, 0.52) 50%,
+            rgba(147, 159, 177, 0.42) 66%,
+            rgba(255, 255, 255, 0.46) 83%,
+            rgba(80, 91, 108, 0.74) 100%
+          ),
+          linear-gradient(to bottom, #f8fbff 0%, #d5dce6 36%, #aab5c3 68%, #7d899b 100%);
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 255, 0.72),
+          inset 0 -4px 0 rgba(61, 69, 84, 0.42);
+      }
+
+      .a .upper {
+        background:
+          linear-gradient(
+            105deg,
+            #7f8b9d 0%,
+            #f9fcff 22%,
+            #c6ceda 45%,
+            #ffffff 58%,
+            #98a5b6 82%,
+            #657184 100%
+          );
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 255, 0.78),
+          inset 0 -3px 0 rgba(74, 83, 98, 0.28);
+      }
+
+      .a .side-vent {
+        background:
+          repeating-linear-gradient(
+            var(--louver-angle),
+            #07101f 0,
+            #07101f 5px,
+            #edf3fb 5px,
+            #edf3fb 10px
+          ),
+          linear-gradient(to bottom, #f9fcff, #9faabb);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 255, 255, 0.82),
+          inset 0 -2px 0 rgba(54, 62, 76, 0.34);
+      }
+
+      .a .tail-panel {
+        background:
+          linear-gradient(90deg, #697588 0%, #e8eef7 24%, #b9c3d1 50%, #f8fbff 76%, #667284 100%);
+      }
+
+      .a .bumper {
+        background:
+          linear-gradient(90deg, #071022 0%, #16315a 28%, #0d2142 50%, #1c3b66 72%, #060d1c 100%);
+      }
+
+      .a .plate {
+        background: linear-gradient(to bottom, #d9e0ea, #a5afbd);
+      }
+
+      .a .rear-car::before {
+        background: linear-gradient(90deg, #050817, #20283a 14%, #f5f8ff 50%, #20283a 86%, #050817);
+        border-top-color: rgba(255, 255, 255, 0.74);
+      }
+
+      .b .rear-car {
+        --body: #d71924;
+        --shade: #7d1018;
+        --accent: #5dfcff;
+        --lamp: #ffb347;
+      }
+
+      .b .body {
+        background:
+          linear-gradient(
+            90deg,
+            rgba(92, 8, 14, 0.38) 0%,
+            rgba(255, 96, 105, 0.28) 28%,
+            rgba(255, 235, 235, 0.42) 49%,
+            rgba(255, 89, 98, 0.24) 67%,
+            rgba(82, 6, 12, 0.44) 100%
+          ),
+          linear-gradient(to bottom, #ff4a52 0%, #e01b27 45%, #b7111d 76%, #7a0d14 100%);
+        box-shadow:
+          inset 0 3px 0 rgba(255, 210, 210, 0.62),
+          inset 0 -4px 0 rgba(60, 8, 12, 0.46);
+      }
+
+      .b .upper {
+        background:
+          linear-gradient(
+            100deg,
+            #8d1018 0%,
+            #ff555d 34%,
+            #ffd6d6 50%,
+            #d71924 66%,
+            #780b13 100%
+          );
+        box-shadow:
+          inset 0 3px 0 rgba(255, 205, 205, 0.62),
+          inset 0 -3px 0 rgba(50, 5, 9, 0.34);
+      }
+
+      .b .side-vent {
+        background:
+          repeating-linear-gradient(
+            var(--louver-angle),
+            #080814 0,
+            #080814 5px,
+            #ff8e8e 5px,
+            #ff8e8e 10px
+          ),
+          linear-gradient(to bottom, #ff4b53, #8c111a);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 220, 220, 0.58),
+          inset 0 -2px 0 rgba(48, 4, 8, 0.42);
+      }
+
+      .b .tail-panel,
+      .b .bumper {
+        background:
+          linear-gradient(90deg, #8e1018 0%, #df1c27 36%, #ff656b 52%, #c81520 72%, #770b13 100%);
+      }
+
+      .b .plate {
+        background: linear-gradient(to bottom, #e73640, #8b1018);
+      }
+
+      .b .rear-car::before {
+        background: linear-gradient(90deg, #050817, #3a0d14 16%, #ff6d74 50%, #3a0d14 84%, #050817);
+        border-top-color: rgba(255, 160, 160, 0.58);
+      }
+
+      .c .rear-car {
+        --body: #f4f6fb;
+        --shade: #9aa3b0;
+        --accent: #ff4b3e;
+        --lamp: #ffb347;
+      }
+
+      .c .body {
+        background:
+          linear-gradient(
+            90deg,
+            rgba(116, 126, 142, 0.34) 0%,
+            rgba(255, 255, 255, 0.36) 30%,
+            rgba(255, 255, 255, 0.7) 50%,
+            rgba(235, 240, 248, 0.34) 69%,
+            rgba(102, 112, 128, 0.38) 100%
+          ),
+          linear-gradient(to bottom, #ffffff 0%, #f7f9fd 42%, #e5ebf3 72%, #b9c4d2 100%);
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 255, 0.8),
+          inset 0 -4px 0 rgba(64, 72, 86, 0.32);
+      }
+
+      .c .upper {
+        background:
+          linear-gradient(
+            100deg,
+            #b8c1ce 0%,
+            #ffffff 38%,
+            #ffffff 53%,
+            #e2e8f1 70%,
+            #9aa5b5 100%
+          );
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 255, 0.82),
+          inset 0 -3px 0 rgba(70, 78, 92, 0.26);
+      }
+
+      .c .side-vent {
+        background:
+          repeating-linear-gradient(
+            var(--louver-angle),
+            #07101f 0,
+            #07101f 5px,
+            #f7fbff 5px,
+            #f7fbff 10px
+          ),
+          linear-gradient(to bottom, #ffffff, #aeb8c7);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 255, 255, 0.84),
+          inset 0 -2px 0 rgba(54, 62, 76, 0.3);
+      }
+
+      .c .tail-panel {
+        background:
+          linear-gradient(90deg, #9ea8b7 0%, #f8fbff 38%, #ffffff 52%, #d7dee9 72%, #8d98a8 100%);
+      }
+
+      .c .bumper {
+        background:
+          linear-gradient(90deg, #8e1018 0%, #e51e2a 35%, #ff7377 52%, #c81520 72%, #790b13 100%);
+      }
+
+      .c .plate {
+        background: linear-gradient(to bottom, #e8edf5, #a9b4c2);
+      }
+
+      .c .rear-car::before {
+        background: linear-gradient(90deg, #050817, #273044 16%, #ffffff 50%, #273044 84%, #050817);
+        border-top-color: rgba(255, 255, 255, 0.78);
+      }
+
+      .d .rear-car {
+        --body: #ffd43b;
+        --shade: #9f7620;
+        --accent: #5dfcff;
+        --lamp: #ff4b3e;
+      }
+
+      .d .body {
+        background:
+          linear-gradient(
+            90deg,
+            rgba(104, 72, 9, 0.36) 0%,
+            rgba(255, 211, 61, 0.26) 30%,
+            rgba(255, 255, 210, 0.54) 50%,
+            rgba(255, 199, 42, 0.28) 68%,
+            rgba(96, 65, 7, 0.42) 100%
+          ),
+          linear-gradient(to bottom, #ffe85f 0%, #ffd033 44%, #e0a824 76%, #9e6b12 100%);
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 210, 0.62),
+          inset 0 -4px 0 rgba(72, 48, 6, 0.4);
+      }
+
+      .d .upper {
+        background:
+          linear-gradient(
+            100deg,
+            #9b6b15 0%,
+            #ffe45a 34%,
+            #fff8bf 50%,
+            #f5bd28 66%,
+            #80530e 100%
+          );
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 210, 0.64),
+          inset 0 -3px 0 rgba(70, 45, 4, 0.34);
+      }
+
+      .d .side-vent {
+        background:
+          repeating-linear-gradient(
+            var(--louver-angle),
+            #080814 0,
+            #080814 5px,
+            #ffe98a 5px,
+            #ffe98a 10px
+          ),
+          linear-gradient(to bottom, #ffe85f, #b98118);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 255, 210, 0.62),
+          inset 0 -2px 0 rgba(64, 42, 5, 0.4);
+      }
+
+      .d .tail-panel,
+      .d .bumper {
+        background:
+          linear-gradient(90deg, #9c6a13 0%, #f2bd29 36%, #fff080 52%, #d79a1d 72%, #80530e 100%);
+      }
+
+      .d .plate {
+        background: linear-gradient(to bottom, #efbd2c, #9d6b14);
+      }
+
+      .d .rear-car::before {
+        background: linear-gradient(90deg, #090b12, #555d6b 18%, #bfc6d1 50%, #555d6b 82%, #090b12);
+        border-top-color: rgba(220, 228, 238, 0.7);
+      }
+
+      .caption {
+        margin: 0;
+        padding: 0 20px 18px;
+        font-size: 13px;
+        font-family: "Courier New", ui-monospace, monospace;
+      }
+
+      @media (max-width: 920px) {
+        .title {
+          display: block;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="title">
+        <div>
+          <p>ZHOU XIANG // NEON DRIVE ARCHIVE</p>
+          <h1>COUNTACH REAR OPTIONS</h1>
+        </div>
+        <p>rear view · wide tail · flat deck · louvers · quad exhaust</p>
+      </section>
+
+      <section class="grid">
+        <article class="option a">
+          <header>
+            <h2>A // SILVER REFERENCE</h2>
+            <p>Closest to the provided rear reference: silver body, black lower diffuser, red tail lamps.</p>
+          </header>
+          <div class="scene">
+            <div class="road"></div>
+            <div class="rear-car enemy-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+            <div class="rear-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+          </div>
+          <p class="caption">Best if you want the car to read as Countach rear view first, neon second.</p>
+        </article>
+
+        <article class="option b">
+          <header>
+            <h2>B // GLOSS RED</h2>
+            <p>Large bright-red baked-paint body using the same Countach rear structure, with strong arcade readability.</p>
+          </header>
+          <div class="scene">
+            <div class="road"></div>
+            <div class="rear-car enemy-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+            <div class="rear-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+          </div>
+          <p class="caption">Best if you want a bold red obstacle/player variant with clear silhouette.</p>
+        </article>
+
+        <article class="option c">
+          <header>
+            <h2>C // WHITE + RED REAR BUMPER</h2>
+            <p>Gloss white body with a red rear bumper, preserving the same tail, louver, and exhaust layout.</p>
+          </header>
+          <div class="scene">
+            <div class="road"></div>
+            <div class="rear-car enemy-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+            <div class="rear-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+          </div>
+          <p class="caption">Best if you want a cleaner white car with a red rear accent.</p>
+        </article>
+
+        <article class="option d">
+          <header>
+            <h2>D // YELLOW + GRAY SPOILER</h2>
+            <p>Gloss yellow body with a gray rear spoiler, keeping the same Countach tail structure.</p>
+          </header>
+          <div class="scene">
+            <div class="road"></div>
+            <div class="rear-car enemy-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+            <div class="rear-car"><i class="body"></i><i class="upper"></i><i class="upper-shadow"></i><i class="center-vent"></i><i class="side-vent left"></i><i class="side-vent right"></i><i class="tail-panel"></i><i class="tail-light left"></i><i class="tail-light right"></i><i class="plate"></i><i class="bumper"></i><i class="diffuser"></i><i class="exhaust left"></i><i class="exhaust right"></i><i class="wheel left"></i><i class="wheel right"></i></div>
+          </div>
+          <p class="caption">Best if you want a warm yellow baked-paint variant with a neutral gray wing.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

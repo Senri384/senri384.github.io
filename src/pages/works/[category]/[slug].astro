@@ -1,0 +1,627 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import DwarfFlowDiagram from "../../../components/DwarfFlowDiagram.astro";
+import portfolio from "../../../data/portfolio-content.json";
+import photoPortfolio from "../../../data/photo-albums.json";
+import filmPortfolio from "../../../data/film-works.json";
+import { ChevronUp, Undo2 } from "@lucide/astro";
+
+export function getStaticPaths() {
+  const portfolioCategories: any[] = [
+    ...portfolio.categories,
+    ...filmPortfolio.categories,
+    ...photoPortfolio.categories,
+  ];
+  const portfolioWorks: any[] = [
+    ...portfolio.works,
+    ...filmPortfolio.works,
+    ...photoPortfolio.works,
+  ].filter((work) => work.slug !== "film-ranking-analysis");
+  return portfolioWorks.map((work) => ({
+    params: { category: work.category, slug: work.slug },
+    props: {
+      work,
+      category: portfolioCategories.find((item) => item.slug === work.category),
+    },
+  }));
+}
+
+const portfolioCategories: any[] = [
+  ...portfolio.categories,
+  ...filmPortfolio.categories,
+  ...photoPortfolio.categories,
+];
+const { work } = Astro.props as any;
+const mediaBaseUrl = String(import.meta.env.PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/+$/, "");
+const resolveVideoUrl = (source: string) =>
+  mediaBaseUrl && source?.startsWith("/") ? `${mediaBaseUrl}${source}` : source;
+const matchedCategory =
+  Astro.props.category ?? portfolioCategories.find((item) => item.slug === work.category);
+
+if (!matchedCategory) {
+  throw new Error(`Missing portfolio category for ${work.slug}`);
+}
+
+const category = matchedCategory;
+const titleGlyphCount = Array.from(work.title).length;
+const titleHasCjk = /[\u3400-\u9fff]/u.test(work.title);
+const titleSize =
+  titleGlyphCount > (titleHasCjk ? 18 : 44)
+    ? "compact"
+    : titleGlyphCount > (titleHasCjk ? 12 : 34)
+      ? "medium"
+      : "standard";
+
+const isPageMarker = (text: string) => /^第\s*\d+\s*页$/.test(text);
+const isHeading = (_text: string) => {
+  return false;
+};
+
+const legacyIsHeading = (text: string) => {
+  if (isPageMarker(text)) return true;
+  if (text.length > 72) return false;
+  return (
+    /^([一二三四五六七八九十]+[、.．]|[0-9]+(\.[0-9]+)*\s|Episode\s*\d+|Scene\s*\d+|【.+】)/i.test(text) ||
+    (/^[\p{Letter}\p{Number}\s:：·《》“”‘’\-—]+$/u.test(text) && text.length <= 32)
+  );
+};
+
+void legacyIsHeading;
+void isHeading;
+
+const isPhotoAlbum = work.category === "photography";
+const isFilm = work.category === "short-films";
+const coverImage =
+  work.image && !work.image.includes("/portfolio-assets/extracted/") && !isPhotoAlbum && !isFilm;
+const rawContentBlocks: any[] =
+  work.blocks ?? (work.paragraphs ?? []).map((text: string) => ({ type: "paragraph", text }));
+const normalizeOpeningTitle = (value: string) =>
+  value
+    .normalize("NFKC")
+    .toLocaleLowerCase("zh-CN")
+    .replace(/[\s\u3000《》「」『』“”‘’"'：:—–\-_.。！？!?，,、（）()【】]/gu, "");
+const firstTextBlockIndex = rawContentBlocks.findIndex(
+  (block) => block?.type === "paragraph" && typeof block.text === "string" && block.text.trim(),
+);
+if (
+  firstTextBlockIndex >= 0 &&
+  normalizeOpeningTitle(rawContentBlocks[firstTextBlockIndex].text) === normalizeOpeningTitle(work.title)
+) {
+  rawContentBlocks.splice(firstTextBlockIndex, 1);
+}
+const hasZoomablePdf = work.slug === "rock-kingdom-world-breakdown";
+const isDwarfProject = work.slug === "dwarf-lost-in-the-dark-forest";
+
+const contentBlocks: any[] = [];
+
+if (isDwarfProject) {
+  let chapterFlowIndex = 0;
+  let skipUntil: string | null = null;
+
+  for (const block of rawContentBlocks) {
+    const text = typeof block?.text === "string" ? block.text.trim() : "";
+
+    if (skipUntil) {
+      if (text === skipUntil) {
+        skipUntil = null;
+        contentBlocks.push(block);
+      }
+      continue;
+    }
+
+    contentBlocks.push(block);
+
+    if (text === "章节流程") {
+      contentBlocks.push({
+        type: "dwarf-flow",
+        variant: chapterFlowIndex === 0 ? "dead-forest" : "fog-swamp",
+      });
+      chapterFlowIndex += 1;
+      skipUntil = "关卡线索系统";
+    } else if (text === "5.3 流程状态机") {
+      contentBlocks.push({ type: "dwarf-flow", variant: "state-machine" });
+      skipUntil = "两关互相独立，无先后强制顺序，玩家可任意顺序体验两条路线。";
+    } else if (text === "七、章节地图总览") {
+      contentBlocks.push({ type: "dwarf-flow", variant: "chapter-map" });
+      skipUntil = "八、音效设计指引（待实现）";
+    }
+  }
+} else {
+  contentBlocks.push(...rawContentBlocks);
+}
+
+const isCaptionText = (block: any) => {
+  const text = typeof block?.text === "string" ? block.text.trim() : "";
+  if (block?.type !== "paragraph" || !text) return false;
+  if (block.role === "heading" || block.role === "subheading") return false;
+  if (block.role === "caption") return true;
+  return text.length <= 72 && !/[。！？.!?]$/.test(text);
+};
+
+const displayBlocks: any[] = [];
+
+for (let index = 0; index < contentBlocks.length; index += 1) {
+  const block = contentBlocks[index];
+
+  if (block?.type !== "image") {
+    displayBlocks.push(block);
+    continue;
+  }
+
+  const images = [block];
+  while (contentBlocks[index + 1]?.type === "image") {
+    index += 1;
+    images.push(contentBlocks[index]);
+  }
+
+  const nextBlock = contentBlocks[index + 1];
+  const caption = isCaptionText(nextBlock) ? nextBlock.text : "";
+  if (caption) index += 1;
+
+  displayBlocks.push({ type: "image-group", images, caption });
+}
+
+const leadHeadingIndex = displayBlocks.findIndex(
+  (block) => block?.type === "paragraph" && block.role === "heading",
+);
+
+const filmMediaItems = isFilm
+  ? [
+      {
+        type: "video",
+        label: "本片",
+        thumb: work.videoPoster ?? work.showcaseImage ?? work.image ?? "",
+        src: resolveVideoUrl(work.video),
+        poster: work.videoBlurPoster ?? work.showcaseImage ?? work.videoPoster ?? work.image ?? "",
+      },
+      ...(work.images ?? []).map((image: string, index: number) => ({
+        type: "image",
+        label: `剧照 ${String(index + 1).padStart(2, "0")}`,
+        thumb: image,
+        src: image,
+      })),
+      work.showcaseImage
+        ? {
+            type: "image",
+            label: "展示图",
+            thumb: work.showcaseImage,
+            src: work.showcaseImage,
+          }
+        : {
+            type: "placeholder",
+            label: "展示图",
+            thumb: "",
+            src: "",
+          },
+    ]
+  : [];
+---
+
+<BaseLayout
+  title={`${work.title} | Senri's Personal Homepage`}
+  description={`${work.title}完整作品内容。`}
+>
+  <main class="works-page detail-page" data-category={work.category} data-slug={work.slug}>
+    <a
+      class="detail-back-button"
+      data-detail-back
+      href={`/works/?category=${category.slug}&work=${work.slug}`}
+      aria-label="返回作品目录"
+      title="返回作品目录"
+    >
+      <Undo2 size={27} stroke-width={1.8} aria-hidden="true" />
+    </a>
+
+    <article class="detail-shell">
+      <header class="detail-header">
+        <p class="eyebrow">{category.title}</p>
+        <h1 class={`detail-title detail-title--${titleSize}`}>{work.title}</h1>
+      </header>
+
+      {coverImage && (
+        <img
+          class="detail-hero-image"
+          src={work.image}
+          alt={`${work.title}封面`}
+          loading="eager"
+        />
+      )}
+
+      {isFilm ? (
+        <section class="film-showcase" aria-label={`${work.title}短片内容`}>
+          <div class="film-detail-card" data-film-gallery>
+            <div class="film-main-column">
+              <figure class="film-player-frame">
+                <div class="film-stage">
+                  <video
+                    controls
+                    playsinline
+                    preload="metadata"
+                    poster={work.videoBlurPoster ?? work.showcaseImage ?? work.videoPoster ?? work.image}
+                    width={work.videoWidth}
+                    height={work.videoHeight}
+                    aria-label={`播放短片《${work.title}》`}
+                    data-film-video
+                  >
+                    <source src={resolveVideoUrl(work.video)} type="video/mp4" />
+                    当前浏览器不支持视频播放。
+                  </video>
+                  <img
+                    class="film-stage-image"
+                    src=""
+                    alt=""
+                    loading="lazy"
+                    data-film-image
+                    hidden
+                  />
+                  <div class="film-stage-placeholder" data-film-placeholder hidden>
+                    <span>展示图待补</span>
+                  </div>
+                </div>
+              </figure>
+
+              <div class="film-media-rail" aria-label={`${work.title}媒体卷轴`}>
+                {filmMediaItems.map((item: any, index: number) => (
+                  <button
+                    class="film-media-thumb"
+                    type="button"
+                    aria-pressed={index === 0 ? "true" : "false"}
+                    data-film-thumb
+                    data-media-type={item.type}
+                    data-media-src={item.src}
+                    data-media-label={item.label}
+                  >
+                    {item.thumb ? (
+                      <img src={item.thumb} alt="" loading="lazy" />
+                    ) : (
+                      <span class="film-thumb-placeholder" aria-hidden="true">待补</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <aside class="film-info-panel" aria-label={`${work.title}作品介绍`}>
+              {work.showcaseImage ? (
+                <img
+                  class="film-showcase-poster"
+                  src={work.showcaseImage}
+                  alt={`${work.title}展示图`}
+                  loading="eager"
+                />
+              ) : (
+                <div class="film-showcase-placeholder">
+                  <span>展示图待补</span>
+                </div>
+              )}
+
+              <section class="film-summary" aria-labelledby="film-summary-title">
+                <p class="film-section-label" id="film-summary-title">概述</p>
+                <p>{work.summary ?? "该短片资料正在整理中，当前先保留播放器与媒体展示框架。"}</p>
+              </section>
+
+            </aside>
+          </div>
+        </section>
+      ) : work.table ? (
+        <div class="content-table-wrap" aria-label={`${work.title}完整表格`}>
+          <table class="content-table">
+            <thead>
+              <tr>
+                {work.table.headers.map((header: string) => <th>{header}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {work.table.rows.map((row: string[]) => (
+                <tr>
+                  {row.map((cell: string) => <td>{cell}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <section class="reader" aria-label={`${work.title}完整原文`}>
+          {displayBlocks.map((rawBlock, index) => {
+            const block = rawBlock as any;
+            if (block.type === "dwarf-flow") {
+              return <DwarfFlowDiagram variant={block.variant} />;
+            }
+
+            if (block.type === "image-group") {
+              return (
+                <figure class="source-figure">
+                  <div class="source-image-grid" data-count={block.images.length}>
+                    {block.images.map((image: any, imageIndex: number) => (
+                      <img
+                        src={image.src}
+                        alt={`${work.title}配图 ${index + 1}-${imageIndex + 1}`}
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                  {block.caption && <figcaption>{block.caption}</figcaption>}
+                </figure>
+              );
+            }
+
+            if (block.type === "video") {
+              return (
+                <figure class="source-video-figure">
+                  <video controls playsinline preload="metadata" aria-label={block.caption ?? `${work.title}视频`}>
+                    <source src={resolveVideoUrl(block.src)} type="video/mp4" />
+                    当前浏览器不支持视频播放。
+                  </video>
+                  {block.caption && <figcaption>{block.caption}</figcaption>}
+                </figure>
+              );
+            }
+
+            if (block.type === "pdf-page") {
+              const alt = `${work.title}${block.caption}`;
+              return (
+                <figure class="pdf-page-figure">
+                  {hasZoomablePdf ? (
+                    <button
+                      type="button"
+                      class="pdf-zoom-trigger"
+                      data-zoom-src={block.src}
+                      data-zoom-alt={alt}
+                      aria-label={`${alt}，点击放大查看`}
+                    >
+                      <img src={block.src} alt={alt} loading="lazy" />
+                      <span class="zoom-hint">点击放大查看</span>
+                    </button>
+                  ) : (
+                    <img src={block.src} alt={alt} loading="lazy" />
+                  )}
+                </figure>
+              );
+            }
+
+            if (block.type === "table") {
+              return (
+                <div class="content-table-wrap inline-table" aria-label={`${work.title}原文表格`}>
+                  <table class="content-table">
+                    <thead>
+                      <tr>
+                        {block.headers.map((header: string) => <th>{header}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {block.rows.map((row: string[]) => (
+                        <tr>
+                          {row.map((cell: string) => <td>{cell}</td>)}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            }
+
+            const paragraph = block.text;
+            const role = block.role ?? "paragraph";
+            return isPageMarker(paragraph) ? (
+              <h2 class="source-page">{paragraph}</h2>
+            ) : role === "heading" ? (
+              <h2 class={index === leadHeadingIndex ? "reader-lead-heading" : undefined}>{paragraph}</h2>
+            ) : role === "subheading" ? (
+              <h3>{paragraph}</h3>
+            ) : (
+              <p class={role === "caption" ? "source-caption" : "source-paragraph"}>{paragraph}</p>
+            );
+          })}
+        </section>
+      )}
+    </article>
+
+    {hasZoomablePdf && (
+      <div class="pdf-lightbox" data-pdf-lightbox hidden>
+        <div class="pdf-lightbox-bar">
+          <button type="button" data-zoom-out aria-label="缩小">-</button>
+          <button type="button" data-zoom-reset aria-label="重置缩放">100%</button>
+          <button type="button" data-zoom-in aria-label="放大">+</button>
+          <button type="button" data-zoom-close aria-label="关闭">关闭</button>
+        </div>
+        <div class="pdf-lightbox-stage">
+          <img data-zoom-image alt="" />
+        </div>
+      </div>
+    )}
+
+    <button
+      class="scroll-top-button"
+      type="button"
+      data-scroll-top
+      aria-label="回到顶部"
+      title="回到顶部"
+      hidden
+    >
+      <ChevronUp size={27} stroke-width={1.8} aria-hidden="true" />
+    </button>
+  </main>
+
+  <script is:inline data-astro-rerun>
+    (() => {
+      const button = document.querySelector("[data-scroll-top]");
+      if (!(button instanceof HTMLButtonElement)) return;
+
+      const updateVisibility = () => {
+        const shouldShow = window.scrollY > Math.min(520, window.innerHeight * 0.62);
+        button.hidden = !shouldShow;
+        button.classList.toggle("is-visible", shouldShow);
+      };
+
+      button.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+        });
+      });
+      window.addEventListener("scroll", updateVisibility, { passive: true });
+      updateVisibility();
+    })();
+  </script>
+
+  {hasZoomablePdf && (
+    <script is:inline>
+      const lightbox = document.querySelector("[data-pdf-lightbox]");
+      const zoomImage = lightbox?.querySelector("[data-zoom-image]");
+      const stage = lightbox?.querySelector(".pdf-lightbox-stage");
+      const closeButton = lightbox?.querySelector("[data-zoom-close]");
+      const zoomInButton = lightbox?.querySelector("[data-zoom-in]");
+      const zoomOutButton = lightbox?.querySelector("[data-zoom-out]");
+      const zoomResetButton = lightbox?.querySelector("[data-zoom-reset]");
+      let zoomScale = 1;
+      let fitWidth = 1000;
+
+      const renderZoom = () => {
+        if (!zoomImage) return;
+        zoomImage.style.width = `${fitWidth * zoomScale}px`;
+        if (zoomResetButton) zoomResetButton.textContent = `${Math.round(zoomScale * 100)}%`;
+      };
+
+      const setFitWidth = () => {
+        if (!zoomImage) return;
+        const naturalWidth = zoomImage.naturalWidth || 1200;
+        fitWidth = Math.min(naturalWidth, window.innerWidth * 0.92, 1280);
+        renderZoom();
+      };
+
+      const openLightbox = (src, alt) => {
+        if (!lightbox || !zoomImage) return;
+        zoomScale = 1;
+        zoomImage.src = src;
+        zoomImage.alt = alt || "";
+        lightbox.hidden = false;
+        document.documentElement.classList.add("has-pdf-lightbox");
+        zoomImage.onload = setFitWidth;
+        setFitWidth();
+      };
+
+      const closeLightbox = () => {
+        if (!lightbox) return;
+        lightbox.hidden = true;
+        document.documentElement.classList.remove("has-pdf-lightbox");
+      };
+
+      document.querySelectorAll("[data-zoom-src]").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          openLightbox(trigger.dataset.zoomSrc, trigger.dataset.zoomAlt);
+        });
+      });
+
+      zoomInButton?.addEventListener("click", () => {
+        zoomScale = Math.min(zoomScale + 0.25, 3);
+        renderZoom();
+      });
+
+      zoomOutButton?.addEventListener("click", () => {
+        zoomScale = Math.max(zoomScale - 0.25, 0.5);
+        renderZoom();
+      });
+
+      zoomResetButton?.addEventListener("click", () => {
+        zoomScale = 1;
+        if (stage) stage.scrollTo({ top: 0, left: 0 });
+        renderZoom();
+      });
+
+      closeButton?.addEventListener("click", closeLightbox);
+      lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeLightbox();
+      });
+      window.addEventListener("resize", setFitWidth);
+    </script>
+  )}
+
+  {isFilm && (
+    <script is:inline data-astro-rerun>
+      document.querySelectorAll("[data-film-gallery]").forEach((gallery) => {
+        const video = gallery.querySelector("[data-film-video]");
+        const stage = gallery.querySelector(".film-stage");
+        const image = gallery.querySelector("[data-film-image]");
+        const placeholder = gallery.querySelector("[data-film-placeholder]");
+        const rail = gallery.querySelector(".film-media-rail");
+        const thumbs = Array.from(gallery.querySelectorAll("[data-film-thumb]"));
+        let resumeMusicAfterVideo = false;
+
+        const soundwavePlayer = () => window.__soundwavePlayer;
+        const pauseMusicForVideo = () => {
+          const player = soundwavePlayer();
+          resumeMusicAfterVideo = Boolean(player?.getState?.().playing);
+          if (resumeMusicAfterVideo) player?.pause?.();
+        };
+        const resumeMusicAfterPlayback = () => {
+          if (!resumeMusicAfterVideo) return;
+          resumeMusicAfterVideo = false;
+          void soundwavePlayer()?.play?.();
+        };
+
+        if (video instanceof HTMLVideoElement) {
+          video.addEventListener("play", pauseMusicForVideo);
+          video.addEventListener("pause", resumeMusicAfterPlayback);
+          video.addEventListener("ended", resumeMusicAfterPlayback);
+          document.addEventListener("astro:before-swap", resumeMusicAfterPlayback, { once: true });
+        }
+
+        rail?.addEventListener("wheel", (event) => {
+          if (!(rail instanceof HTMLElement) || rail.scrollWidth <= rail.clientWidth) return;
+          const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX)
+            ? event.deltaY
+            : event.deltaX;
+          if (!delta) return;
+          event.preventDefault();
+          rail.scrollBy({ left: delta, behavior: "smooth" });
+        }, { passive: false });
+
+        const setHidden = (element, hidden) => {
+          if (element instanceof HTMLElement) element.hidden = hidden;
+        };
+
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener("click", () => {
+            if (!(thumb instanceof HTMLButtonElement)) return;
+
+            thumbs.forEach((item) => item.setAttribute("aria-pressed", String(item === thumb)));
+
+            const type = thumb.dataset.mediaType;
+            const src = thumb.dataset.mediaSrc ?? "";
+            const label = thumb.dataset.mediaLabel ?? "";
+
+            if (type === "video") {
+              if (stage instanceof HTMLElement) stage.style.aspectRatio = "16 / 9";
+              setHidden(video, false);
+              setHidden(image, true);
+              setHidden(placeholder, true);
+              return;
+            }
+
+            if (video instanceof HTMLVideoElement) video.pause();
+
+            if (type === "image" && image instanceof HTMLImageElement && src) {
+              image.src = src;
+              image.alt = label;
+              if (stage instanceof HTMLElement) stage.style.aspectRatio = "16 / 9";
+              setHidden(video, true);
+              setHidden(image, false);
+              setHidden(placeholder, true);
+              return;
+            }
+
+            if (stage instanceof HTMLElement) stage.style.aspectRatio = "16 / 9";
+            setHidden(video, true);
+            setHidden(image, true);
+            setHidden(placeholder, false);
+          });
+        });
+      });
+    </script>
+  )}
+</BaseLayout>

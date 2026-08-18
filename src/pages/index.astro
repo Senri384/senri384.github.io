@@ -1,0 +1,212 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Senri's Personal Homepage"
+  description="Zhou Xiang 的游戏内容策划、游戏与文娱研究作品集首页。"
+>
+  <main class="home-shell" aria-label="Senri's Personal Homepage 首页">
+    <section
+      id="opening-sequence"
+      class="opening-sequence"
+      aria-label="Welcome to Senri's Portfolio"
+      data-opening-state="entry"
+    >
+      <div class="opening-entry" aria-label="Start opening sequence">
+        <button id="opening-enter" class="opening-enter" type="button" disabled autofocus>
+          ENTER
+        </button>
+      </div>
+      <div class="opening-titles" aria-hidden="true">
+        <p class="opening-line opening-welcome">Welcome To</p>
+        <p class="opening-line opening-senri">SENRI'S</p>
+        <p class="opening-line opening-portfolio">HOMEPAGE</p>
+      </div>
+      <div class="opening-sweep opening-sweep-a" aria-hidden="true"></div>
+      <div class="opening-sweep opening-sweep-b" aria-hidden="true"></div>
+      <div class="opening-sweep opening-sweep-c" aria-hidden="true"></div>
+      <div class="opening-sparks" aria-hidden="true"></div>
+      <div class="opening-noise" aria-hidden="true"></div>
+      <div class="opening-scanlines" aria-hidden="true"></div>
+      <div class="opening-flash" aria-hidden="true"></div>
+      <div class="opening-vignette" aria-hidden="true"></div>
+      <button id="opening-skip" class="opening-skip" type="button" aria-label="Skip opening animation">
+        SKIP
+      </button>
+    </section>
+
+    <canvas id="neon-drive-canvas" class="drive-canvas" aria-label="可玩的霓虹像素公路跑车游戏"></canvas>
+
+    <div class="scanline-layer" aria-hidden="true"></div>
+    <div class="noise-layer" aria-hidden="true"></div>
+
+    <section class="hud hud-metrics" aria-label="Driving metrics">
+      <div class="metric">
+        <span>距离</span>
+        <strong id="distance-readout">0.00 KM</strong>
+      </div>
+      <div class="metric">
+        <span>分数</span>
+        <strong id="score-readout">000000</strong>
+      </div>
+      <div class="metric">
+        <span>速度</span>
+        <strong id="speed-readout">0 KM/H</strong>
+      </div>
+      <div class="metric best">
+        <span>BEST</span>
+        <strong id="best-readout">0.00 KM</strong>
+      </div>
+    </section>
+
+    <section id="combo-hud" class="hud combo-hud" aria-live="polite" aria-label="Combo multiplier" hidden>
+      <strong id="combo-readout">2X</strong>
+    </section>
+
+    <section class="hud hud-bottom" aria-label="游戏模式与状态">
+      <p id="status-line" class="status-line">STANDING BY</p>
+      <section id="mode-select" class="mode-select bottom-mode-select" aria-label="模式选择">
+        <p class="mode-title">模式选择</p>
+        <div class="mode-actions">
+          <button class="mode-button" type="button" data-drive-mode="race">竞速</button>
+          <button class="mode-button" type="button" data-drive-mode="airing">兜风</button>
+        </div>
+      </section>
+      <p class="control-hint">← → / A D steer · W/Q/E attack · R reset</p>
+    </section>
+  </main>
+
+  <script>
+    import "../scripts/neonDrive";
+  </script>
+  <script is:inline>
+    (() => {
+      const overlay = document.querySelector("#opening-sequence");
+      const enterButton = document.querySelector("#opening-enter");
+      const skipButton = document.querySelector("#opening-skip");
+      if (!(overlay instanceof HTMLElement)) return;
+
+      const storageKey = "neon-drive-opening-seen-v1";
+      const params = new URLSearchParams(window.location.search);
+      const requestedTarget = params.get("introTarget");
+      const targetPath =
+        requestedTarget?.startsWith("/") && !requestedTarget.startsWith("//")
+          ? requestedTarget
+          : "";
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let finished = false;
+      let fallbackTimer;
+      let audioStartTimer;
+      let started = false;
+      let audioReady = Boolean(window.__neonDriveOpeningAudioReady);
+
+      const enableEnter = () => {
+        audioReady = true;
+        if (enterButton instanceof HTMLButtonElement) enterButton.disabled = false;
+        enterButton?.focus({ preventScroll: true });
+      };
+
+      const signalOpeningGesture = () => {
+        window.dispatchEvent(new CustomEvent("opening-user-gesture"));
+      };
+
+      const markOpeningSeen = () => {
+        try {
+          window.sessionStorage.setItem(storageKey, "1");
+        } catch {}
+      };
+
+      const revealSite = () => {
+        markOpeningSeen();
+        if (targetPath) {
+          document.documentElement.dataset.siteGate = "redirecting";
+          window.location.replace(targetPath);
+          return;
+        }
+
+        document.documentElement.dataset.siteGate = "open";
+        window.dispatchEvent(new CustomEvent("opening-complete"));
+      };
+
+      const finish = (immediate = false) => {
+        if (finished) return;
+        finished = true;
+        window.clearTimeout(fallbackTimer);
+        window.removeEventListener("keydown", onKeydown);
+        document.documentElement.dataset.opening = "done";
+        overlay.dataset.openingState = "done";
+        if (immediate) {
+          overlay.remove();
+          revealSite();
+          return;
+        }
+        overlay.classList.add("is-skipped");
+        window.setTimeout(() => {
+          overlay.remove();
+          revealSite();
+        }, 260);
+      };
+
+      const onKeydown = (event) => {
+        signalOpeningGesture();
+        if (event.key === "Escape") finish(false);
+      };
+
+      const beginVisualOpening = () => {
+        window.clearTimeout(audioStartTimer);
+        if (finished || overlay.dataset.openingState === "playing") return;
+        overlay.dataset.openingState = "playing";
+        document.documentElement.dataset.opening = "playing";
+        window.addEventListener("keydown", onKeydown);
+        overlay.addEventListener("animationend", (event) => {
+          if (event.target === overlay && event.animationName === "opening-backdrop") finish(true);
+        });
+        fallbackTimer = window.setTimeout(() => finish(true), reducedMotion ? 1000 : 5600);
+      };
+
+      const startOpening = () => {
+        if (started || finished || !audioReady) return;
+        started = true;
+        overlay.dataset.openingState = "arming";
+        document.documentElement.dataset.opening = "arming";
+        window.addEventListener("opening-audio-started", beginVisualOpening, { once: true });
+        signalOpeningGesture();
+        audioStartTimer = window.setTimeout(() => {
+          window.dispatchEvent(new CustomEvent("opening-audio-cancel"));
+          beginVisualOpening();
+        }, 4000);
+      };
+
+      document.documentElement.dataset.opening = "entry";
+      window.addEventListener("opening-audio-ready", enableEnter, { once: true });
+      if (audioReady) enableEnter();
+      window.__openingDebug = {
+        start: startOpening,
+        skip: () => finish(true),
+        state: () => overlay.dataset.openingState ?? "removed",
+      };
+
+      let hasSeenOpening = false;
+      try {
+        hasSeenOpening = window.sessionStorage.getItem(storageKey) === "1";
+      } catch {}
+
+      const navigationEntry = window.performance.getEntriesByType("navigation")[0];
+      const isReload =
+        navigationEntry instanceof PerformanceNavigationTiming &&
+        navigationEntry.type === "reload";
+
+      if ((hasSeenOpening && !isReload) || params.has("skipIntro")) {
+        finish(true);
+        return;
+      }
+
+      enterButton?.addEventListener("click", startOpening, { once: true });
+      skipButton?.addEventListener("click", () => {
+        signalOpeningGesture();
+        finish(false);
+      }, { once: true });
+    })();
+  </script>
+</BaseLayout>
