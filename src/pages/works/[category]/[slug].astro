@@ -708,8 +708,8 @@ const photoMediaItems = isPhotoAlbum
             item.setAttribute("aria-pressed", String(itemIndex === index));
           });
           if (alignRail && rail instanceof HTMLElement) {
-            const targetLeft = thumb.offsetLeft + thumb.offsetWidth / 2 - rail.clientWidth / 2;
-            rail.scrollTo({ left: targetLeft, behavior: "smooth" });
+            const targetTop = thumb.offsetTop + thumb.offsetHeight / 2 - rail.clientHeight / 2;
+            rail.scrollTo({ top: targetTop, behavior: "smooth" });
           }
 
           const incoming = new Image();
@@ -756,7 +756,7 @@ const photoMediaItems = isPhotoAlbum
           const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
           if (!delta) return;
           event.preventDefault();
-          rail.scrollBy({ left: delta, behavior: "smooth" });
+          rail.scrollBy({ top: delta, behavior: "smooth" });
         }, { passive: false });
 
         preloadAround(0);
