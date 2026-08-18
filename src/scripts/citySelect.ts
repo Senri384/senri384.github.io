@@ -276,6 +276,7 @@ function initCitySelect(canvas: HTMLCanvasElement) {
     cancelAnimationFrame(frame);
     window.removeEventListener("resize", resize);
     document.removeEventListener("visibilitychange", handleVisibilityChange);
+    delete canvas.dataset.citySelectReady;
     skylineTexture.dispose();
     layers.forEach((layer) => layer.meshes.forEach((mesh) => {
       mesh.geometry.dispose();
@@ -287,17 +288,21 @@ function initCitySelect(canvas: HTMLCanvasElement) {
   };
 }
 
-let citySelectCleanups: Array<() => void> = [];
+const citySelectCleanups = new Map<HTMLCanvasElement, () => void>();
 
 function bootCitySelect() {
-  citySelectCleanups.forEach((cleanup) => cleanup());
-  citySelectCleanups = [];
+  citySelectCleanups.forEach((cleanup, canvas) => {
+    if (canvas.isConnected) return;
+    cleanup();
+    citySelectCleanups.delete(canvas);
+  });
   const canvases = Array.from(
     document.querySelectorAll<HTMLCanvasElement>("[data-city-select-canvas]"),
   );
   canvases.forEach((canvas) => {
+    if (citySelectCleanups.has(canvas)) return;
     const cleanup = initCitySelect(canvas);
-    if (cleanup) citySelectCleanups.push(cleanup);
+    if (cleanup) citySelectCleanups.set(canvas, cleanup);
   });
 }
 
