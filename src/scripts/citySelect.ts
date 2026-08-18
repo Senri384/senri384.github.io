@@ -14,7 +14,7 @@ interface SkylineLayer {
   phase: number;
 }
 
-const skylineSource = "/portfolio-assets/ui/city-skyline-near.png";
+const skylineSource = "/portfolio-assets/ui/city-skyline-near.webp";
 const skylineAspect = 1148 / 196;
 const horizonY = -6.15;
 const cameraZ = 32;

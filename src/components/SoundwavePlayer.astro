@@ -13,6 +13,7 @@ const { section } = Astro.props;
   data-deck-state="empty"
   data-playing="false"
   data-loading="false"
+  transition:persist={`soundwave-player-${section}`}
   aria-label="全站音乐播放器"
 >
   <div class="soundwave-wave-field" aria-hidden="true">
@@ -21,7 +22,7 @@ const { section } = Astro.props;
   <div class="soundwave-deck">
     <img
       class="soundwave-deck-image"
-      src="/portfolio-assets/audio-player/walkman-empty.png"
+      src="/portfolio-assets/audio-player/walkman-empty.webp"
       width="1536"
       height="1536"
       alt="声波配色 Walkman 音乐播放器"
@@ -37,7 +38,7 @@ const { section } = Astro.props;
   <output class="soundwave-volume" aria-live="polite">VOL 50</output>
 </aside>
 
-<script is:inline>
+<script is:inline data-astro-rerun>
   (() => {
     const root = document.querySelector("#soundwave-player");
     if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
@@ -52,15 +53,15 @@ const { section } = Astro.props;
     const stateKey = "soundwave-player-state-v3";
     const audioSettingsKey = "neon-drive-audio-settings";
     const assets = {
-      empty: "/portfolio-assets/audio-player/walkman-empty.png",
-      open: "/portfolio-assets/audio-player/walkman-open-empty.png",
-      game: "/portfolio-assets/audio-player/walkman-cassette-game-v3.png",
-      works: "/portfolio-assets/audio-player/walkman-cassette-works.png",
-      resume: "/portfolio-assets/audio-player/walkman-cassette-resume.png",
+      empty: "/portfolio-assets/audio-player/walkman-empty.webp",
+      open: "/portfolio-assets/audio-player/walkman-open-empty.webp",
+      game: "/portfolio-assets/audio-player/walkman-cassette-game-v3.webp",
+      works: "/portfolio-assets/audio-player/walkman-cassette-works.webp",
+      resume: "/portfolio-assets/audio-player/walkman-cassette-resume.webp",
       openLoaded: {
-        game: "/portfolio-assets/audio-player/walkman-open-cassette-game.png",
-        works: "/portfolio-assets/audio-player/walkman-open-cassette-works.png",
-        resume: "/portfolio-assets/audio-player/walkman-open-cassette-resume.png",
+        game: "/portfolio-assets/audio-player/walkman-open-cassette-game.webp",
+        works: "/portfolio-assets/audio-player/walkman-open-cassette-works.webp",
+        resume: "/portfolio-assets/audio-player/walkman-open-cassette-resume.webp",
       },
     };
     const playlists = {
@@ -109,6 +110,9 @@ const { section } = Astro.props;
     const trackIndices = stored.trackIndices && typeof stored.trackIndices === "object"
       ? stored.trackIndices
       : {};
+    const currentTimes = stored.currentTimes && typeof stored.currentTimes === "object"
+      ? stored.currentTimes
+      : {};
     let trackIndex = Number.isInteger(trackIndices[section])
       ? trackIndices[section]
       : defaultTrackIndices[section] ?? 0;
@@ -119,7 +123,8 @@ const { section } = Astro.props;
         ? savedAudio.volume
         : 0.5;
     volume = Math.max(0, Math.min(1, volume));
-    let playing = false;
+    const shouldResumeSameSection = stored.playing === true && previousSection === section && loaded;
+    let playing = shouldResumeSameSection;
     let transition = Promise.resolve();
     let toastTimer = 0;
     let volumeTooltipTimer = 0;
@@ -134,18 +139,50 @@ const { section } = Astro.props;
 
     const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
     const currentTrack = () => playlist[trackIndex];
+    const imagePreloads = new Map();
+    const preloadImage = (source) => {
+      if (!source) return Promise.resolve();
+      if (imagePreloads.has(source)) return imagePreloads.get(source);
+      const promise = new Promise((resolve) => {
+        const preload = new Image();
+        const finish = () => {
+          if (typeof preload.decode === "function") void preload.decode().catch(() => {}).finally(resolve);
+          else resolve();
+        };
+        preload.addEventListener("load", finish, { once: true });
+        preload.addEventListener("error", resolve, { once: true });
+        preload.src = source;
+        if (preload.complete) finish();
+      });
+      imagePreloads.set(source, promise);
+      return promise;
+    };
+    const allDeckImages = [
+      assets.empty,
+      assets.open,
+      assets.game,
+      assets.works,
+      assets.resume,
+      ...Object.values(assets.openLoaded),
+    ];
+    allDeckImages.forEach((source) => void preloadImage(source));
 
     const save = () => {
       root.dataset.trackIndex = String(trackIndex);
       root.dataset.volume = volume.toFixed(2);
       trackIndices[section] = trackIndex;
+      if (localAudio && Number.isFinite(localAudio.currentTime)) {
+        currentTimes[section] = localAudio.currentTime;
+      }
       try {
         window.sessionStorage.setItem(stateKey, JSON.stringify({
           loaded,
           section,
           loadedSection: loaded ? loadedSection || section : "",
           trackIndices,
+          currentTimes,
           volume,
+          playing,
         }));
       } catch {}
       try {
@@ -219,6 +256,7 @@ const { section } = Astro.props;
         if (root.dataset.loading === "true") return;
         root.dataset.loading = "true";
         const openingImage = loaded ? openLoadedImage(loadedSection || previousSection || section) : assets.open;
+        await Promise.all([preloadImage(openingImage), preloadImage(assets[section])]);
         setImage(openingImage, "open");
         setPlaying(false);
         if (localAudio) localAudio.pause();
@@ -246,7 +284,9 @@ const { section } = Astro.props;
           loadedSection = section;
         }
         root.dataset.loading = "true";
-        setImage(openLoadedImage(loadedSection || section), "open");
+        const openingImage = openLoadedImage(loadedSection || section);
+        await Promise.all([preloadImage(openingImage), preloadImage(assets.empty)]);
+        setImage(openingImage, "open");
         pause();
         await mechanicalFx("open");
         await wait(720);
@@ -334,9 +374,19 @@ const { section } = Astro.props;
       showVolume();
     }, { passive: false });
 
-    document.querySelectorAll(".site-nav a").forEach((link) => {
-      link.addEventListener("click", () => pause());
-    });
+    window.addEventListener("pagehide", save);
+    const handleBeforeSwap = (event) => {
+      const nextRoot = event.newDocument?.querySelector?.("#soundwave-player");
+      const nextSection = nextRoot instanceof HTMLElement ? nextRoot.dataset.section : "";
+      save();
+      if (!nextSection || nextSection === section) return;
+      if (localAudio) localAudio.pause();
+      Object.values(lidSounds).forEach((sound) => sound.pause());
+      setPlaying(false);
+      save();
+      document.removeEventListener("astro:before-swap", handleBeforeSwap);
+    };
+    document.addEventListener("astro:before-swap", handleBeforeSwap);
 
     window.__soundwavePlayer = {
       playFromGame: async () => {
@@ -374,6 +424,21 @@ const { section } = Astro.props;
       setImage(assets.empty, "empty");
     }
     if (localAudio) localAudio.volume = volume;
+    setPlaying(playing);
     save();
+    if (localAudio && shouldResumeSameSection) {
+      localAudio.src = currentTrack();
+      const resumeAt = Number(currentTimes[section]);
+      if (Number.isFinite(resumeAt) && resumeAt > 0) {
+        const restoreTime = () => {
+          try {
+            localAudio.currentTime = resumeAt;
+          } catch {}
+        };
+        if (localAudio.readyState >= 1) restoreTime();
+        else localAudio.addEventListener("loadedmetadata", restoreTime, { once: true });
+      }
+      void play();
+    }
   })();
 </script>

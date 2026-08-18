@@ -114,14 +114,14 @@ const gameCardGeometry = {
   slotDisplayWidth: 214,
 };
 const gameCardCategoryAssets: Record<string, string> = {
-  "game-design": `${gameCardRackAssetBase}/rack-game-design.png`,
-  "game-research": `${gameCardRackAssetBase}/rack-game-research.png`,
-  articles: `${gameCardRackAssetBase}/rack-articles.png`,
-  scripts: `${gameCardRackAssetBase}/rack-scripts.png`,
-  reviews: `${gameCardRackAssetBase}/rack-reviews.png`,
-  experience: `${gameCardRackAssetBase}/rack-experience.png`,
-  "short-films": `${gameCardRackAssetBase}/rack-short-films.png`,
-  photography: `${gameCardRackAssetBase}/rack-photography.png`,
+  "game-design": `${gameCardRackAssetBase}/rack-game-design.webp`,
+  "game-research": `${gameCardRackAssetBase}/rack-game-research.webp`,
+  articles: `${gameCardRackAssetBase}/rack-articles.webp`,
+  scripts: `${gameCardRackAssetBase}/rack-scripts.webp`,
+  reviews: `${gameCardRackAssetBase}/rack-reviews.webp`,
+  experience: `${gameCardRackAssetBase}/rack-experience.webp`,
+  "short-films": `${gameCardRackAssetBase}/rack-short-films.webp`,
+  photography: `${gameCardRackAssetBase}/rack-photography.webp`,
 };
 const gameCardWorkSlugs = [
   ...portfolioWorks.map((work) => work.slug),
@@ -132,9 +132,9 @@ const gameCardWorkAssets: Record<string, {
   openCaseImage: string;
   cartridgeImage: string;
 }> = Object.fromEntries(gameCardWorkSlugs.map((slug) => [slug, {
-  caseImage: `${gameCardAssetBase}/cases/${slug}.png`,
-  openCaseImage: `${gameCardAssetBase}/insides/${slug}.png`,
-  cartridgeImage: `${gameCardAssetBase}/cartridges/${slug}.png`,
+    caseImage: `${gameCardAssetBase}/cases/${slug}.webp`,
+    openCaseImage: `${gameCardAssetBase}/insides/${slug}.webp`,
+    cartridgeImage: `${gameCardAssetBase}/cartridges/${slug}.webp`,
 }]));
 
 const cassetteData = categories.map((category) => ({

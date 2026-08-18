@@ -145,11 +145,10 @@ const previewMode = {
 };
 const attackSoundMode = readAttackSoundVariant();
 const uiPreviewMode = readUiPreviewVariant();
-const useGeneratedVehicleAssets = searchParams.get("legacyVehicles") !== "1";
 if (uiPreviewMode) {
   document.documentElement.dataset.uiPreview = uiPreviewMode.toLowerCase();
 }
-document.documentElement.dataset.vehicleAssets = useGeneratedVehicleAssets ? "v55" : "legacy";
+document.documentElement.dataset.vehicleAssets = "v55";
 const bgmUrl = "/audio/music/game/Perturbator - Miami Disco.mp3";
 const openingAudioUrl = "/audio/music/the touch.mp3";
 const openingAudioVolumeBoost = 1.55;
@@ -326,6 +325,8 @@ let openingAudioElement: HTMLAudioElement | null = null;
 let openingAudioFadeFrame = 0;
 let openingAudioActive = false;
 let openingAudioStarted = false;
+let openingAudioStartPending = false;
+let openingAudioStartToken = 0;
 let openingAudioStopAt = 0;
 let openingRenderStartedAt: number | null = null;
 const openingAudioNodes: AudioNode[] = [];
@@ -724,6 +725,14 @@ function resetRun(mode: DriveMode) {
 async function startDriveMode(mode: DriveMode) {
   await window.__soundwavePlayer?.playFromGame();
   await unlockAudio();
+  if (mode === "race") {
+    setStatus("LOADING VEHICLES");
+    const assetsReady = await generatedVehicleAssetsReady;
+    if (!assetsReady) {
+      setStatus("VEHICLE LOAD FAILED");
+      return;
+    }
+  }
   resetRun(mode);
   playEffect("button");
 }
@@ -2602,24 +2611,46 @@ function generatedVehicleTextureReady(texture: THREE.Texture | null | undefined)
   return Boolean(image?.complete && (image.naturalWidth || image.width) > 0);
 }
 
-function preloadGeneratedPlayerVehicleAssets() {
-  if (!useGeneratedVehicleAssets) return;
-  const lanes: LaneIndex[] = [0, 1, 2];
-  const wheelFrames: VehicleWheelFrame[] = [1, 2];
-  lanes.forEach((laneIndex) => {
-    const normalUrl = generatedVehicleAssetUrl("player", 0, laneIndex, "normal", 0);
-    const damagedUrl = generatedVehicleAssetUrl("player", 0, laneIndex, "damaged-front", 0);
-    if (normalUrl) generatedVehicleTexture(normalUrl);
-    if (damagedUrl) generatedVehicleTexture(damagedUrl);
-    wheelFrames.forEach((wheelFrame) => {
-      const wheelUrl = generatedVehicleAssetUrl("player", 0, laneIndex, "normal", wheelFrame);
-      if (wheelUrl) generatedVehicleTexture(wheelUrl);
-    });
+function waitForGeneratedVehicleTextures(textures: THREE.Texture[]) {
+  if (textures.length === 0) return Promise.resolve(true);
+  return new Promise<boolean>((resolve) => {
+    const check = () => {
+      if (textures.every((texture) => generatedVehicleTextureReady(texture) || texture.userData.failed)) {
+        resolve(textures.every((texture) => generatedVehicleTextureReady(texture)));
+        return;
+      }
+      window.setTimeout(check, 40);
+    };
+    check();
   });
 }
 
-// Kept as a lightweight fallback/reference path for the previous 2D vehicle renderer.
-void makeVehicleTexture;
+function preloadGeneratedVehicleAssets() {
+  const lanes: LaneIndex[] = [0, 1, 2];
+  const wheelFrames: VehicleWheelFrame[] = [1, 2];
+  const textures = new Set<THREE.Texture>();
+  const queue = (url: string | null) => {
+    if (url) textures.add(generatedVehicleTexture(url));
+  };
+  lanes.forEach((laneIndex) => {
+    queue(generatedVehicleAssetUrl("player", 0, laneIndex, "normal", 0));
+    queue(generatedVehicleAssetUrl("player", 0, laneIndex, "damaged-front", 0));
+    wheelFrames.forEach((wheelFrame) => {
+      queue(generatedVehicleAssetUrl("player", 0, laneIndex, "normal", wheelFrame));
+    });
+    obstacleVehicleAssetSlugs.forEach((_, paletteIndex) => {
+      queue(generatedVehicleAssetUrl("traffic", paletteIndex, laneIndex, "normal", 0));
+      queue(generatedVehicleAssetUrl("traffic", paletteIndex, laneIndex, "damaged-rear", 0));
+      queue(generatedVehicleAssetUrl("traffic", paletteIndex, laneIndex, "damaged-diagonal", 0));
+      wheelFrames.forEach((wheelFrame) => {
+        queue(generatedVehicleAssetUrl("traffic", paletteIndex, laneIndex, "normal", wheelFrame));
+      });
+    });
+  });
+  return waitForGeneratedVehicleTextures([...textures]);
+}
+
+let generatedVehicleAssetsReady = Promise.resolve(true);
 
 function createCarMaterial(
   color: number,
@@ -3041,15 +3072,11 @@ function createVehicleSprite(
   assetVariant: VehicleAssetVariant = "normal",
   wheelFrame: VehicleWheelFrame = 0,
 ): VehicleSprite | null {
-  const assetUrl =
-    useGeneratedVehicleAssets
-      ? generatedVehicleAssetUrl(kind, paletteIndex, laneIndex, assetVariant, wheelFrame)
-      : null;
+  const usesGeneratedAsset = kind !== "barrier";
+  const assetUrl = generatedVehicleAssetUrl(kind, paletteIndex, laneIndex, assetVariant, wheelFrame);
   const generatedTexture = assetUrl ? generatedVehicleTexture(assetUrl) : null;
-  const useGeneratedTexture = generatedVehicleTextureReady(generatedTexture);
-  const texture = useGeneratedTexture && generatedTexture
-    ? generatedTexture
-    : makeVehicleTexture(kind, paletteIndex);
+  if (usesGeneratedAsset && !generatedVehicleTextureReady(generatedTexture)) return null;
+  const texture = usesGeneratedAsset ? generatedTexture : makeVehicleTexture(kind, paletteIndex);
   if (!texture) return null;
   const material = new THREE.SpriteMaterial({
     map: texture,
@@ -3067,15 +3094,15 @@ function createVehicleSprite(
     paletteIndex,
     laneIndex,
     assetVariant,
-    wheelFrame: useGeneratedTexture ? wheelFrame : 0,
-    aspect: useGeneratedTexture
+    wheelFrame: usesGeneratedAsset ? wheelFrame : 0,
+    aspect: usesGeneratedAsset
       ? 0.5
       : (() => {
           const imageSize = textureImageSize(texture);
           return imageSize.width > 0 ? imageSize.height / imageSize.width : 0.5;
         })(),
-    ownsTexture: !useGeneratedTexture,
-    usesGeneratedAsset: useGeneratedTexture,
+    ownsTexture: !usesGeneratedAsset,
+    usesGeneratedAsset,
   };
 }
 
@@ -3131,7 +3158,7 @@ function setVehicleVisualState(vehicle: VehicleSprite, opacity: number, tint: nu
 }
 
 function movingVehicleWheelFrame(): VehicleWheelFrame {
-  if (!useGeneratedVehicleAssets || state.mode !== "running" || state.speed <= 0) return 0;
+  if (state.mode !== "running" || state.speed <= 0) return 0;
   const wheelFps = clamp(state.speed / 26, 8, 15);
   return (Math.floor(state.runTime * wheelFps) % 3) as VehicleWheelFrame;
 }
@@ -3196,7 +3223,7 @@ function obstacleWreckLeanLift(widthWorld: number, rotation: number) {
 }
 
 function playerVehicleAssetLaneIndex(currentLaneIndex?: LaneIndex): LaneIndex {
-  if (!useGeneratedVehicleAssets || player.laneIndex !== 1) return player.laneIndex;
+  if (player.laneIndex !== 1) return player.laneIndex;
   if (
     currentLaneIndex !== undefined &&
     currentLaneIndex !== 1 &&
@@ -3210,12 +3237,10 @@ function playerVehicleAssetLaneIndex(currentLaneIndex?: LaneIndex): LaneIndex {
 function updateVehicleSprites() {
   const wheelFrame = movingVehicleWheelFrame();
   const playerAssetVariant: VehicleAssetVariant =
-    useGeneratedVehicleAssets && state.mode === "recovering" ? "damaged-front" : "normal";
+    state.mode === "recovering" ? "damaged-front" : "normal";
   const currentPlayerVehicle = roadScene.playerVehicle;
   const playerAssetLaneIndex = playerVehicleAssetLaneIndex(currentPlayerVehicle?.laneIndex);
-  const playerAssetUrl = useGeneratedVehicleAssets
-    ? generatedVehicleAssetUrl("player", 0, playerAssetLaneIndex, playerAssetVariant, wheelFrame)
-    : null;
+  const playerAssetUrl = generatedVehicleAssetUrl("player", 0, playerAssetLaneIndex, playerAssetVariant, wheelFrame);
   const playerGeneratedAssetReady = playerAssetUrl
     ? generatedVehicleTextureReady(generatedVehicleTexture(playerAssetUrl))
     : false;
@@ -3275,9 +3300,7 @@ function updateVehicleSprites() {
     const assetVariant = obstacleVehicleAssetVariant(obstacle);
     const existing = roadScene.obstacleVehicles.get(obstacle.id);
     const obstacleWheelFrame = obstacle.wreckedByAttack ? 0 : wheelFrame;
-    const obstacleAssetUrl = useGeneratedVehicleAssets
-      ? generatedVehicleAssetUrl(kind, paletteIndex, obstacle.laneIndex, assetVariant, obstacleWheelFrame)
-      : null;
+    const obstacleAssetUrl = generatedVehicleAssetUrl(kind, paletteIndex, obstacle.laneIndex, assetVariant, obstacleWheelFrame);
     const obstacleGeneratedAssetReady = obstacleAssetUrl
       ? generatedVehicleTextureReady(generatedVehicleTexture(obstacleAssetUrl))
       : false;
@@ -3667,7 +3690,7 @@ function shouldPlayOpeningAudio() {
       !audio.muted &&
       audio.volume > 0 &&
       !bgmStarted &&
-      document.documentElement.dataset.opening === "playing",
+      ["arming", "playing"].includes(document.documentElement.dataset.opening ?? ""),
   );
 }
 
@@ -3688,18 +3711,33 @@ function ensureOpeningAudio() {
   return openingAudioElement;
 }
 
-function playOpeningAudio() {
-  if (openingAudioStarted || !shouldPlayOpeningAudio()) return;
+async function playOpeningAudio() {
+  if (openingAudioStarted || openingAudioStartPending || !shouldPlayOpeningAudio()) return;
   const openingAudio = ensureOpeningAudio();
+  const requestToken = ++openingAudioStartToken;
+  openingAudioStartPending = true;
   window.cancelAnimationFrame(openingAudioFadeFrame);
   openingAudio.currentTime = 0;
   openingAudio.volume = openingAudioVolume();
-  openingAudioStarted = true;
-  openingAudioActive = true;
-  openingAudioStopAt = performance.now() + openingAudioDurationMs;
-  void openingAudio.play().catch(() => {
+  try {
+    await openingAudio.play();
+    if (requestToken !== openingAudioStartToken) {
+      openingAudio.pause();
+      openingAudio.currentTime = 0;
+      return;
+    }
+    openingAudioStarted = true;
+    openingAudioActive = true;
+    openingAudioStopAt = performance.now() + openingAudioDurationMs;
+    window.dispatchEvent(new CustomEvent("opening-audio-started", { detail: { audible: true } }));
+  } catch {
+    if (requestToken !== openingAudioStartToken) return;
     openingAudioActive = false;
-  });
+    openingAudioStarted = true;
+    window.dispatchEvent(new CustomEvent("opening-audio-started", { detail: { audible: false } }));
+  } finally {
+    if (requestToken === openingAudioStartToken) openingAudioStartPending = false;
+  }
 }
 
 function stopOpeningAudio(fadeDuration = 0.22) {
@@ -4111,6 +4149,15 @@ function setupEvents() {
     ensureOpeningAudio();
     playOpeningAudio();
     void unlockAudio();
+  });
+  window.addEventListener("opening-audio-cancel", () => {
+    openingAudioStartToken += 1;
+    openingAudioStartPending = false;
+    openingAudioStarted = true;
+    if (openingAudioElement) {
+      openingAudioElement.pause();
+      openingAudioElement.currentTime = 0;
+    }
   });
   window.__neonDriveOpeningAudioReady = true;
   window.dispatchEvent(new CustomEvent("opening-audio-ready"));
@@ -4600,7 +4647,7 @@ setupThreeScene();
 resizeCanvas();
 setupEvents();
 installDebugHook();
-preloadGeneratedPlayerVehicleAssets();
+generatedVehicleAssetsReady = preloadGeneratedVehicleAssets();
 setStatus("STANDING BY");
 updateHud();
 requestAnimationFrame(loop);

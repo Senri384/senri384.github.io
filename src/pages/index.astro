@@ -97,6 +97,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let finished = false;
       let fallbackTimer;
+      let audioStartTimer;
       let started = false;
       let audioReady = Boolean(window.__neonDriveOpeningAudioReady);
 
@@ -152,17 +153,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         if (event.key === "Escape") finish(false);
       };
 
-      const startOpening = () => {
-        if (started || finished || !audioReady) return;
-        started = true;
+      const beginVisualOpening = () => {
+        window.clearTimeout(audioStartTimer);
+        if (finished || overlay.dataset.openingState === "playing") return;
         overlay.dataset.openingState = "playing";
         document.documentElement.dataset.opening = "playing";
-        signalOpeningGesture();
         window.addEventListener("keydown", onKeydown);
         overlay.addEventListener("animationend", (event) => {
           if (event.target === overlay && event.animationName === "opening-backdrop") finish(true);
         });
         fallbackTimer = window.setTimeout(() => finish(true), reducedMotion ? 1000 : 5600);
+      };
+
+      const startOpening = () => {
+        if (started || finished || !audioReady) return;
+        started = true;
+        overlay.dataset.openingState = "arming";
+        document.documentElement.dataset.opening = "arming";
+        window.addEventListener("opening-audio-started", beginVisualOpening, { once: true });
+        signalOpeningGesture();
+        audioStartTimer = window.setTimeout(() => {
+          window.dispatchEvent(new CustomEvent("opening-audio-cancel"));
+          beginVisualOpening();
+        }, 4000);
       };
 
       document.documentElement.dataset.opening = "entry";

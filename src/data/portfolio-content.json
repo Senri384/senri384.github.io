@@ -51,7 +51,7 @@
         "Jump Scare"
       ],
       "source": "docs/AI游戏策划/DWARF/dwarf-lost-in-the-dark-forest-gdd.docx",
-      "image": "/portfolio-assets/games/dwarf-cover.png",
+      "image": "/portfolio-assets/games/dwarf-cover.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -1248,7 +1248,7 @@
         "循环叙事"
       ],
       "source": "docs/AI游戏策划/STONE'S FEAST/stones-feast-game-design.docx",
-      "image": "/portfolio-assets/games/stones-feast-cover.png",
+      "image": "/portfolio-assets/games/stones-feast-cover.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -1977,7 +1977,7 @@
         "道德困境"
       ],
       "source": "docs/AI游戏策划/TheColdTrial/the-cold-trial-gdd.docx",
-      "image": "/portfolio-assets/games/cold-trial-cover.png",
+      "image": "/portfolio-assets/games/cold-trial-cover.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -2602,156 +2602,156 @@
         "机制引导"
       ],
       "source": "docs/游戏peak社交设计洞察.pdf",
-      "image": "/portfolio-assets/extracted/peak-social-design/page-01.png",
+      "image": "/portfolio-assets/extracted/peak-social-design/page-01.webp",
       "blocks": [
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-01.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-01.webp",
           "caption": "第 1 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-02.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-02.webp",
           "caption": "第 2 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-03.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-03.webp",
           "caption": "第 3 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-04.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-04.webp",
           "caption": "第 4 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-05.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-05.webp",
           "caption": "第 5 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-06.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-06.webp",
           "caption": "第 6 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-07.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-07.webp",
           "caption": "第 7 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-08.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-08.webp",
           "caption": "第 8 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-09.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-09.webp",
           "caption": "第 9 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-10.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-10.webp",
           "caption": "第 10 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-11.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-11.webp",
           "caption": "第 11 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-12.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-12.webp",
           "caption": "第 12 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-13.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-13.webp",
           "caption": "第 13 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-14.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-14.webp",
           "caption": "第 14 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-15.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-15.webp",
           "caption": "第 15 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-16.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-16.webp",
           "caption": "第 16 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-17.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-17.webp",
           "caption": "第 17 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-18.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-18.webp",
           "caption": "第 18 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-19.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-19.webp",
           "caption": "第 19 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-20.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-20.webp",
           "caption": "第 20 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-21.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-21.webp",
           "caption": "第 21 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-22.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-22.webp",
           "caption": "第 22 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-23.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-23.webp",
           "caption": "第 23 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-24.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-24.webp",
           "caption": "第 24 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-25.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-25.webp",
           "caption": "第 25 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-26.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-26.webp",
           "caption": "第 26 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-27.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-27.webp",
           "caption": "第 27 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-28.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-28.webp",
           "caption": "第 28 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-29.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-29.webp",
           "caption": "第 29 页"
         },
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/peak-social-design/page-30.png",
+          "src": "/portfolio-assets/extracted/peak-social-design/page-30.webp",
           "caption": "第 30 页"
         }
       ],
@@ -2774,11 +2774,11 @@
         "应对关系"
       ],
       "source": "docs/游戏拆解/洛克王国：世界拆解.pdf",
-      "image": "/portfolio-assets/extracted/rock-kingdom-world-breakdown/page-1.png",
+      "image": "/portfolio-assets/extracted/rock-kingdom-world-breakdown/page-1.webp",
       "blocks": [
         {
           "type": "pdf-page",
-          "src": "/portfolio-assets/extracted/rock-kingdom-world-breakdown/page-1.png",
+          "src": "/portfolio-assets/extracted/rock-kingdom-world-breakdown/page-1.webp",
           "caption": "第 1 页"
         }
       ],
@@ -2801,7 +2801,7 @@
         "案例分析"
       ],
       "source": "docs/信号文章/以《变形金刚》为例洞察IP改编游戏兴衰成因.docx",
-      "image": "/portfolio-assets/extracted/transformers-ip-games/image-001.png",
+      "image": "/portfolio-assets/extracted/transformers-ip-games/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -2825,7 +2825,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-001.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-001.webp"
         },
         {
           "type": "paragraph",
@@ -2839,23 +2839,23 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-002.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-002.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-003.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-003.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-004.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-004.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-005.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-005.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-006.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -2894,7 +2894,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-007.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-007.webp"
         },
         {
           "type": "paragraph",
@@ -2908,15 +2908,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-008.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-008.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-009.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-009.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-010.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-010.webp"
         },
         {
           "type": "paragraph",
@@ -2930,7 +2930,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-011.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-011.webp"
         },
         {
           "type": "paragraph",
@@ -2984,7 +2984,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-012.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-012.webp"
         },
         {
           "type": "paragraph",
@@ -3013,7 +3013,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-013.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-013.webp"
         },
         {
           "type": "paragraph",
@@ -3062,23 +3062,23 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-014.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-014.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-015.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-015.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-016.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-016.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-017.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-017.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-018.png"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-018.webp"
         },
         {
           "type": "paragraph",
@@ -3102,7 +3102,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-019.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-019.webp"
         },
         {
           "type": "paragraph",
@@ -3126,15 +3126,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-020.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-020.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-021.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-021.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/transformers-ip-games/image-022.jpg"
+          "src": "/portfolio-assets/extracted/transformers-ip-games/image-022.webp"
         },
         {
           "type": "paragraph",
@@ -3314,7 +3314,7 @@
         "情绪设计"
       ],
       "source": "docs/信号文章/关于洛克王国，关于离别的童话.docx",
-      "image": "/portfolio-assets/extracted/rock-kingdom-farewell/image-001.png",
+      "image": "/portfolio-assets/extracted/rock-kingdom-farewell/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -3333,7 +3333,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-001.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-001.webp"
         },
         {
           "type": "paragraph",
@@ -3367,7 +3367,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-002.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-002.webp"
         },
         {
           "type": "paragraph",
@@ -3381,7 +3381,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-003.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-003.webp"
         },
         {
           "type": "paragraph",
@@ -3410,7 +3410,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-004.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-004.webp"
         },
         {
           "type": "paragraph",
@@ -3439,7 +3439,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-005.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-005.webp"
         },
         {
           "type": "paragraph",
@@ -3448,7 +3448,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-006.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -3457,7 +3457,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-007.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-007.webp"
         },
         {
           "type": "paragraph",
@@ -3471,7 +3471,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-008.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-008.webp"
         },
         {
           "type": "paragraph",
@@ -3480,7 +3480,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-009.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-009.webp"
         },
         {
           "type": "paragraph",
@@ -3494,7 +3494,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-010.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-010.webp"
         },
         {
           "type": "paragraph",
@@ -3523,7 +3523,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-011.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-011.webp"
         },
         {
           "type": "paragraph",
@@ -3537,7 +3537,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-012.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-012.webp"
         },
         {
           "type": "paragraph",
@@ -3546,7 +3546,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-013.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-013.webp"
         },
         {
           "type": "paragraph",
@@ -3565,7 +3565,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-014.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-014.webp"
         },
         {
           "type": "paragraph",
@@ -3579,7 +3579,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-015.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-015.webp"
         },
         {
           "type": "paragraph",
@@ -3593,7 +3593,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-016.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-016.webp"
         },
         {
           "type": "paragraph",
@@ -3627,7 +3627,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-017.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-017.webp"
         },
         {
           "type": "paragraph",
@@ -3676,7 +3676,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-018.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-018.webp"
         },
         {
           "type": "paragraph",
@@ -3715,7 +3715,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-019.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-019.webp"
         },
         {
           "type": "paragraph",
@@ -3724,7 +3724,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-020.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-020.webp"
         },
         {
           "type": "paragraph",
@@ -3733,7 +3733,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-021.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-021.webp"
         },
         {
           "type": "paragraph",
@@ -3747,7 +3747,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-022.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-022.webp"
         },
         {
           "type": "paragraph",
@@ -3756,7 +3756,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-023.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-023.webp"
         },
         {
           "type": "paragraph",
@@ -3765,7 +3765,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-024.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-024.webp"
         },
         {
           "type": "paragraph",
@@ -3794,7 +3794,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-025.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-025.webp"
         },
         {
           "type": "paragraph",
@@ -3813,15 +3813,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-026.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-026.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-027.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-027.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-028.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-028.webp"
         },
         {
           "type": "paragraph",
@@ -3840,7 +3840,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-029.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-029.webp"
         },
         {
           "type": "paragraph",
@@ -3849,7 +3849,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-030.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-030.webp"
         },
         {
           "type": "paragraph",
@@ -3858,7 +3858,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-031.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-031.webp"
         },
         {
           "type": "paragraph",
@@ -3872,7 +3872,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-032.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-032.webp"
         },
         {
           "type": "paragraph",
@@ -3896,7 +3896,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-033.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-033.webp"
         },
         {
           "type": "paragraph",
@@ -3910,7 +3910,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-034.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-034.webp"
         },
         {
           "type": "paragraph",
@@ -3919,7 +3919,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-035.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-035.webp"
         },
         {
           "type": "paragraph",
@@ -3933,19 +3933,19 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-036.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-036.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-037.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-037.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-038.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-038.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-039.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-039.webp"
         },
         {
           "type": "paragraph",
@@ -3974,7 +3974,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-040.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-040.webp"
         },
         {
           "type": "paragraph",
@@ -3988,7 +3988,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-041.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-041.webp"
         },
         {
           "type": "paragraph",
@@ -3997,7 +3997,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-042.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-042.webp"
         },
         {
           "type": "paragraph",
@@ -4006,7 +4006,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-043.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-043.webp"
         },
         {
           "type": "paragraph",
@@ -4035,7 +4035,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-044.jpg"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-044.webp"
         },
         {
           "type": "paragraph",
@@ -4059,7 +4059,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-045.png"
+          "src": "/portfolio-assets/extracted/rock-kingdom-farewell/image-045.webp"
         },
         {
           "type": "paragraph",
@@ -4201,7 +4201,7 @@
         "怪异美学"
       ],
       "source": "docs/信号文章/宝可梦形象设计思路分析.docx",
-      "image": "/portfolio-assets/extracted/pokemon-character-design/image-001.png",
+      "image": "/portfolio-assets/extracted/pokemon-character-design/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -4220,11 +4220,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-001.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-001.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-002.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-002.webp"
         },
         {
           "type": "paragraph",
@@ -4238,11 +4238,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-003.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-003.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-004.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-004.webp"
         },
         {
           "type": "paragraph",
@@ -4251,11 +4251,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-005.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-005.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-006.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -4269,11 +4269,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-007.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-007.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-008.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-008.webp"
         },
         {
           "type": "paragraph",
@@ -4292,11 +4292,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-009.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-009.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-010.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-010.webp"
         },
         {
           "type": "paragraph",
@@ -4360,35 +4360,35 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-011.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-011.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-012.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-012.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-013.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-013.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-014.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-014.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-015.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-015.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-016.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-016.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-017.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-017.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-018.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-018.webp"
         },
         {
           "type": "paragraph",
@@ -4407,15 +4407,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-019.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-019.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-020.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-020.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-021.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-021.webp"
         },
         {
           "type": "paragraph",
@@ -4434,11 +4434,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-022.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-022.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-023.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-023.webp"
         },
         {
           "type": "paragraph",
@@ -4497,7 +4497,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-024.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-024.webp"
         },
         {
           "type": "paragraph",
@@ -4516,7 +4516,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-025.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-025.webp"
         },
         {
           "type": "paragraph",
@@ -4540,15 +4540,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-026.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-026.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-027.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-027.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-028.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-028.webp"
         },
         {
           "type": "paragraph",
@@ -4577,7 +4577,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-029.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-029.webp"
         },
         {
           "type": "paragraph",
@@ -4591,7 +4591,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-030.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-030.webp"
         },
         {
           "type": "paragraph",
@@ -4636,15 +4636,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-031.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-031.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-032.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-032.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-033.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-033.webp"
         },
         {
           "type": "paragraph",
@@ -4663,7 +4663,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-034.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-034.webp"
         },
         {
           "type": "paragraph",
@@ -4682,7 +4682,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-035.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-035.webp"
         },
         {
           "type": "paragraph",
@@ -4721,15 +4721,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-036.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-036.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-037.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-037.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-038.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-038.webp"
         },
         {
           "type": "paragraph",
@@ -4748,15 +4748,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-039.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-039.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-040.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-040.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-041.jpg"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-041.webp"
         },
         {
           "type": "paragraph",
@@ -4770,7 +4770,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-042.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-042.webp"
         },
         {
           "type": "paragraph",
@@ -4784,11 +4784,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-043.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-043.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-044.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-044.webp"
         },
         {
           "type": "paragraph",
@@ -4847,7 +4847,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/pokemon-character-design/image-045.png"
+          "src": "/portfolio-assets/extracted/pokemon-character-design/image-045.webp"
         },
         {
           "type": "paragraph",
@@ -4981,7 +4981,7 @@
         "传播"
       ],
       "source": "docs/信号文章/绝地潜兵2社媒账号运营如何靠搞抽象活跃社群.docx",
-      "image": "/portfolio-assets/extracted/helldivers2-community-ops/image-001.png",
+      "image": "/portfolio-assets/extracted/helldivers2-community-ops/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -5005,7 +5005,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-001.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-001.webp"
         },
         {
           "type": "paragraph",
@@ -5014,15 +5014,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-002.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-002.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-003.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-003.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-004.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-004.webp"
         },
         {
           "type": "paragraph",
@@ -5056,7 +5056,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-005.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-005.webp"
         },
         {
           "type": "paragraph",
@@ -5090,7 +5090,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-006.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -5099,7 +5099,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-007.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-007.webp"
         },
         {
           "type": "paragraph",
@@ -5128,7 +5128,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-008.jpg"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-008.webp"
         },
         {
           "type": "paragraph",
@@ -5137,11 +5137,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-009.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-009.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-010.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-010.webp"
         },
         {
           "type": "paragraph",
@@ -5150,15 +5150,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-011.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-011.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-012.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-012.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-013.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-013.webp"
         },
         {
           "type": "paragraph",
@@ -5167,7 +5167,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-014.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-014.webp"
         },
         {
           "type": "paragraph",
@@ -5181,7 +5181,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-015.jpg"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-015.webp"
         },
         {
           "type": "paragraph",
@@ -5200,7 +5200,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-016.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-016.webp"
         },
         {
           "type": "paragraph",
@@ -5209,7 +5209,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-017.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-017.webp"
         },
         {
           "type": "paragraph",
@@ -5218,7 +5218,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-018.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-018.webp"
         },
         {
           "type": "paragraph",
@@ -5232,19 +5232,19 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-019.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-019.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-020.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-020.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-021.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-021.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-022.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-022.webp"
         },
         {
           "type": "paragraph",
@@ -5268,7 +5268,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-023.jpg"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-023.webp"
         },
         {
           "type": "paragraph",
@@ -5277,7 +5277,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-024.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-024.webp"
         },
         {
           "type": "paragraph",
@@ -5286,11 +5286,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-025.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-025.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-026.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-026.webp"
         },
         {
           "type": "paragraph",
@@ -5319,7 +5319,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-027.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-027.webp"
         },
         {
           "type": "paragraph",
@@ -5333,19 +5333,19 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-028.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-028.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-029.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-029.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-030.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-030.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-031.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-031.webp"
         },
         {
           "type": "paragraph",
@@ -5364,15 +5364,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-032.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-032.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-033.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-033.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-034.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-034.webp"
         },
         {
           "type": "paragraph",
@@ -5401,7 +5401,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-035.jpg"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-035.webp"
         },
         {
           "type": "paragraph",
@@ -5415,7 +5415,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-036.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-036.webp"
         },
         {
           "type": "paragraph",
@@ -5434,7 +5434,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-037.jpg"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-037.webp"
         },
         {
           "type": "paragraph",
@@ -5463,7 +5463,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-038.png"
+          "src": "/portfolio-assets/extracted/helldivers2-community-ops/image-038.webp"
         },
         {
           "type": "paragraph",
@@ -5592,7 +5592,7 @@
         "传播机制"
       ],
       "source": "docs/信号文章/荒诞又不知“何意味”的大头外星人如何火出圈.docx",
-      "image": "/portfolio-assets/extracted/alien-meme-culture/image-001.jpg",
+      "image": "/portfolio-assets/extracted/alien-meme-culture/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -5611,7 +5611,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-001.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-001.webp"
         },
         {
           "type": "paragraph",
@@ -5625,7 +5625,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-002.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-002.webp"
         },
         {
           "type": "paragraph",
@@ -5639,7 +5639,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-003.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-003.webp"
         },
         {
           "type": "paragraph",
@@ -5693,7 +5693,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-004.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-004.webp"
         },
         {
           "type": "paragraph",
@@ -5732,7 +5732,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-005.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-005.webp"
         },
         {
           "type": "paragraph",
@@ -5756,7 +5756,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-006.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -5780,7 +5780,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-007.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-007.webp"
         },
         {
           "type": "paragraph",
@@ -5804,7 +5804,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-008.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-008.webp"
         },
         {
           "type": "paragraph",
@@ -5818,7 +5818,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-009.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-009.webp"
         },
         {
           "type": "paragraph",
@@ -5832,7 +5832,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-010.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-010.webp"
         },
         {
           "type": "paragraph",
@@ -5851,7 +5851,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-011.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-011.webp"
         },
         {
           "type": "paragraph",
@@ -5870,7 +5870,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-012.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-012.webp"
         },
         {
           "type": "paragraph",
@@ -5884,7 +5884,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-013.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-013.webp"
         },
         {
           "type": "paragraph",
@@ -5893,7 +5893,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-014.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-014.webp"
         },
         {
           "type": "paragraph",
@@ -5917,7 +5917,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-015.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-015.webp"
         },
         {
           "type": "paragraph",
@@ -5941,7 +5941,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-016.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-016.webp"
         },
         {
           "type": "paragraph",
@@ -5960,7 +5960,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-017.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-017.webp"
         },
         {
           "type": "paragraph",
@@ -5989,7 +5989,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-018.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-018.webp"
         },
         {
           "type": "paragraph",
@@ -6028,7 +6028,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-019.png"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-019.webp"
         },
         {
           "type": "paragraph",
@@ -6052,7 +6052,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-020.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-020.webp"
         },
         {
           "type": "paragraph",
@@ -6071,7 +6071,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-021.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-021.webp"
         },
         {
           "type": "paragraph",
@@ -6090,7 +6090,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/alien-meme-culture/image-022.jpg"
+          "src": "/portfolio-assets/extracted/alien-meme-culture/image-022.webp"
         },
         {
           "type": "paragraph",
@@ -6207,7 +6207,7 @@
         "角色塑造"
       ],
       "source": "docs/信号文章/说真的，《电锯人》的梦早该结束了。.docx",
-      "image": "/portfolio-assets/extracted/chainsaw-man-dream/image-001.jpg",
+      "image": "/portfolio-assets/extracted/chainsaw-man-dream/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -6226,7 +6226,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-001.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-001.webp"
         },
         {
           "type": "paragraph",
@@ -6240,7 +6240,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-002.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-002.webp"
         },
         {
           "type": "paragraph",
@@ -6304,7 +6304,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-003.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-003.webp"
         },
         {
           "type": "paragraph",
@@ -6323,7 +6323,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-004.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-004.webp"
         },
         {
           "type": "paragraph",
@@ -6342,7 +6342,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-005.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-005.webp"
         },
         {
           "type": "paragraph",
@@ -6366,7 +6366,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-006.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -6395,7 +6395,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-007.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-007.webp"
         },
         {
           "type": "paragraph",
@@ -6409,7 +6409,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-008.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-008.webp"
         },
         {
           "type": "paragraph",
@@ -6433,7 +6433,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-009.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-009.webp"
         },
         {
           "type": "paragraph",
@@ -6447,11 +6447,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-010.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-010.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-011.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-011.webp"
         },
         {
           "type": "paragraph",
@@ -6465,7 +6465,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-012.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-012.webp"
         },
         {
           "type": "paragraph",
@@ -6479,7 +6479,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-013.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-013.webp"
         },
         {
           "type": "paragraph",
@@ -6493,7 +6493,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-014.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-014.webp"
         },
         {
           "type": "paragraph",
@@ -6512,7 +6512,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-015.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-015.webp"
         },
         {
           "type": "paragraph",
@@ -6521,7 +6521,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-016.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-016.webp"
         },
         {
           "type": "paragraph",
@@ -6535,7 +6535,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-017.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-017.webp"
         },
         {
           "type": "paragraph",
@@ -6564,7 +6564,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-018.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-018.webp"
         },
         {
           "type": "paragraph",
@@ -6593,7 +6593,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-019.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-019.webp"
         },
         {
           "type": "paragraph",
@@ -6607,7 +6607,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-020.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-020.webp"
         },
         {
           "type": "paragraph",
@@ -6621,7 +6621,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-021.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-021.webp"
         },
         {
           "type": "paragraph",
@@ -6630,7 +6630,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-022.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-022.webp"
         },
         {
           "type": "paragraph",
@@ -6659,7 +6659,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-023.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-023.webp"
         },
         {
           "type": "paragraph",
@@ -6698,7 +6698,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-024.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-024.webp"
         },
         {
           "type": "paragraph",
@@ -6727,7 +6727,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-025.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-025.webp"
         },
         {
           "type": "paragraph",
@@ -6751,7 +6751,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-026.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-026.webp"
         },
         {
           "type": "paragraph",
@@ -6775,7 +6775,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-027.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-027.webp"
         },
         {
           "type": "paragraph",
@@ -6809,7 +6809,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-028.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-028.webp"
         },
         {
           "type": "paragraph",
@@ -6843,7 +6843,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-029.png"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-029.webp"
         },
         {
           "type": "paragraph",
@@ -6877,7 +6877,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-030.jpg"
+          "src": "/portfolio-assets/extracted/chainsaw-man-dream/image-030.webp"
         },
         {
           "type": "paragraph",
@@ -7022,7 +7022,7 @@
         "情绪连接"
       ],
       "source": "docs/信号文章/谈藤本树作品中颇受追捧的“电影感”背后的生效机制.docx",
-      "image": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-001.jpg",
+      "image": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-001.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -7041,7 +7041,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-001.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-001.webp"
         },
         {
           "type": "paragraph",
@@ -7090,7 +7090,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-002.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-002.webp"
         },
         {
           "type": "paragraph",
@@ -7099,7 +7099,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-003.png"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-003.webp"
         },
         {
           "type": "paragraph",
@@ -7113,7 +7113,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-004.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-004.webp"
         },
         {
           "type": "paragraph",
@@ -7172,7 +7172,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-005.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-005.webp"
         },
         {
           "type": "paragraph",
@@ -7186,7 +7186,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-006.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-006.webp"
         },
         {
           "type": "paragraph",
@@ -7250,11 +7250,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-007.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-007.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-008.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-008.webp"
         },
         {
           "type": "paragraph",
@@ -7303,7 +7303,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-009.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-009.webp"
         },
         {
           "type": "paragraph",
@@ -7322,7 +7322,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-010.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-010.webp"
         },
         {
           "type": "paragraph",
@@ -7416,7 +7416,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-011.png"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-011.webp"
         },
         {
           "type": "paragraph",
@@ -7455,7 +7455,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-012.png"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-012.webp"
         },
         {
           "type": "paragraph",
@@ -7494,7 +7494,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-013.jpg"
+          "src": "/portfolio-assets/extracted/fujimoto-cinematic-sense/image-013.webp"
         },
         {
           "type": "paragraph",
@@ -12936,7 +12936,7 @@
         "bbno$"
       ],
       "source": "docs/信号文章/海外Z世代顶流歌手玩转互联网的方法分析",
-      "image": "/portfolio-assets/articles/bbno-internet-playbook/image-01.jpg",
+      "image": "/portfolio-assets/articles/bbno-internet-playbook/image-01.webp",
       "blocks": [
         {
           "type": "paragraph",
@@ -12950,7 +12950,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-01.jpg"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-01.webp"
         },
         {
           "type": "paragraph",
@@ -12959,7 +12959,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-02.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-02.webp"
         },
         {
           "type": "paragraph",
@@ -12978,7 +12978,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-03.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-03.webp"
         },
         {
           "type": "paragraph",
@@ -12987,11 +12987,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-04.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-04.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-05.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-05.webp"
         },
         {
           "type": "paragraph",
@@ -13010,7 +13010,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-06.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-06.webp"
         },
         {
           "type": "paragraph",
@@ -13019,7 +13019,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-07.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-07.webp"
         },
         {
           "type": "paragraph",
@@ -13033,11 +13033,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-08.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-08.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-09.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-09.webp"
         },
         {
           "type": "paragraph",
@@ -13046,19 +13046,19 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-10.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-10.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-11.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-11.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-12.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-12.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-13.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-13.webp"
         },
         {
           "type": "paragraph",
@@ -13082,11 +13082,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-14.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-14.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-15.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-15.webp"
         },
         {
           "type": "paragraph",
@@ -13095,7 +13095,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-16.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-16.webp"
         },
         {
           "type": "paragraph",
@@ -13104,7 +13104,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-17.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-17.webp"
         },
         {
           "type": "paragraph",
@@ -13128,11 +13128,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-18.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-18.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-19.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-19.webp"
         },
         {
           "type": "paragraph",
@@ -13141,7 +13141,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-20.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-20.webp"
         },
         {
           "type": "paragraph",
@@ -13150,7 +13150,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-21.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-21.webp"
         },
         {
           "type": "paragraph",
@@ -13174,7 +13174,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-22.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-22.webp"
         },
         {
           "type": "paragraph",
@@ -13183,11 +13183,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-23.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-23.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-24.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-24.webp"
         },
         {
           "type": "paragraph",
@@ -13231,15 +13231,15 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-25.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-25.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-26.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-26.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-27.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-27.webp"
         },
         {
           "type": "paragraph",
@@ -13258,19 +13258,19 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-28.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-28.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-29.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-29.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-30.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-30.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-31.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-31.webp"
         },
         {
           "type": "paragraph",
@@ -13284,11 +13284,11 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-32.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-32.webp"
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-33.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-33.webp"
         },
         {
           "type": "paragraph",
@@ -13337,7 +13337,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-34.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-34.webp"
         },
         {
           "type": "paragraph",
@@ -13346,7 +13346,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-35.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-35.webp"
         },
         {
           "type": "paragraph",
@@ -13370,7 +13370,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-36.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-36.webp"
         },
         {
           "type": "paragraph",
@@ -13394,7 +13394,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-37.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-37.webp"
         },
         {
           "type": "paragraph",
@@ -13423,7 +13423,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-38.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-38.webp"
         },
         {
           "type": "paragraph",
@@ -13432,7 +13432,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-39.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-39.webp"
         },
         {
           "type": "paragraph",
@@ -13451,7 +13451,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-40.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-40.webp"
         },
         {
           "type": "paragraph",
@@ -13490,7 +13490,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-41.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-41.webp"
         },
         {
           "type": "paragraph",
@@ -13504,7 +13504,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-42.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-42.webp"
         },
         {
           "type": "paragraph",
@@ -13523,7 +13523,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-43.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-43.webp"
         },
         {
           "type": "paragraph",
@@ -13537,7 +13537,7 @@
         },
         {
           "type": "image",
-          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-44.png"
+          "src": "/portfolio-assets/articles/bbno-internet-playbook/image-44.webp"
         },
         {
           "type": "paragraph",

@@ -442,16 +442,8 @@ const filmMediaItems = isFilm
     </button>
   </main>
 
-  <script is:inline>
+  <script is:inline data-astro-rerun>
     (() => {
-      const backButton = document.querySelector("[data-detail-back]");
-      if (backButton instanceof HTMLAnchorElement) {
-        backButton.addEventListener("click", (event) => {
-          event.preventDefault();
-          window.location.assign(backButton.href);
-        });
-      }
-
       const button = document.querySelector("[data-scroll-top]");
       if (!(button instanceof HTMLButtonElement)) return;
 
@@ -550,13 +542,24 @@ const filmMediaItems = isFilm
   )}
 
   {isFilm && (
-    <script is:inline>
+    <script is:inline data-astro-rerun>
       document.querySelectorAll("[data-film-gallery]").forEach((gallery) => {
         const video = gallery.querySelector("[data-film-video]");
         const stage = gallery.querySelector(".film-stage");
         const image = gallery.querySelector("[data-film-image]");
         const placeholder = gallery.querySelector("[data-film-placeholder]");
+        const rail = gallery.querySelector(".film-media-rail");
         const thumbs = Array.from(gallery.querySelectorAll("[data-film-thumb]"));
+
+        rail?.addEventListener("wheel", (event) => {
+          if (!(rail instanceof HTMLElement) || rail.scrollWidth <= rail.clientWidth) return;
+          const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX)
+            ? event.deltaY
+            : event.deltaX;
+          if (!delta) return;
+          event.preventDefault();
+          rail.scrollBy({ left: delta, behavior: "smooth" });
+        }, { passive: false });
 
         const setHidden = (element, hidden) => {
           if (element instanceof HTMLElement) element.hidden = hidden;

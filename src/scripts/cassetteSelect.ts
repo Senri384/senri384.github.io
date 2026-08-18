@@ -1,3 +1,5 @@
+import { navigate } from "astro:transitions/client";
+
 interface CassetteWork {
   slug: string;
   title: string;
@@ -104,11 +106,42 @@ if (rootElement && dataElement?.textContent) {
   gameCardOpenSound.preload = "auto";
   gameCardOpenSound.load();
   const cases = Array.from(root.querySelectorAll<HTMLElement>("[data-cassette-case]"));
+  const imagePreloadCache = new Map<string, Promise<void>>();
+  const preloadImage = (source?: string) => {
+    if (!source) return Promise.resolve();
+    const cached = imagePreloadCache.get(source);
+    if (cached) return cached;
+    const promise = new Promise<void>((resolve) => {
+      const image = new Image();
+      const finish = () => {
+        if (typeof image.decode === "function") void image.decode().catch(() => {}).finally(resolve);
+        else resolve();
+      };
+      image.addEventListener("load", finish, { once: true });
+      image.addEventListener("error", () => resolve(), { once: true });
+      image.src = source;
+      if (image.complete) finish();
+    });
+    imagePreloadCache.set(source, promise);
+    return promise;
+  };
+  const preloadWorkVisuals = (work: CassetteWork) => Promise.all([
+    preloadImage(work.caseImage),
+    preloadImage(work.titleImage),
+    preloadImage(work.faceMaskImage),
+    preloadImage(work.volumeMaskImage),
+  ]);
+  const preloadCategoryVisuals = (category: CassetteCategory) => Promise.all([
+    preloadImage(category.titleImage),
+    preloadImage(category.faceMaskImage),
+    preloadImage(category.volumeMaskImage),
+  ]);
   const categoryTitlePreloads = categories.map((category) => {
     const image = new Image();
     image.src = category.titleImage;
     return image;
   });
+  categories.forEach((category) => void preloadCategoryVisuals(category));
   let activeCategoryIndex: number | null = null;
   let browseCategoryIndex = 0;
   let activeWorkIndex = 0;
@@ -244,6 +277,7 @@ if (rootElement && dataElement?.textContent) {
     titleStageMainMotion.dataset.miamiFaceMask = work.faceMaskImage;
     titleStageMainMotion.dataset.miamiVolumeMask = work.volumeMaskImage;
     titleStage.hidden = false;
+    void preloadWorkVisuals(work);
     if (workDescriptionStage && workDescriptionSummary && workDescriptionBody) {
       const hasDescription = Boolean(work.overview.trim() || work.description.trim());
       const summaryLength = Array.from(work.overview).reduce((total, character) => (
@@ -291,7 +325,7 @@ if (rootElement && dataElement?.textContent) {
       }
     }
 
-    window.location.assign(work.href);
+    void navigate(work.href);
   }
 
   function ensureBrowseEntryBeforeDirectory(categorySlug: string, workSlug: string | null) {
@@ -610,6 +644,8 @@ if (rootElement && dataElement?.textContent) {
     const caseElement = cases[index];
     const category = categories[index];
     if (!caseElement || !category?.works.length) return;
+
+    category.works.forEach((work) => void preloadWorkVisuals(work));
 
     activeCategoryIndex = index;
     markBrowseCategory(index);

@@ -145,7 +145,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/archive-sidecase-closed-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/archive-sidecase-closed-v2.webp") center / contain no-repeat;
   transform: translateY(0) scale(1);
   filter:
     contrast(1.08)
@@ -210,7 +210,7 @@
 .city-select-page .cassette-case::before {
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/archive-vertical-holder-v1.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/archive-vertical-holder-v1.webp") center / contain no-repeat;
   filter:
     drop-shadow(16px 18px 0 rgba(0, 0, 0, 0.38))
     drop-shadow(0 0 8px rgba(255, 0, 92, 0.18));
@@ -255,7 +255,7 @@
   width: 48%;
   height: 77%;
   border: 0;
-  background: url("/portfolio-assets/ui/vertical-work-case-v1.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/vertical-work-case-v1.webp") center / contain no-repeat;
   box-shadow: none;
   opacity: 1;
   pointer-events: auto;
@@ -775,7 +775,7 @@
 
 .city-select-page .category-title-kicker {
   top: clamp(112px, 15vh, 168px);
-  font-family: "Brush Script MT", "Segoe Script", "Segoe Print", cursive;
+  font-family: "Oxanium", "Microsoft YaHei", sans-serif;
   font-size: clamp(1.12rem, 2.05vw, 1.96rem);
   font-style: italic;
   font-weight: 600;
@@ -786,7 +786,7 @@
 .city-select-page .category-title-kicker span {
   display: inline-block;
   color: #72f6e4;
-  -webkit-text-stroke: 0.55px rgba(3, 8, 10, 0.94);
+  -webkit-text-stroke: 0.3px rgba(3, 8, 10, 0.82);
   text-shadow:
     1px 1px 0 #050003,
     2px 2px 0 #6f002c,
@@ -1164,7 +1164,7 @@
    carousel state machine; only the physical metaphor and entry transition
    change here. */
 .city-select-page .disc-archive-shell {
-  background-image: url("/portfolio-assets/ui/disc-system/archive-closed.png");
+  background-image: url("/portfolio-assets/ui/disc-system/archive-closed.webp");
   background-position: center;
   background-size: 158% auto;
   filter:
@@ -1182,7 +1182,7 @@
 }
 
 .city-select-page .disc-archive-case::before {
-  background-image: url("/portfolio-assets/ui/disc-system/archive-open.png");
+  background-image: url("/portfolio-assets/ui/disc-system/archive-open.webp");
   background-position: center;
   background-size: contain;
   filter:

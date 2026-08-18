@@ -51,7 +51,7 @@
 }
 
 .city-select-page .cassette-shell {
-  background-image: url("/portfolio-assets/ui/archive-sidecase-closed-v2.png");
+  background-image: url("/portfolio-assets/ui/archive-sidecase-closed-v2.webp");
   filter:
     contrast(1.08)
     saturate(0.94)
@@ -96,7 +96,7 @@
 }
 
 .city-select-page .cassette-case::before {
-  background-image: url("/portfolio-assets/ui/archive-sidecase-slot-v2.png");
+  background-image: url("/portfolio-assets/ui/archive-sidecase-slot-v2.webp");
 }
 
 .city-select-page .cassette-carousel[data-mode="open"] .cassette-case[data-position="active"] {
@@ -108,7 +108,7 @@
   top: 31%;
   width: 45%;
   height: 38%;
-  background: url("/portfolio-assets/ui/side-slot-work-case-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/side-slot-work-case-v2.webp") center / contain no-repeat;
   transform: translateX(34%) rotate(0.8deg);
 }
 
@@ -286,7 +286,7 @@
 }
 
 .city-select-page .cassette-shell {
-  background-image: url("/portfolio-assets/ui/archive-case-closed-v4.png");
+  background-image: url("/portfolio-assets/ui/archive-case-closed-v4.webp");
   background-size: contain;
   filter:
     contrast(1.08)
@@ -345,7 +345,7 @@
   width: 100%;
   height: 100%;
   aspect-ratio: auto;
-  background-image: url("/portfolio-assets/ui/archive-case-open-v4.png");
+  background-image: url("/portfolio-assets/ui/archive-case-open-v4.webp");
   background-position: center;
   background-size: contain;
   filter:
@@ -367,7 +367,7 @@
   width: 29.5%;
   height: 70%;
   display: block;
-  background: url("/portfolio-assets/ui/work-cassette-box-generic-v1.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/work-cassette-box-generic-v1.webp") center / contain no-repeat;
   opacity: 1;
   transform: translateX(22%) rotate(1.2deg);
   transform-origin: 36% 50%;
@@ -396,7 +396,7 @@
   width: clamp(340px, 31vw, 520px);
   min-height: clamp(92px, 9vw, 132px);
   padding: clamp(18px, 1.7vw, 28px) clamp(24px, 2.4vw, 40px) 14px clamp(28px, 2.8vw, 52px);
-  background: url("/portfolio-assets/ui/hud-description-frame-v2.png") center / 100% 100% no-repeat;
+  background: url("/portfolio-assets/ui/hud-description-frame-v2.webp") center / 100% 100% no-repeat;
 }
 
 .city-select-page .cassette-carousel[data-mode="open"] .tape-copy strong {
@@ -606,7 +606,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/archive-sidecase-closed-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/archive-sidecase-closed-v2.webp") center / contain no-repeat;
   transform: translateY(0) scale(1);
   filter:
     contrast(1.08)
@@ -680,7 +680,7 @@
 .city-select-page .cassette-case::before {
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/archive-sidecase-slot-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/archive-sidecase-slot-v2.webp") center / contain no-repeat;
   filter:
     drop-shadow(16px 18px 0 rgba(0, 0, 0, 0.38))
     drop-shadow(0 0 8px rgba(255, 0, 92, 0.18));
@@ -721,7 +721,7 @@
   width: 45%;
   height: 38%;
   border: 0;
-  background: url("/portfolio-assets/ui/side-slot-work-case-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/side-slot-work-case-v2.webp") center / contain no-repeat;
   box-shadow: none;
   opacity: 1;
   pointer-events: auto;
@@ -988,7 +988,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/archive-sidecase-closed-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/archive-sidecase-closed-v2.webp") center / contain no-repeat;
   transform: translateY(0) scale(1);
   filter:
     contrast(1.08)
@@ -1062,7 +1062,7 @@
 .city-select-page .cassette-case::before {
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/archive-sidecase-slot-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/archive-sidecase-slot-v2.webp") center / contain no-repeat;
   filter:
     drop-shadow(16px 18px 0 rgba(0, 0, 0, 0.38))
     drop-shadow(0 0 8px rgba(255, 0, 92, 0.18));
@@ -1103,7 +1103,7 @@
   width: 45%;
   height: 38%;
   border: 0;
-  background: url("/portfolio-assets/ui/side-slot-work-case-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/side-slot-work-case-v2.webp") center / contain no-repeat;
   box-shadow: none;
   opacity: 1;
   pointer-events: auto;
@@ -1306,7 +1306,7 @@
 }
 
 .city-select-page .cassette-shell {
-  background-image: url("/portfolio-assets/ui/archive-sidecase-closed-v2.png");
+  background-image: url("/portfolio-assets/ui/archive-sidecase-closed-v2.webp");
   filter:
     contrast(1.08)
     saturate(0.94)
@@ -1351,7 +1351,7 @@
 }
 
 .city-select-page .cassette-case::before {
-  background-image: url("/portfolio-assets/ui/archive-sidecase-slot-v2.png");
+  background-image: url("/portfolio-assets/ui/archive-sidecase-slot-v2.webp");
 }
 
 .city-select-page .cassette-carousel[data-mode="open"] .cassette-case[data-position="active"] {
@@ -1363,7 +1363,7 @@
   top: 31%;
   width: 45%;
   height: 38%;
-  background: url("/portfolio-assets/ui/side-slot-work-case-v2.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/side-slot-work-case-v2.webp") center / contain no-repeat;
   transform: translateX(34%) rotate(0.8deg);
 }
 
@@ -1567,7 +1567,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/cassette-case-closed-v3.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/cassette-case-closed-v3.webp") center / contain no-repeat;
   transform: translateY(0) scale(1);
   transform-origin: 50% 56%;
   filter:
@@ -1701,7 +1701,7 @@
   z-index: 2;
   width: 100%;
   height: 100%;
-  background: url("/portfolio-assets/ui/cassette-case-open-v3.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/cassette-case-open-v3.webp") center / contain no-repeat;
   opacity: 0;
   pointer-events: none;
   transform: translateX(-10px) scale(0.97);
@@ -2052,7 +2052,7 @@
 }
 
 .city-select-page .cassette-shell {
-  background-image: url("/portfolio-assets/ui/archive-case-closed-v4.png");
+  background-image: url("/portfolio-assets/ui/archive-case-closed-v4.webp");
   background-size: contain;
   filter:
     contrast(1.08)
@@ -2111,7 +2111,7 @@
   width: 100%;
   height: 100%;
   aspect-ratio: auto;
-  background-image: url("/portfolio-assets/ui/archive-case-open-v4.png");
+  background-image: url("/portfolio-assets/ui/archive-case-open-v4.webp");
   background-position: center;
   background-size: contain;
   filter:
@@ -2133,7 +2133,7 @@
   width: 29.5%;
   height: 70%;
   display: block;
-  background: url("/portfolio-assets/ui/work-cassette-box-generic-v1.png") center / contain no-repeat;
+  background: url("/portfolio-assets/ui/work-cassette-box-generic-v1.webp") center / contain no-repeat;
   opacity: 1;
   transform: translateX(22%) rotate(1.2deg);
   transform-origin: 36% 50%;
@@ -2162,7 +2162,7 @@
   width: clamp(340px, 31vw, 520px);
   min-height: clamp(92px, 9vw, 132px);
   padding: clamp(18px, 1.7vw, 28px) clamp(24px, 2.4vw, 40px) 14px clamp(28px, 2.8vw, 52px);
-  background: url("/portfolio-assets/ui/hud-description-frame-v2.png") center / 100% 100% no-repeat;
+  background: url("/portfolio-assets/ui/hud-description-frame-v2.webp") center / 100% 100% no-repeat;
 }
 
 .city-select-page .cassette-carousel[data-mode="open"] .tape-copy strong {

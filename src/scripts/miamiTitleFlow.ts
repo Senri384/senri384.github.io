@@ -146,12 +146,28 @@ interface TitleFlowInstance {
   requestToken: number;
   width: number;
   height: number;
+  resizeObserver: ResizeObserver;
   render?: (time: number) => void;
 }
 
 const instances: TitleFlowInstance[] = [];
 const textureLoader = new THREE.TextureLoader();
+const textureCache = new Map<string, Promise<THREE.Texture>>();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function cachedTexture(url: string) {
+  const cached = textureCache.get(url);
+  if (cached) return cached;
+  const pending = textureLoader.loadAsync(url).then((texture) => {
+    texture.colorSpace = THREE.NoColorSpace;
+    texture.minFilter = THREE.NearestFilter;
+    texture.magFilter = THREE.NearestFilter;
+    texture.generateMipmaps = false;
+    return texture;
+  });
+  textureCache.set(url, pending);
+  return pending;
+}
 
 function resize(instance: TitleFlowInstance) {
   const rect = instance.element.getBoundingClientRect();
@@ -178,24 +194,12 @@ async function loadMasks(instance: TitleFlowInstance) {
 
   try {
     const [faceTexture, volumeTexture] = await Promise.all([
-      textureLoader.loadAsync(faceUrl),
-      textureLoader.loadAsync(volumeUrl),
+      cachedTexture(faceUrl),
+      cachedTexture(volumeUrl),
     ]);
     if (token !== instance.requestToken) {
-      faceTexture.dispose();
-      volumeTexture.dispose();
       return;
     }
-
-    for (const texture of [faceTexture, volumeTexture]) {
-      texture.colorSpace = THREE.NoColorSpace;
-      texture.minFilter = THREE.NearestFilter;
-      texture.magFilter = THREE.NearestFilter;
-      texture.generateMipmaps = false;
-    }
-
-    instance.faceTexture?.dispose();
-    instance.volumeTexture?.dispose();
     instance.faceTexture = faceTexture;
     instance.volumeTexture = volumeTexture;
     instance.material.uniforms.uFaceMask.value = faceTexture;
@@ -220,12 +224,12 @@ function createTitleFlow(element: HTMLElement) {
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
+      antialias: false,
       premultipliedAlpha: false,
       powerPreference: "low-power",
     });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.35));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     const material = new THREE.ShaderMaterial({
@@ -259,6 +263,7 @@ function createTitleFlow(element: HTMLElement) {
       requestToken: 0,
       width: 0,
       height: 0,
+      resizeObserver: new ResizeObserver(() => resize(instance)),
       observer: new MutationObserver(() => void loadMasks(instance)),
     };
     instance.observer.observe(element, {
@@ -266,10 +271,12 @@ function createTitleFlow(element: HTMLElement) {
       attributeFilter: ["data-miami-face-mask", "data-miami-volume-mask"],
     });
     instances.push(instance);
+    instance.resizeObserver.observe(element);
+    resize(instance);
     void loadMasks(instance);
 
     const render = (time: number) => {
-      if (!element.classList.contains("has-three-title-flow") || !resize(instance)) return;
+      if (!element.classList.contains("has-three-title-flow") || instance.width < 1 || instance.height < 1) return;
       // A single global multiplier keeps every phase relationship intact.
       material.uniforms.uTime.value = reducedMotion.matches ? 1.75 : time * 0.0015;
       renderer.render(scene, camera);
