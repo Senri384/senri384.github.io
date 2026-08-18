@@ -165,7 +165,29 @@ const { section } = Astro.props;
       assets.resume,
       ...Object.values(assets.openLoaded),
     ];
-    allDeckImages.forEach((source) => void preloadImage(source));
+    const initialDeckImage = loaded
+      ? assets[previousSection] || assets[section]
+      : assets.empty;
+    void preloadImage(initialDeckImage);
+
+    let deferredDeckPreloadsStarted = false;
+    const preloadRemainingDeckImages = () => {
+      if (deferredDeckPreloadsStarted) return;
+      deferredDeckPreloadsStarted = true;
+      const run = () => allDeckImages.forEach((source) => void preloadImage(source));
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(run, { timeout: 4000 });
+      } else {
+        window.setTimeout(run, 1200);
+      }
+    };
+
+    if (document.querySelector("[data-city-select]")) {
+      window.addEventListener("city-select:ready", preloadRemainingDeckImages, { once: true });
+      window.setTimeout(preloadRemainingDeckImages, 5000);
+    } else {
+      preloadRemainingDeckImages();
+    }
 
     const save = () => {
       root.dataset.trackIndex = String(trackIndex);

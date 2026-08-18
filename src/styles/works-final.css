@@ -3,6 +3,37 @@
   padding: clamp(8px, 1vw, 14px);
 }
 
+.city-select-page .city-select-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  background-image:
+    radial-gradient(circle at 50% 66%, rgba(255, 112, 139, 0.9) 0 6.5%, rgba(255, 46, 111, 0.54) 6.7% 8%, transparent 8.3%),
+    url("/portfolio-assets/ui/city-skyline-near.webp"),
+    url("/portfolio-assets/ui/city-skyline-near.webp"),
+    url("/portfolio-assets/ui/city-skyline-near.webp");
+  background-repeat: no-repeat, repeat-x, repeat-x, repeat-x;
+  background-position: center, 0 72%, 18vw 76%, -11vw 80%;
+  background-size: auto, auto 19%, auto 14.5%, auto 10.5%;
+  filter: saturate(1.14) brightness(0.88);
+  transition: opacity 320ms ease;
+}
+
+.city-select-page .city-select-canvas {
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.city-select-page.is-city-ready .city-select-fallback {
+  opacity: 0;
+}
+
+.city-select-page.is-city-ready .city-select-canvas {
+  opacity: 1;
+}
+
 .city-select-page::before {
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.34) 0 7%, transparent 22% 87%, rgba(0, 0, 0, 0.16) 100%),

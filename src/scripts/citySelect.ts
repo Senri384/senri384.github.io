@@ -30,7 +30,7 @@ const layerConfigs: SkylineLayerConfig[] = [
 
 const loader = new THREE.TextureLoader();
 
-function loadSkylineTexture() {
+function loadSkylineTexture(onReady: () => void) {
   const texture = loader.load(skylineSource, (loadedTexture) => {
     const source = loadedTexture.image as HTMLImageElement;
     const canvas = document.createElement("canvas");
@@ -39,6 +39,7 @@ function loadSkylineTexture() {
     const context = canvas.getContext("2d", { willReadFrequently: true });
     if (!context) {
       loadedTexture.needsUpdate = true;
+      onReady();
       return;
     }
 
@@ -66,6 +67,7 @@ function loadSkylineTexture() {
       // Keep the original loaded skyline visible when canvas pixel access fails.
     }
     loadedTexture.needsUpdate = true;
+    onReady();
   });
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.minFilter = THREE.LinearFilter;
@@ -189,7 +191,12 @@ function initCitySelect(canvas: HTMLCanvasElement) {
   });
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 260);
-  const skylineTexture = loadSkylineTexture();
+  const page = canvas.closest<HTMLElement>("[data-city-select]");
+  let skylineReady = false;
+  const markSkylineReady = () => {
+    skylineReady = true;
+  };
+  const skylineTexture = loadSkylineTexture(markSkylineReady);
   const layers = layerConfigs.map((config) => buildSkylineLayer(config, skylineTexture));
   const sun = buildSun();
   let pan = 0;
@@ -243,6 +250,14 @@ function initCitySelect(canvas: HTMLCanvasElement) {
     placeTiles();
 
     renderer.render(scene, camera);
+    const skylineImage = skylineTexture.image as HTMLImageElement | undefined;
+    const canShowDynamicSkyline = skylineReady || Boolean(
+      skylineImage?.complete && skylineImage.naturalWidth > 0,
+    );
+    if (canShowDynamicSkyline && page && !page.classList.contains("is-city-ready")) {
+      page.classList.add("is-city-ready");
+      window.dispatchEvent(new CustomEvent("city-select:ready"));
+    }
   };
 
   frame = requestAnimationFrame(render);
