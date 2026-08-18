@@ -4269,7 +4269,9 @@ html[data-debug-hud="hidden"] .hud {
   display: grid;
   place-items: stretch;
   overflow: hidden;
-  flex: 0 0 clamp(102px, 15.2%, 160px);
+  flex: 0 0 auto;
+  aspect-ratio: 1 / 1;
+  width: auto;
   height: 100%;
   min-width: 0;
   padding: 0;
@@ -6305,9 +6307,6 @@ html[data-debug-hud="hidden"] .hud {
     height: clamp(58px, 9.5svh, 76px);
   }
 
-  .detail-page[data-category="photography"] .photo-media-thumb {
-    flex-basis: clamp(88px, 13.5%, 126px);
-  }
 }
 
 @media (max-width: 760px) {
@@ -6350,7 +6349,4 @@ html[data-debug-hud="hidden"] .hud {
     height: clamp(64px, 10svh, 78px);
   }
 
-  .detail-page[data-category="photography"] .photo-media-thumb {
-    flex-basis: min(34vw, 138px);
-  }
 }
