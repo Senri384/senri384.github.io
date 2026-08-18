@@ -195,6 +195,14 @@ const filmMediaItems = isFilm
           },
     ]
   : [];
+const photoMediaItems = isPhotoAlbum
+  ? (work.blocks ?? [])
+      .filter((block: any) => block?.type === "image" && typeof block.src === "string")
+      .map((block: any, index: number) => ({
+        src: block.src,
+        alt: `${work.title}摄影作品 ${String(index + 1).padStart(2, "0")}`,
+      }))
+  : [];
 ---
 
 <BaseLayout
@@ -301,6 +309,40 @@ const filmMediaItems = isFilm
               </section>
 
             </aside>
+          </div>
+        </section>
+      ) : isPhotoAlbum ? (
+        <section class="photo-showcase" data-photo-gallery aria-label={`${work.title}摄影集`}>
+          <figure
+            class="photo-main-stage"
+            data-photo-stage
+            tabindex="0"
+            aria-label={`${work.title}主图，使用滚轮或方向键切换照片`}
+          >
+            <img
+              src={photoMediaItems[0]?.src ?? work.image}
+              alt={photoMediaItems[0]?.alt ?? `${work.title}封面`}
+              loading="eager"
+              fetchpriority="high"
+              data-photo-main
+            />
+          </figure>
+
+          <div class="photo-media-rail" data-photo-rail aria-label={`${work.title}照片卷轴`}>
+            {photoMediaItems.map((item: any, index: number) => (
+              <button
+                class="photo-media-thumb"
+                type="button"
+                aria-label={`查看第 ${index + 1} 张照片`}
+                aria-pressed={index === 0 ? "true" : "false"}
+                data-photo-thumb
+                data-photo-index={index}
+                data-photo-src={item.src}
+                data-photo-alt={item.alt}
+              >
+                <img src={item.src} alt="" loading={index < 5 ? "eager" : "lazy"} />
+              </button>
+            ))}
           </div>
         </section>
       ) : work.table ? (
@@ -621,6 +663,98 @@ const filmMediaItems = isFilm
             setHidden(placeholder, false);
           });
         });
+      });
+    </script>
+  )}
+
+  {isPhotoAlbum && (
+    <script is:inline data-astro-rerun>
+      document.querySelectorAll("[data-photo-gallery]").forEach((gallery) => {
+        if (!(gallery instanceof HTMLElement) || gallery.dataset.ready === "true") return;
+        gallery.dataset.ready = "true";
+
+        const stage = gallery.querySelector("[data-photo-stage]");
+        const main = gallery.querySelector("[data-photo-main]");
+        const rail = gallery.querySelector("[data-photo-rail]");
+        const thumbs = Array.from(gallery.querySelectorAll("[data-photo-thumb]"));
+        if (!(stage instanceof HTMLElement) || !(main instanceof HTMLImageElement) || !thumbs.length) return;
+
+        let activeIndex = 0;
+        let wheelLocked = false;
+        let swapVersion = 0;
+
+        const preloadAround = (index) => {
+          [-1, 1].forEach((offset) => {
+            const neighbour = thumbs[(index + offset + thumbs.length) % thumbs.length];
+            if (!(neighbour instanceof HTMLButtonElement)) return;
+            const source = neighbour.dataset.photoSrc;
+            if (source) new Image().src = source;
+          });
+        };
+
+        const showPhoto = (nextIndex) => {
+          const index = (nextIndex + thumbs.length) % thumbs.length;
+          const thumb = thumbs[index];
+          if (!(thumb instanceof HTMLButtonElement)) return;
+
+          const source = thumb.dataset.photoSrc ?? "";
+          if (!source || (index === activeIndex && main.src.endsWith(source))) return;
+
+          activeIndex = index;
+          const version = ++swapVersion;
+          thumbs.forEach((item, itemIndex) => {
+            item.setAttribute("aria-pressed", String(itemIndex === index));
+          });
+          thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+
+          const incoming = new Image();
+          incoming.decoding = "async";
+          incoming.src = source;
+          const applyPhoto = () => {
+            if (version !== swapVersion) return;
+            main.classList.add("is-switching");
+            main.src = source;
+            main.alt = thumb.dataset.photoAlt ?? "";
+            requestAnimationFrame(() => main.classList.remove("is-switching"));
+            preloadAround(index);
+          };
+          if (incoming.complete) applyPhoto();
+          else incoming.addEventListener("load", applyPhoto, { once: true });
+        };
+
+        thumbs.forEach((thumb, index) => {
+          thumb.addEventListener("click", () => showPhoto(index));
+        });
+
+        stage.addEventListener("wheel", (event) => {
+          const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+          if (!delta) return;
+          event.preventDefault();
+          if (wheelLocked || Math.abs(delta) < 8) return;
+          wheelLocked = true;
+          showPhoto(activeIndex + (delta > 0 ? 1 : -1));
+          window.setTimeout(() => { wheelLocked = false; }, 240);
+        }, { passive: false });
+
+        stage.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+            event.preventDefault();
+            showPhoto(activeIndex + 1);
+          } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+            event.preventDefault();
+            showPhoto(activeIndex - 1);
+          }
+        });
+
+        rail?.addEventListener("wheel", (event) => {
+          if (!(rail instanceof HTMLElement) || rail.scrollWidth <= rail.clientWidth) return;
+          const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+          if (!delta) return;
+          event.preventDefault();
+          rail.scrollBy({ left: delta, behavior: "smooth" });
+        }, { passive: false });
+
+        preloadAround(0);
       });
     </script>
   )}
