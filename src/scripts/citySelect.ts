@@ -177,7 +177,7 @@ function applyVerticalLensShift(camera: THREE.PerspectiveCamera) {
 }
 
 function initCitySelect(canvas: HTMLCanvasElement) {
-  if (canvas.dataset.citySelectReady === "true") return;
+  if (canvas.dataset.citySelectReady === "true") return null;
   canvas.dataset.citySelectReady = "true";
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -247,20 +247,43 @@ function initCitySelect(canvas: HTMLCanvasElement) {
 
   frame = requestAnimationFrame(render);
 
-  document.addEventListener("visibilitychange", () => {
+  const handleVisibilityChange = () => {
     if (document.hidden) cancelAnimationFrame(frame);
     else {
       lastTime = performance.now();
       frame = requestAnimationFrame(render);
     }
-  });
+  };
+
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  return () => {
+    cancelAnimationFrame(frame);
+    window.removeEventListener("resize", resize);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+    skylineTexture.dispose();
+    layers.forEach((layer) => layer.meshes.forEach((mesh) => {
+      mesh.geometry.dispose();
+      mesh.material.dispose();
+    }));
+    sun.geometry.dispose();
+    (sun.material as THREE.Material).dispose();
+    renderer.dispose();
+  };
 }
 
+let citySelectCleanups: Array<() => void> = [];
+
 function bootCitySelect() {
+  citySelectCleanups.forEach((cleanup) => cleanup());
+  citySelectCleanups = [];
   const canvases = Array.from(
     document.querySelectorAll<HTMLCanvasElement>("[data-city-select-canvas]"),
   );
-  canvases.forEach(initCitySelect);
+  canvases.forEach((canvas) => {
+    const cleanup = initCitySelect(canvas);
+    if (cleanup) citySelectCleanups.push(cleanup);
+  });
 }
 
 if (document.readyState === "loading") {
@@ -268,5 +291,6 @@ if (document.readyState === "loading") {
 } else {
   bootCitySelect();
 }
+document.addEventListener("astro:page-load", bootCitySelect);
 
 export {};

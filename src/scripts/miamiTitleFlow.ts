@@ -217,8 +217,10 @@ async function loadMasks(instance: TitleFlowInstance) {
 }
 
 function createTitleFlow(element: HTMLElement) {
+  if (element.dataset.miamiTitleFlowReady === "true") return;
   const canvas = element.querySelector<HTMLCanvasElement>("[data-miami-title-flow-canvas]");
   if (!canvas) return;
+  element.dataset.miamiTitleFlowReady = "true";
 
   try {
     const renderer = new THREE.WebGLRenderer({
@@ -283,11 +285,17 @@ function createTitleFlow(element: HTMLElement) {
     };
     instance.render = render;
   } catch {
+    delete element.dataset.miamiTitleFlowReady;
     element.classList.remove("has-three-title-flow");
   }
 }
 
-document.querySelectorAll<HTMLElement>(".miami-title-motion[data-miami-face-mask]").forEach(createTitleFlow);
+function bootTitleFlows() {
+  document.querySelectorAll<HTMLElement>(".miami-title-motion[data-miami-face-mask]").forEach(createTitleFlow);
+}
+
+bootTitleFlows();
+document.addEventListener("astro:page-load", bootTitleFlows);
 
 let animationTime = 0;
 let previousFrameTime: number | null = null;
@@ -300,10 +308,19 @@ function animate(time: number) {
   const frameDelta = Math.min(Math.max(time - previousFrameTime, 0), 34);
   animationTime += frameDelta;
   previousFrameTime = time;
-  for (const instance of instances) {
+  for (let index = instances.length - 1; index >= 0; index -= 1) {
+    const instance = instances[index];
+    if (!instance.element.isConnected) {
+      instance.resizeObserver.disconnect();
+      instance.observer.disconnect();
+      instance.material.dispose();
+      instance.renderer.dispose();
+      instances.splice(index, 1);
+      continue;
+    }
     instance.render?.(animationTime);
   }
   window.requestAnimationFrame(animate);
 }
 
-if (instances.length) window.requestAnimationFrame(animate);
+window.requestAnimationFrame(animate);

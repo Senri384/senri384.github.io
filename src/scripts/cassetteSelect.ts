@@ -57,10 +57,16 @@ interface CassettePayload {
   gameCardGeometry: GameCardGeometry;
 }
 
-const rootElement = document.querySelector<HTMLElement>("[data-cassette-carousel]");
-const dataElement = document.querySelector<HTMLScriptElement>("#cassette-select-data");
+let cleanupCassetteSelect: (() => void) | null = null;
 
-if (rootElement && dataElement?.textContent) {
+function bootCassetteSelect() {
+  cleanupCassetteSelect?.();
+  cleanupCassetteSelect = null;
+
+  const rootElement = document.querySelector<HTMLElement>("[data-cassette-carousel]");
+  const dataElement = document.querySelector<HTMLScriptElement>("#cassette-select-data");
+
+  if (rootElement && dataElement?.textContent) {
   const root = rootElement;
   const parsed = JSON.parse(dataElement.textContent) as CassettePayload | CassetteCategory[];
   const categories = Array.isArray(parsed) ? parsed : parsed.categories;
@@ -826,21 +832,32 @@ if (rootElement && dataElement?.textContent) {
     showCategoryTitle(browseCategoryIndex);
   }
 
-  window.addEventListener("pagehide", () => {
+  const handlePageHide = () => {
     if (!discOpening) return;
     resetDiscOpeningState();
-  });
+  };
 
-  window.addEventListener("pageshow", (event) => {
+  const handlePageShow = (event: PageTransitionEvent) => {
     if (!event.persisted && document.documentElement.dataset.discOpening !== "true") return;
     resetDiscOpeningState();
     restoreDirectoryStateFromUrl();
-  });
+  };
 
-  window.addEventListener("popstate", () => {
+  const handlePopState = () => {
     resetDiscOpeningState();
     restoreDirectoryStateFromUrl();
-  });
+  };
+
+  window.addEventListener("pagehide", handlePageHide);
+  window.addEventListener("pageshow", handlePageShow);
+  window.addEventListener("popstate", handlePopState);
+
+  cleanupCassetteSelect = () => {
+    window.removeEventListener("pagehide", handlePageHide);
+    window.removeEventListener("pageshow", handlePageShow);
+    window.removeEventListener("popstate", handlePopState);
+    if (discOpening) resetDiscOpeningState();
+  };
 
   rail?.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -869,6 +886,10 @@ if (rootElement && dataElement?.textContent) {
       stepWork(-1);
     }
   });
+  }
 }
+
+bootCassetteSelect();
+document.addEventListener("astro:page-load", bootCassetteSelect);
 
 export {};

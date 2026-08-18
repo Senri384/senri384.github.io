@@ -389,6 +389,7 @@ const { section } = Astro.props;
     document.addEventListener("astro:before-swap", handleBeforeSwap);
 
     window.__soundwavePlayer = {
+      play,
       playFromGame: async () => {
         if (!loaded) await swapCassette(false);
         setPlaying(true);

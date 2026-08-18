@@ -550,6 +550,26 @@ const filmMediaItems = isFilm
         const placeholder = gallery.querySelector("[data-film-placeholder]");
         const rail = gallery.querySelector(".film-media-rail");
         const thumbs = Array.from(gallery.querySelectorAll("[data-film-thumb]"));
+        let resumeMusicAfterVideo = false;
+
+        const soundwavePlayer = () => window.__soundwavePlayer;
+        const pauseMusicForVideo = () => {
+          const player = soundwavePlayer();
+          resumeMusicAfterVideo = Boolean(player?.getState?.().playing);
+          if (resumeMusicAfterVideo) player?.pause?.();
+        };
+        const resumeMusicAfterPlayback = () => {
+          if (!resumeMusicAfterVideo) return;
+          resumeMusicAfterVideo = false;
+          void soundwavePlayer()?.play?.();
+        };
+
+        if (video instanceof HTMLVideoElement) {
+          video.addEventListener("play", pauseMusicForVideo);
+          video.addEventListener("pause", resumeMusicAfterPlayback);
+          video.addEventListener("ended", resumeMusicAfterPlayback);
+          document.addEventListener("astro:before-swap", resumeMusicAfterPlayback, { once: true });
+        }
 
         rail?.addEventListener("wheel", (event) => {
           if (!(rail instanceof HTMLElement) || rail.scrollWidth <= rail.clientWidth) return;
