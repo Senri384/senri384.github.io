@@ -32,7 +32,11 @@ const portfolioCategories: any[] = [
   ...photoPortfolio.categories,
 ];
 const { work } = Astro.props as any;
-const mediaBaseUrl = String(import.meta.env.PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/+$/, "");
+const productionMediaBaseUrl =
+  "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com";
+const configuredMediaBaseUrl = String(import.meta.env.PUBLIC_MEDIA_BASE_URL ?? "").trim();
+const mediaBaseUrl = (configuredMediaBaseUrl || (import.meta.env.PROD ? productionMediaBaseUrl : ""))
+  .replace(/\/+$/, "");
 const useEdgeOneHls = String(import.meta.env.PUBLIC_EDGEONE_HLS ?? "") === "true";
 const resolveVideoUrl = (source: string) =>
   mediaBaseUrl && source?.startsWith("/") ? `${mediaBaseUrl}${source}` : source;
@@ -260,6 +264,9 @@ const photoMediaItems = isPhotoAlbum
                     data-film-hls={useEdgeOneHls ? resolveHlsUrl(work.video) : undefined}
                   >
                     {!useEdgeOneHls && <source src={resolveVideoUrl(work.video)} type="video/mp4" />}
+                    {!useEdgeOneHls && mediaBaseUrl && (
+                      <source src={work.video} type="video/mp4" />
+                    )}
                     当前浏览器不支持视频播放。
                   </video>
                   <img
@@ -402,6 +409,7 @@ const photoMediaItems = isPhotoAlbum
                 <figure class="source-video-figure">
                   <video controls playsinline preload="metadata" aria-label={block.caption ?? `${work.title}视频`}>
                     <source src={resolveVideoUrl(block.src)} type="video/mp4" />
+                    {mediaBaseUrl && <source src={block.src} type="video/mp4" />}
                     当前浏览器不支持视频播放。
                   </video>
                   {block.caption && <figcaption>{block.caption}</figcaption>}
