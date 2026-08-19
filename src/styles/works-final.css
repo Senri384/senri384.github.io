@@ -889,7 +889,7 @@
   font-weight: 700;
   line-height: 1;
   isolation: isolate;
-  --category-hint-mask: url("/portfolio-assets/ui/text/generated-3d/category-hint-scroll.webp");
+  --category-hint-mask: url("/portfolio-assets/ui/text/generated-3d/category-hint-scroll-unified.webp");
 }
 
 .city-select-page .category-title-hint-image {
@@ -1641,61 +1641,7 @@
 
 .city-select-page .miami-title-motion::before,
 .city-select-page .miami-title-motion::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  -webkit-mask-image: var(--miami-title-mask, var(--category-title-mask));
-  mask-image: var(--miami-title-mask, var(--category-title-mask));
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-}
-
-.city-select-page .miami-title-motion::before {
-  z-index: 2;
-  background: linear-gradient(
-    180deg,
-    rgba(226, 255, 251, 0.34) 0%,
-    rgba(255, 255, 255, 0.9) 15%,
-    rgba(104, 255, 232, 0.48) 34%,
-    rgba(19, 207, 214, 0.18) 52%,
-    rgba(255, 64, 159, 0.38) 72%,
-    rgba(255, 132, 203, 0.72) 88%,
-    rgba(255, 43, 142, 0.3) 100%
-  );
-  background-size: 100% 260%;
-  background-position: 50% 0%;
-  opacity: 0.64;
-  mix-blend-mode: normal;
-  filter: saturate(1.26) contrast(1.08);
-  animation: miami-title-surface-flow 5.2s cubic-bezier(0.42, 0, 0.2, 1) infinite;
-}
-
-.city-select-page .miami-title-motion::after {
-  z-index: 3;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    transparent 31%,
-    rgba(62, 255, 226, 0.34) 39%,
-    rgba(226, 255, 250, 0.92) 47%,
-    rgba(255, 255, 255, 1) 51%,
-    rgba(91, 255, 231, 0.82) 56%,
-    rgba(255, 67, 166, 0.76) 63%,
-    transparent 74%,
-    transparent 100%
-  );
-  background-size: 100% 300%;
-  background-position: center -190%;
-  mix-blend-mode: screen;
-  filter:
-    saturate(1.24)
-    drop-shadow(0 0 6px rgba(116, 255, 237, 0.42));
-  animation: miami-title-flow 4.8s cubic-bezier(0.3, 0, 0.18, 1) infinite;
+  content: none;
 }
 
 .city-select-page .miami-title-flow-canvas {
@@ -1706,15 +1652,15 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  opacity: 0;
   mix-blend-mode: normal;
   filter: drop-shadow(0 0 2px rgba(98, 255, 226, 0.24));
 }
 
-/* Once the face-only WebGL mask is ready, retire the flat whole-image CSS
-   overlays. They remain in place as a graceful fallback when WebGL is absent. */
-.city-select-page .miami-title-motion.has-three-title-flow::before,
-.city-select-page .miami-title-motion.has-three-title-flow::after {
-  content: none;
+/* Never expose the previous CSS gradient or a stale WebGL frame while a new
+   title mask is loading. The static generated title remains as the fallback. */
+.city-select-page .miami-title-motion.has-three-title-flow .miami-title-flow-canvas {
+  opacity: 1;
 }
 
 .city-select-page .work-title-stage {
@@ -2240,5 +2186,133 @@
     left: 50% !important;
     top: 48% !important;
     width: 38vw;
+  }
+}
+
+/* Final desktop-scale override: keep this after every archive/game-card skin. */
+@media (min-width: 921px) {
+  .city-select-page {
+    --archive-kicker-top: 15svh;
+    --archive-kicker-height: calc(max(1.12rem, min(1.6333vw, 2.9037svh)) * 0.96);
+    --archive-main-top: 69.5svh;
+    --archive-title-height: max(92px, min(6.6667vw, 11.8519svh));
+    --archive-guide-line: max(4px, min(0.2604vw, 0.463svh));
+    --archive-guide-step: max(8px, min(0.5208vw, 0.9259svh));
+    --archive-guide-edge: max(2px, min(0.1302vw, 0.2315svh));
+    --archive-kicker-guide-height: max(27px, min(1.5625vw, 2.7778svh));
+    --archive-title-guide-height: max(100px, min(6.25vw, 11.1111svh));
+  }
+
+  .city-select-page .city-select-content {
+    width: min(76.0417vw, 135.1852svh);
+  }
+
+  .city-select-page .cassette-carousel {
+    min-height: max(480px, min(33.8542vw, 60.1852svh));
+  }
+
+  .city-select-page .cassette-carousel[data-mode="browse"] {
+    transform: translateY(min(3.2svh, 5.6889vw));
+  }
+
+  .city-select-page .cassette-carousel[data-mode="browse"] .cassette-rail {
+    padding-top: min(4svh, 7.1111vw);
+    padding-bottom: min(8.8889svh, 15.8025vw);
+    margin-top: max(-1.1458vw, -2.037svh);
+    margin-bottom: max(-1.4583vw, -2.5926svh);
+  }
+
+  .city-select-page .cassette-rail {
+    grid-auto-columns: max(190px, min(12.3958vw, 22.037svh));
+    gap: max(118px, min(10.3125vw, 18.3333svh));
+    padding-left: calc(50vw - max(95px, min(6.1979vw, 11.0185svh)));
+    padding-right: calc(50vw - max(95px, min(6.1979vw, 11.0185svh)));
+  }
+
+  .city-select-page .cassette-case {
+    width: max(190px, min(12.3958vw, 22.037svh));
+    height: max(234px, min(15.2604vw, 27.1296svh));
+  }
+
+  .city-select-page .cassette-back {
+    top: min(4.7813vw, 8.5svh);
+    right: max(28px, min(2.8125vw, 5svh));
+    width: max(40px, min(2.0833vw, 3.7037svh));
+    height: max(40px, min(2.0833vw, 3.7037svh));
+  }
+
+  .city-select-page .category-title-kicker,
+  .city-select-page .category-title-hint {
+    width: min(39.5833vw, 70.3704svh);
+  }
+
+  .city-select-page .category-title-kicker {
+    font-size: max(1.12rem, min(1.6333vw, 2.9037svh));
+  }
+
+  .city-select-page .category-title-main-motion,
+  .city-select-page .work-title-main-motion {
+    width: min(
+      calc(var(--miami-title-height) * var(--miami-title-aspect, 4)),
+      min(83.3333vw, 148.1481svh),
+      94vw
+    );
+  }
+
+  .city-select-page .category-title-hint.miami-yellow-motion,
+  .city-select-page .work-title-kicker.miami-yellow-motion {
+    width: min(
+      calc(max(26px, min(1.7708vw, 3.1481svh)) * var(--miami-yellow-aspect, 7)),
+      min(36.4583vw, 64.8148svh),
+      62vw
+    );
+    height: max(26px, min(1.7708vw, 3.1481svh));
+    max-width: min(36.4583vw, 64.8148svh);
+  }
+
+  .city-select-page .work-title-stage {
+    top: var(--archive-main-top);
+    max-width: min(83.3333vw, 148.1481svh);
+    gap: max(5px, min(0.5208vw, 0.9259svh));
+  }
+
+  .city-select-page .cassette-carousel[data-mode="open"] {
+    transform: none;
+  }
+
+  .city-select-page .cassette-carousel[data-mode="open"]
+    .disc-archive-case[data-game-card-category="true"][data-position="active"] {
+    position: fixed;
+    left: 50%;
+    top: 30svh;
+    width: max(260px, min(17.7083vw, 31.4815svh));
+    height: max(350px, min(26.0417vw, 46.2963svh));
+    transform: translate(0, -8%);
+  }
+
+  .city-select-page .work-description-stage {
+    top: 36svh;
+    right: calc(50% + min(2.0833vw, 3.7037svh));
+    left: auto;
+    width: min(27.0833vw, 48.1481svh);
+  }
+
+  .city-select-page .work-description-summary {
+    font-size: max(1rem, min(1.1333vw, 2.0148svh));
+  }
+
+  .city-select-page .work-description-stage[data-summary-length="long"]
+    .work-description-summary {
+    font-size: max(0.88rem, min(0.9333vw, 1.6593svh));
+  }
+
+  .city-select-page .work-description-stage[data-summary-length="extra-long"]
+    .work-description-summary {
+    font-size: max(0.72rem, min(0.7833vw, 1.3926svh));
+  }
+
+  .city-select-page .work-description-body {
+    margin-top: max(12px, min(1.0417vw, 1.8519svh));
+    font-size: max(0.74rem, min(0.7583vw, 1.3481svh));
   }
 }

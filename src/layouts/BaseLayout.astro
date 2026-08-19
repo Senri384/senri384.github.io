@@ -20,7 +20,9 @@ const activeSection = pathname.startsWith("/works")
   ? "works"
   : pathname.startsWith("/resume")
     ? "resume"
-    : "game";
+    : pathname.startsWith("/making-of")
+      ? "easter"
+      : "game";
 const isScrollableWorkPage =
   /^\/works\/[^/]+\/[^/]+\/?$/.test(pathname) &&
   !pathname.startsWith("/works/short-films/") &&
@@ -59,7 +61,6 @@ const isScrollableWorkPage =
     <script is:inline>
       (() => {
         const storageKey = "neon-drive-opening-seen-v1";
-        const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
         const navigationEntry = window.performance.getEntriesByType("navigation")[0];
         const isReload =
           navigationEntry instanceof PerformanceNavigationTiming &&
@@ -73,7 +74,7 @@ const isScrollableWorkPage =
 
         if (!hasSeenOpening && window.location.pathname !== "/") {
           document.documentElement.dataset.siteGate = "redirecting";
-          window.location.replace(`/?introTarget=${encodeURIComponent(currentPath)}`);
+          window.location.replace("/");
           return;
         }
 
@@ -94,7 +95,9 @@ const isScrollableWorkPage =
           width="64"
           height="64"
         />
-        <span>Senri's Personal Homepage</span>
+        <a class="site-brand-link" href="/making-of/" aria-label="打开制作心得彩蛋页">
+          Senri's Personal Homepage
+        </a>
       </div>
       <div class="site-controls">
         <SoundwavePlayer section={activeSection} />

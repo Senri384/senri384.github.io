@@ -1,6 +1,6 @@
 ---
 interface Props {
-  section: "game" | "works" | "resume";
+  section: "game" | "works" | "resume" | "easter";
 }
 
 const { section } = Astro.props;
@@ -35,7 +35,7 @@ const { section } = Astro.props;
     <button class="soundwave-hotspot soundwave-next" type="button" data-player-action="next" data-player-tooltip="下一首" aria-label="下一首"></button>
     <button class="soundwave-hotspot soundwave-volume-control" type="button" data-player-action="volume" data-player-tooltip="滚轮调节音量" aria-label="滚轮调节音量"></button>
   </div>
-  <output class="soundwave-volume" aria-live="polite">VOL 50</output>
+  <output class="soundwave-volume" aria-live="polite">VOL 20</output>
 </aside>
 
 <script is:inline data-astro-rerun>
@@ -58,10 +58,12 @@ const { section } = Astro.props;
       game: "/portfolio-assets/audio-player/walkman-cassette-game-v3.webp",
       works: "/portfolio-assets/audio-player/walkman-cassette-works.webp",
       resume: "/portfolio-assets/audio-player/walkman-cassette-resume.webp",
+      easter: "/portfolio-assets/audio-player/walkman-cassette-easter.webp",
       openLoaded: {
         game: "/portfolio-assets/audio-player/walkman-open-cassette-game.webp",
         works: "/portfolio-assets/audio-player/walkman-open-cassette-works.webp",
         resume: "/portfolio-assets/audio-player/walkman-open-cassette-resume.webp",
+        easter: "/portfolio-assets/audio-player/walkman-open-cassette-easter.webp",
       },
     };
     const playlists = {
@@ -81,14 +83,20 @@ const { section } = Astro.props;
         "/audio/music/resume/Old Future Fox Gang - Guided Meditation.mp3",
         "/audio/music/resume/Sun Araw - Horse Steppin.mp3",
       ],
+      easter: [
+        "/audio/music/easter/Perturbator - Electric Dreams.mp3",
+      ],
     };
-    const defaultTrackIndices = { game: 0, works: 2, resume: 0 };
+    const defaultTrackIndices = { game: 0, works: 2, resume: 0, easter: 0 };
     const playlist = playlists[section] || playlists.game;
+    const isSingleTrackSection = playlist.length <= 1;
+    const isEasterSection = section === "easter";
     const localAudio = section === "game" ? null : new Audio();
     if (localAudio) {
       localAudio.preload = "metadata";
-      localAudio.loop = true;
+      localAudio.loop = !isEasterSection;
     }
+    root.dataset.singleTrack = String(isSingleTrackSection);
 
     let stored = {};
     try {
@@ -117,17 +125,34 @@ const { section } = Astro.props;
       ? trackIndices[section]
       : defaultTrackIndices[section] ?? 0;
     trackIndex = ((trackIndex % playlist.length) + playlist.length) % playlist.length;
-    let volume = typeof stored.volume === "number"
+    const savedAudioHasAdjustmentFlag = Object.prototype.hasOwnProperty.call(savedAudio, "volumeAdjusted");
+    const storedHasAdjustmentFlag = Object.prototype.hasOwnProperty.call(stored, "volumeAdjusted");
+    const legacySavedVolumeWasAdjusted =
+      !savedAudioHasAdjustmentFlag &&
+      typeof savedAudio.volume === "number" &&
+      Math.abs(savedAudio.volume - 0.5) > 0.001;
+    const legacyStoredVolumeWasAdjusted =
+      !storedHasAdjustmentFlag &&
+      typeof stored.volume === "number" &&
+      Math.abs(stored.volume - 0.5) > 0.001;
+    let volumeAdjusted =
+      savedAudio.volumeAdjusted === true ||
+      stored.volumeAdjusted === true ||
+      legacySavedVolumeWasAdjusted ||
+      legacyStoredVolumeWasAdjusted;
+    let volume = volumeAdjusted && typeof stored.volume === "number"
       ? stored.volume
-      : typeof savedAudio.volume === "number"
+      : volumeAdjusted && typeof savedAudio.volume === "number"
         ? savedAudio.volume
-        : 0.5;
+        : 0.2;
     volume = Math.max(0, Math.min(1, volume));
-    const shouldResumeSameSection = stored.playing === true && previousSection === section && loaded;
+    const shouldResumeSameSection =
+      !isEasterSection && stored.playing === true && previousSection === section && loaded;
     let playing = shouldResumeSameSection;
     let transition = Promise.resolve();
     let toastTimer = 0;
     let volumeTooltipTimer = 0;
+    let envelopeFrame = 0;
     const lidSounds = {
       open: new Audio("/audio/effects/walkman-lid-open.mp3"),
       close: new Audio("/audio/effects/walkman-lid-close.mp3"),
@@ -139,6 +164,39 @@ const { section } = Astro.props;
 
     const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
     const currentTrack = () => playlist[trackIndex];
+    const fadeSecondsForDuration = () => {
+      if (!localAudio || !Number.isFinite(localAudio.duration) || localAudio.duration <= 0) return 2.2;
+      return Math.max(0.8, Math.min(4, localAudio.duration * 0.08, localAudio.duration / 3));
+    };
+    const envelopeMultiplier = () => {
+      if (!localAudio || !isEasterSection) return 1;
+      const fade = fadeSecondsForDuration();
+      const elapsed = Math.max(0, localAudio.currentTime || 0);
+      const duration = Number.isFinite(localAudio.duration) ? localAudio.duration : 0;
+      const fadeIn = Math.min(1, elapsed / fade);
+      const fadeOut = duration > 0 ? Math.min(1, Math.max(0, duration - elapsed) / fade) : 1;
+      return Math.max(0, Math.min(1, fadeIn, fadeOut));
+    };
+    const applyAudioVolume = () => {
+      if (!localAudio) return;
+      localAudio.volume = Math.max(0, Math.min(1, volume * envelopeMultiplier()));
+    };
+    const stopEnvelope = () => {
+      if (envelopeFrame) window.cancelAnimationFrame(envelopeFrame);
+      envelopeFrame = 0;
+    };
+    const runEnvelope = () => {
+      if (!localAudio || !isEasterSection || !playing) {
+        stopEnvelope();
+        return;
+      }
+      applyAudioVolume();
+      envelopeFrame = window.requestAnimationFrame(runEnvelope);
+    };
+    const startEnvelope = () => {
+      if (!localAudio || !isEasterSection || envelopeFrame) return;
+      envelopeFrame = window.requestAnimationFrame(runEnvelope);
+    };
     const imagePreloads = new Map();
     const preloadImage = (source) => {
       if (!source) return Promise.resolve();
@@ -163,6 +221,7 @@ const { section } = Astro.props;
       assets.game,
       assets.works,
       assets.resume,
+      assets.easter,
       ...Object.values(assets.openLoaded),
     ];
     const initialDeckImage = loaded
@@ -204,11 +263,15 @@ const { section } = Astro.props;
           trackIndices,
           currentTimes,
           volume,
+          volumeAdjusted,
           playing,
         }));
       } catch {}
       try {
-        window.localStorage.setItem(audioSettingsKey, JSON.stringify({ muted: false, volume }));
+        window.localStorage.setItem(
+          audioSettingsKey,
+          JSON.stringify({ muted: false, volume, volumeAdjusted }),
+        );
       } catch {}
     };
 
@@ -217,6 +280,16 @@ const { section } = Astro.props;
       const hasCassette = deckState === "cassette" || (deckState === "open" && loaded);
       loadButton.dataset.playerTooltip = hasCassette ? "弹出" : "装入";
       loadButton.setAttribute("aria-label", hasCassette ? "弹出当前磁带" : "打开舱盖并装入当前页面磁带");
+    };
+    const updateTrackButtons = () => {
+      root.querySelectorAll('[data-player-action="previous"], [data-player-action="next"]').forEach((button) => {
+        if (!(button instanceof HTMLButtonElement)) return;
+        button.disabled = isSingleTrackSection;
+        if (isSingleTrackSection) {
+          button.dataset.playerTooltip = "固定曲目";
+          button.setAttribute("aria-label", "彩蛋页固定曲目，不能切歌");
+        }
+      });
     };
 
     const setImage = (source, deckState) => {
@@ -337,28 +410,33 @@ const { section } = Astro.props;
       if (localAudio.src !== new URL(currentTrack(), window.location.href).href) {
         localAudio.src = currentTrack();
       }
-      localAudio.volume = volume;
+      applyAudioVolume();
       try {
         await localAudio.play();
         setPlaying(true);
+        startEnvelope();
       } catch {
         setPlaying(false);
+        stopEnvelope();
       }
       save();
     };
 
     const pause = () => {
       if (localAudio) localAudio.pause();
+      stopEnvelope();
       emit("pause");
       setPlaying(false);
       save();
     };
 
     const changeTrack = async (direction) => {
+      if (isSingleTrackSection) return;
       if (!loaded) await swapCassette(false);
       trackIndex = (trackIndex + direction + playlist.length) % playlist.length;
       if (localAudio) {
         localAudio.pause();
+        stopEnvelope();
         localAudio.src = currentTrack();
         localAudio.currentTime = 0;
       }
@@ -389,8 +467,9 @@ const { section } = Astro.props;
 
     volumeButton?.addEventListener("wheel", (event) => {
       event.preventDefault();
+      volumeAdjusted = true;
       volume = Math.max(0, Math.min(1, volume + (event.deltaY < 0 ? 0.05 : -0.05)));
-      if (localAudio) localAudio.volume = volume;
+      if (localAudio) applyAudioVolume();
       emit("volume", { volume });
       save();
       showVolume();
@@ -403,6 +482,7 @@ const { section } = Astro.props;
       save();
       if (!nextSection || nextSection === section) return;
       if (localAudio) localAudio.pause();
+      stopEnvelope();
       Object.values(lidSounds).forEach((sound) => sound.pause());
       setPlaying(false);
       save();
@@ -421,10 +501,24 @@ const { section } = Astro.props;
       getState: () => ({ loaded, playing, section, trackIndex, volume }),
     };
 
+    if (localAudio && isEasterSection) {
+      localAudio.addEventListener("ended", () => {
+        if (!playing) return;
+        localAudio.currentTime = 0;
+        applyAudioVolume();
+        void localAudio.play().then(startEnvelope).catch(() => {
+          setPlaying(false);
+          stopEnvelope();
+          save();
+        });
+      });
+      localAudio.addEventListener("loadedmetadata", applyAudioVolume);
+    }
+
     if (loaded && previousSection !== section) {
       setImage(assets[previousSection] || assets.empty, "cassette");
       loadedSection = previousSection;
-      const autoplayAfterSwap = section === "works" || section === "resume";
+      const autoplayAfterSwap = section === "works" || section === "resume" || section === "easter";
       const startSwap = () => void swapCassette(autoplayAfterSwap);
       if (section === "game" && document.documentElement.dataset.siteGate !== "open") {
         window.addEventListener("opening-complete", startSwap, { once: true });
@@ -433,7 +527,7 @@ const { section } = Astro.props;
       }
     } else if (!loaded && hadStoredSection && previousSection !== section) {
       setImage(assets.empty, "empty");
-      const autoplayAfterSwap = section === "works" || section === "resume";
+      const autoplayAfterSwap = section === "works" || section === "resume" || section === "easter";
       const startSwap = () => void swapCassette(autoplayAfterSwap);
       if (section === "game" && document.documentElement.dataset.siteGate !== "open") {
         window.addEventListener("opening-complete", startSwap, { once: true });
@@ -443,10 +537,18 @@ const { section } = Astro.props;
     } else if (loaded) {
       setImage(assets[section], "cassette");
       loadedSection = section;
+      if (section === "easter") {
+        setPlaying(false);
+        window.setTimeout(() => void swapCassette(true), 120);
+      }
     } else {
       setImage(assets.empty, "empty");
+      if (section === "easter") {
+        window.setTimeout(() => void swapCassette(true), 120);
+      }
     }
-    if (localAudio) localAudio.volume = volume;
+    updateTrackButtons();
+    if (localAudio) applyAudioVolume();
     setPlaying(playing);
     save();
     if (localAudio && shouldResumeSameSection) {

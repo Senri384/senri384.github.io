@@ -190,6 +190,7 @@ async function loadMasks(instance: TitleFlowInstance) {
   const volumeUrl = instance.element.dataset.miamiVolumeMask;
   const token = ++instance.requestToken;
   instance.element.classList.remove("has-three-title-flow");
+  instance.renderer.clear();
   if (!faceUrl || !volumeUrl) return;
 
   try {
@@ -212,7 +213,10 @@ async function loadMasks(instance: TitleFlowInstance) {
     resize(instance);
     instance.element.classList.add("has-three-title-flow");
   } catch {
-    if (token === instance.requestToken) instance.element.classList.remove("has-three-title-flow");
+    if (token === instance.requestToken) {
+      instance.element.classList.remove("has-three-title-flow");
+      instance.renderer.clear();
+    }
   }
 }
 
