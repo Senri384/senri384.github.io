@@ -131,23 +131,32 @@ function bootCassetteSelect() {
     imagePreloadCache.set(source, promise);
     return promise;
   };
-  const preloadWorkVisuals = (work: CassetteWork) => Promise.all([
+  const preloadWorkDisplayVisuals = (work: CassetteWork) => Promise.all([
     preloadImage(work.caseImage),
     preloadImage(work.titleImage),
     preloadImage(work.faceMaskImage),
     preloadImage(work.volumeMaskImage),
   ]);
+  const preloadWorkOpeningVisuals = (work: CassetteWork) => Promise.all([
+    ...work.openingFrames.map((source) => preloadImage(source)),
+    preloadImage(work.gameCardOpenCaseImage),
+    preloadImage(work.gameCardCartridgeImage),
+  ]);
   const preloadCategoryVisuals = (category: CassetteCategory) => Promise.all([
     preloadImage(category.titleImage),
     preloadImage(category.faceMaskImage),
     preloadImage(category.volumeMaskImage),
+    preloadImage(category.gameCardRackImage),
   ]);
+  const wrapIndex = (index: number, length: number) => (index + length) % length;
+  const preloadAllCategoryVisuals = () => Promise.all(categories.map(preloadCategoryVisuals));
+  const preloadActiveCategoryWorks = (category: CassetteCategory) =>
+    Promise.all(category.works.map(preloadWorkDisplayVisuals));
   const categoryTitlePreloads = categories.map((category) => {
     const image = new Image();
     image.src = category.titleImage;
     return image;
   });
-  categories.forEach((category) => void preloadCategoryVisuals(category));
   let activeCategoryIndex: number | null = null;
   let browseCategoryIndex = 0;
   let activeWorkIndex = 0;
@@ -157,9 +166,11 @@ function bootCassetteSelect() {
   let categorySwapTimer = 0;
   let categoryEnterTimer = 0;
   let browseCenterFrame = 0;
+  let openingPreloadTimer = 0;
   let discOpening = false;
   let openingQueued = false;
   let openingLeadInTimer = 0;
+  let lastWheelInputAt = Number.NEGATIVE_INFINITY;
   const discOpeningTimers: number[] = [];
   root.dataset.mode = "browse";
 
@@ -221,13 +232,17 @@ function bootCassetteSelect() {
     renderCategoryTitle(index);
   }
 
-  function swapCategoryTitle(index: number, direction: number) {
+  function swapCategoryTitle(index: number, direction: number, immediate = false) {
     if (!categoryTitleStage) return;
 
     window.clearTimeout(categorySwapTimer);
     window.clearTimeout(categoryEnterTimer);
     categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
     categoryTitleStage.classList.remove("is-leaving", "is-entering");
+    if (immediate) {
+      renderCategoryTitle(index);
+      return;
+    }
     void categoryTitleStage.offsetWidth;
     categoryTitleStage.classList.add("is-leaving");
 
@@ -283,7 +298,12 @@ function bootCassetteSelect() {
     titleStageMainMotion.dataset.miamiFaceMask = work.faceMaskImage;
     titleStageMainMotion.dataset.miamiVolumeMask = work.volumeMaskImage;
     titleStage.hidden = false;
-    void preloadWorkVisuals(work);
+    // Only the final settled work earns the heavier opening animation assets.
+    // Rapidly passed intermediate works must not compete for bandwidth.
+    window.clearTimeout(openingPreloadTimer);
+    openingPreloadTimer = window.setTimeout(() => {
+      if (currentWork()?.slug === work.slug) void preloadWorkOpeningVisuals(work);
+    }, 650);
     if (workDescriptionStage && workDescriptionSummary && workDescriptionBody) {
       const hasDescription = Boolean(work.overview.trim() || work.description.trim());
       const summaryLength = Array.from(work.overview).reduce((total, character) => (
@@ -299,16 +319,6 @@ function bootCassetteSelect() {
       workDescriptionStage.hidden = !hasDescription;
       if (!preserveMotion) workDescriptionStage.classList.remove("is-leaving", "is-entering");
     }
-    work.openingFrames.forEach((source) => {
-      const image = new Image();
-      image.src = source;
-    });
-    [work.gameCardOpenCaseImage, work.gameCardCartridgeImage]
-      .filter((source): source is string => Boolean(source))
-      .forEach((source) => {
-        const image = new Image();
-        image.src = source;
-      });
   }
 
   function currentWork() {
@@ -610,9 +620,20 @@ function bootCassetteSelect() {
     });
   }
 
-  function swapTapeWithRetract(caseElement: HTMLElement, categoryIndex: number, workIndex: number, direction: number) {
+  function swapTapeWithRetract(
+    caseElement: HTMLElement,
+    categoryIndex: number,
+    workIndex: number,
+    direction: number,
+    immediate = false,
+  ) {
     window.clearTimeout(workSwapTimer);
     clearWorkTitleMotion();
+    if (immediate) {
+      caseElement.classList.remove("is-switching", "is-work-retracting");
+      updateTape(caseElement, categoryIndex, workIndex);
+      return;
+    }
     const directionName = direction > 0 ? "next" : "previous";
     [categoryTitleStage, titleStage].forEach((stage) => {
       if (!stage) return;
@@ -651,8 +672,6 @@ function bootCassetteSelect() {
     const category = categories[index];
     if (!caseElement || !category?.works.length) return;
 
-    category.works.forEach((work) => void preloadWorkVisuals(work));
-
     activeCategoryIndex = index;
     markBrowseCategory(index);
     activeWorkIndex = Math.min(activeWorkIndex, category.works.length - 1);
@@ -672,6 +691,8 @@ function bootCassetteSelect() {
     centerCase(caseElement, "auto");
     root.dataset.mode = "open";
     window.scrollTo({ left: 0 });
+
+    void preloadActiveCategoryWorks(category);
   }
 
   function closeCase() {
@@ -755,22 +776,31 @@ function bootCassetteSelect() {
     openCase(categoryIndex);
   }
 
-  function stepWork(direction: number) {
+  function stepWork(direction: number, distance = 1, immediate = false) {
     if (activeCategoryIndex === null) return;
     const category = categories[activeCategoryIndex];
     const caseElement = cases[activeCategoryIndex];
     if (!category || !caseElement || category.works.length < 2) return;
 
-    activeWorkIndex = (activeWorkIndex + direction + category.works.length) % category.works.length;
-    swapTapeWithRetract(caseElement, activeCategoryIndex, activeWorkIndex, direction);
+    const nextWorkIndex = wrapIndex(activeWorkIndex + direction * distance, category.works.length);
+    const nextWork = category.works[nextWorkIndex];
+    if (!nextWork) return;
+
+    activeWorkIndex = nextWorkIndex;
+    swapTapeWithRetract(caseElement, activeCategoryIndex, activeWorkIndex, direction, immediate);
+    void preloadWorkDisplayVisuals(nextWork);
   }
 
-  function stepCategory(direction: number) {
-    const nextIndex = (browseCategoryIndex + direction + cases.length) % cases.length;
+  function stepCategory(direction: number, distance = 1, immediate = false) {
+    const nextIndex = wrapIndex(browseCategoryIndex + direction * distance, cases.length);
+    const nextCategory = categories[nextIndex];
+    if (!nextCategory) return;
+
     markBrowseCategory(nextIndex);
-    swapCategoryTitle(nextIndex, direction);
+    swapCategoryTitle(nextIndex, direction, immediate);
+    void preloadCategoryVisuals(nextCategory);
     const caseElement = cases[browseCategoryIndex];
-    if (caseElement) centerCase(caseElement);
+    if (caseElement) centerCase(caseElement, immediate ? "auto" : "smooth");
   }
 
   cases.forEach((caseElement, index) => {
@@ -797,19 +827,17 @@ function bootCassetteSelect() {
     "wheel",
     (event) => {
       event.preventDefault();
-      if (wheelLock || discOpening) return;
+      if (discOpening || openingQueued || wheelLock) return;
       const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
       if (delta === 0) return;
 
-      wheelLock = true;
       const direction = delta > 0 ? 1 : -1;
+      const now = window.performance.now();
+      const isRapidInput = now - lastWheelInputAt < 180;
+      lastWheelInputAt = now;
       pulseStep();
-      if (activeCategoryIndex === null) stepCategory(direction);
-      else stepWork(direction);
-
-      window.setTimeout(() => {
-        wheelLock = false;
-      }, activeCategoryIndex === null ? 260 : 320);
+      if (activeCategoryIndex === null) stepCategory(direction, 1, isRapidInput);
+      else stepWork(direction, 1, isRapidInput);
     },
     { passive: false },
   );
@@ -823,6 +851,7 @@ function bootCassetteSelect() {
 
   if (initialCategoryIndex >= 0 && initialCategory) {
     ensureBrowseEntryBeforeDirectory(initialCategory, initialWork);
+    void preloadAllCategoryVisuals();
     const initialWorks = categories[initialCategoryIndex]?.works ?? [];
     const initialWorkIndex = initialWorks.findIndex((work) => work.slug === initialWork);
     activeWorkIndex = Math.max(0, initialWorkIndex);
@@ -830,6 +859,7 @@ function bootCassetteSelect() {
   } else {
     markBrowseCategory(browseCategoryIndex);
     showCategoryTitle(browseCategoryIndex);
+    void preloadAllCategoryVisuals();
   }
 
   const handlePageHide = () => {
@@ -856,6 +886,7 @@ function bootCassetteSelect() {
     window.removeEventListener("pagehide", handlePageHide);
     window.removeEventListener("pageshow", handlePageShow);
     window.removeEventListener("popstate", handlePopState);
+    window.clearTimeout(openingPreloadTimer);
     if (discOpening) resetDiscOpeningState();
   };
 

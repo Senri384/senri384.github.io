@@ -1,0 +1,110 @@
+.making-of-page {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  padding: 0 clamp(18px, 5vw, 70px);
+  background: #000;
+  color: #fff;
+  touch-action: none;
+}
+
+.making-of-reader {
+  position: relative;
+  width: min(900px, 92vw);
+  height: min(72svh, 640px);
+  overflow: hidden;
+  outline: none;
+}
+
+.making-of-reader::before,
+.making-of-reader::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  height: 22%;
+  pointer-events: none;
+}
+
+.making-of-reader::before {
+  top: 0;
+  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0));
+}
+
+.making-of-reader::after {
+  bottom: 0;
+  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0));
+}
+
+.making-of-track {
+  --making-index: 0;
+  --making-offset: 0px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  display: grid;
+  align-content: start;
+  gap: clamp(18px, 3.6svh, 32px);
+  transform: translateY(calc(-1 * var(--making-offset)));
+  transition: transform 520ms cubic-bezier(0.2, 0.84, 0.22, 1);
+  will-change: transform;
+}
+
+.making-of-passage {
+  --line-distance: 4;
+  --line-direction: 0;
+  margin: 0 auto;
+  width: min(760px, 100%);
+  color: rgba(255, 255, 255, calc(0.72 - min(var(--line-distance), 4) * 0.13));
+  font-family: "Courier New", "Microsoft YaHei", ui-monospace, monospace;
+  font-size: clamp(1rem, 1.55vw, 1.22rem);
+  line-height: 1.9;
+  text-align: center;
+  text-wrap: balance;
+  transform:
+    translateY(calc(var(--line-direction) * min(var(--line-distance), 3) * 2px))
+    scale(calc(1 - min(var(--line-distance), 4) * 0.026));
+  transition:
+    color 360ms ease,
+    opacity 360ms ease,
+    transform 520ms cubic-bezier(0.2, 0.84, 0.22, 1);
+}
+
+.making-of-passage[data-active="true"] {
+  color: #fff;
+  font-size: clamp(1.12rem, 1.72vw, 1.38rem);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
+}
+
+.making-of-reader:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.42);
+  outline-offset: 12px;
+}
+
+@media (max-width: 760px) {
+  .making-of-reader {
+    width: 92vw;
+    height: min(68svh, 560px);
+  }
+
+  .making-of-track {
+    gap: 22px;
+  }
+
+  .making-of-passage,
+  .making-of-passage[data-active="true"] {
+    font-size: clamp(0.96rem, 4vw, 1.12rem);
+    line-height: 1.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .making-of-track,
+  .making-of-passage {
+    transition-duration: 1ms;
+  }
+}

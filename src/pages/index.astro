@@ -89,11 +89,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const storageKey = "neon-drive-opening-seen-v1";
       const params = new URLSearchParams(window.location.search);
-      const requestedTarget = params.get("introTarget");
-      const targetPath =
-        requestedTarget?.startsWith("/") && !requestedTarget.startsWith("//")
-          ? requestedTarget
-          : "";
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let finished = false;
       let fallbackTimer;
@@ -119,12 +114,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const revealSite = () => {
         markOpeningSeen();
-        if (targetPath) {
-          document.documentElement.dataset.siteGate = "redirecting";
-          window.location.replace(targetPath);
-          return;
-        }
-
         document.documentElement.dataset.siteGate = "open";
         window.dispatchEvent(new CustomEvent("opening-complete"));
       };

@@ -33,8 +33,11 @@ const portfolioCategories: any[] = [
 ];
 const { work } = Astro.props as any;
 const mediaBaseUrl = String(import.meta.env.PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/+$/, "");
+const useEdgeOneHls = String(import.meta.env.PUBLIC_EDGEONE_HLS ?? "") === "true";
 const resolveVideoUrl = (source: string) =>
   mediaBaseUrl && source?.startsWith("/") ? `${mediaBaseUrl}${source}` : source;
+const resolveHlsUrl = (source: string) =>
+  source?.replace(/\/film\.mp4$/u, "/hls/stream.m3u8");
 const matchedCategory =
   Astro.props.category ?? portfolioCategories.find((item) => item.slug === work.category);
 
@@ -72,7 +75,11 @@ void isHeading;
 const isPhotoAlbum = work.category === "photography";
 const isFilm = work.category === "short-films";
 const coverImage =
-  work.image && !work.image.includes("/portfolio-assets/extracted/") && !isPhotoAlbum && !isFilm;
+  work.image &&
+  !work.image.includes("/portfolio-assets/extracted/") &&
+  !isPhotoAlbum &&
+  !isFilm &&
+  work.slug !== "bbno-internet-playbook";
 const rawContentBlocks: any[] =
   work.blocks ?? (work.paragraphs ?? []).map((text: string) => ({ type: "paragraph", text }));
 const normalizeOpeningTitle = (value: string) =>
@@ -250,8 +257,9 @@ const photoMediaItems = isPhotoAlbum
                     height={work.videoHeight}
                     aria-label={`播放短片《${work.title}》`}
                     data-film-video
+                    data-film-hls={useEdgeOneHls ? resolveHlsUrl(work.video) : undefined}
                   >
-                    <source src={resolveVideoUrl(work.video)} type="video/mp4" />
+                    {!useEdgeOneHls && <source src={resolveVideoUrl(work.video)} type="video/mp4" />}
                     当前浏览器不支持视频播放。
                   </video>
                   <img
@@ -668,6 +676,10 @@ const photoMediaItems = isPhotoAlbum
       });
     </script>
   )}
+
+  <script>
+    import "../../../scripts/filmHls";
+  </script>
 
   {isPhotoAlbum && (
     <script is:inline data-astro-rerun>

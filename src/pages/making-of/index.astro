@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { makingOfPassages } from "../../data/making-of-copy";
+import makingOfStylesUrl from "../../styles/making-of.css?url";
+---
+
+<BaseLayout
+  title="制作心得 | Senri's Personal Homepage"
+  description="Senri's Personal Homepage 的制作心得彩蛋页。"
+  styles={[makingOfStylesUrl]}
+>
+  <main class="making-of-page" data-making-of aria-label="制作心得彩蛋页">
+    <section class="making-of-reader" tabindex="0" aria-label="制作心得段落">
+      <div class="making-of-track" data-making-track>
+        {makingOfPassages.map((passage, index) => (
+          <p class="making-of-passage" data-making-passage data-index={index}>
+            {passage}
+          </p>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import "../../scripts/makingOfCredits";
+  </script>
+</BaseLayout>

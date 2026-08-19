@@ -644,3 +644,4 @@ const saved = loadState();
 resumeButton.hidden = !saved;
 updateJournal();
 
+export {};

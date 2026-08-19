@@ -82,6 +82,7 @@ interface ScorePopup {
 interface AudioSettings {
   muted: boolean;
   volume: number;
+  volumeAdjusted: boolean;
   unlocked: boolean;
 }
 
@@ -175,6 +176,7 @@ const attackHitCompressorThreshold = -8;
 const playerCrashUrl = "/audio/effects/player-crash-from-crack-1p1s-natural.mp3";
 const playerCrashVolumeBoost = 1.75;
 const raceSpeed = 315;
+const displayedRunningSpeed = 280;
 const attackDuration = 0.22;
 const attackWreckDuration = 0.55;
 const comboWindow = 3;
@@ -448,9 +450,16 @@ function readAudioSettings(): AudioSettings {
     const raw = localStorage.getItem(config.storageKeys.audio);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<AudioSettings>;
+      const hasAdjustmentFlag = Object.prototype.hasOwnProperty.call(parsed, "volumeAdjusted");
+      const legacyVolumeWasAdjusted =
+        !hasAdjustmentFlag &&
+        typeof parsed.volume === "number" &&
+        Math.abs(parsed.volume - 0.5) > 0.001;
+      const volumeAdjusted = parsed.volumeAdjusted === true || legacyVolumeWasAdjusted;
       return {
         muted: parsed.muted ?? false,
-        volume: typeof parsed.volume === "number" ? parsed.volume : 0.5,
+        volume: volumeAdjusted && typeof parsed.volume === "number" ? parsed.volume : 0.2,
+        volumeAdjusted,
         unlocked: false,
       };
     }
@@ -458,14 +467,18 @@ function readAudioSettings(): AudioSettings {
     // Defaults handle blocked storage or bad data.
   }
 
-  return { muted: false, volume: 0.5, unlocked: false };
+  return { muted: false, volume: 0.2, volumeAdjusted: false, unlocked: false };
 }
 
 function writeAudioSettings() {
   try {
     localStorage.setItem(
       config.storageKeys.audio,
-      JSON.stringify({ muted: audio.muted, volume: audio.volume }),
+      JSON.stringify({
+        muted: audio.muted,
+        volume: audio.volume,
+        volumeAdjusted: audio.volumeAdjusted,
+      }),
     );
   } catch {
     // Audio preference persistence is non-critical.
@@ -3556,7 +3569,10 @@ function updateHud() {
   canvas.dataset.obstacles = String(obstacles.length);
   if (readout.distance) readout.distance.textContent = `${state.distance.toFixed(2)} KM`;
   if (readout.score) readout.score.textContent = `${String(state.score).padStart(6, "0")}`;
-  if (readout.speed) readout.speed.textContent = `${Math.round(state.speed)} KM/H`;
+  if (readout.speed) {
+    const displayedSpeed = state.mode === "running" ? displayedRunningSpeed : Math.round(state.speed);
+    readout.speed.textContent = `${displayedSpeed} KM/H`;
+  }
   if (readout.best) readout.best.textContent = `${state.best.toFixed(2)} KM`;
   const metricTitles = ["DISTANCE", "SCORE", "SPEED", "BEST"];
   readout.metricLabels.forEach((label, index) => {
@@ -4130,6 +4146,7 @@ async function handleSoundwaveTrack(detail: {
 
 function handleSoundwaveVolume(detail: { volume?: number }) {
   if (typeof detail.volume !== "number") return;
+  audio.volumeAdjusted = true;
   audio.volume = clamp(detail.volume, 0, 1);
   if (audio.volume > 0) audio.muted = false;
   writeAudioSettings();
