@@ -4156,6 +4156,9 @@ function handleSoundwaveVolume(detail: { volume?: number }) {
 }
 
 function setupEvents() {
+  // Start fetching the short opening cue as soon as the homepage runtime is
+  // ready, so ENTER can begin audio and visuals together on slower networks.
+  ensureOpeningAudio().load();
   window.addEventListener("resize", resizeCanvas);
   window.addEventListener("blur", pauseGame);
   window.addEventListener("focus", resumeGame);
