@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const distDir = fileURLToPath(new URL("../dist/", import.meta.url));
 const cosOrigin = "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com";
+const cosSiteAssetsRoot = `${cosOrigin}/site-assets`;
 
 async function collectFiles(directory, matches) {
   const files = [];
@@ -70,6 +71,12 @@ for (const filePath of textAssets) {
     /\/portfolio-assets\/ui\/([^/"'\s`()<>?#]+)(?=[?"'\s`()<>#]|$)/g,
     `${cosOrigin}/portfolio-assets/ui/$1`,
   );
+
+  // Ship the hashed production runtime from Guangzhou COS as well. HTML stays
+  // on the hosting origin, while JS, CSS and fonts are fetched from the nearer
+  // object-storage edge and retain their content hashes for long-term caching.
+  optimized = optimized.replaceAll("/_astro/", `${cosSiteAssetsRoot}/_astro/`);
+  optimized = optimized.replaceAll("/fonts/", `${cosSiteAssetsRoot}/fonts/`);
 
   if (optimized !== original) await writeFile(filePath, optimized, "utf8");
 }

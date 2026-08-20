@@ -233,8 +233,8 @@ const cassettePayload = {
                       class="game-card-category-rack"
                       src={gameCardCategory.gameCardRackImage}
                       alt=""
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchpriority={index === 0 ? "high" : "low"}
+                      loading="eager"
+                      fetchpriority={index === 0 ? "high" : "auto"}
                     />
                   )}
                   <span class="cassette-face">
@@ -266,8 +266,8 @@ const cassettePayload = {
                         data-cassette-image
                         src={firstGameCardWork?.caseImage}
                         alt=""
-                        loading={index === 0 ? "eager" : "lazy"}
-                        fetchpriority={index === 0 ? "high" : "low"}
+                        loading="eager"
+                        fetchpriority={index === 0 ? "high" : "auto"}
                       />
                     )}
                     {!firstWork && <img data-cassette-image alt="" hidden />}

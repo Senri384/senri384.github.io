@@ -27,6 +27,7 @@ const isScrollableWorkPage =
   /^\/works\/[^/]+\/[^/]+\/?$/.test(pathname) &&
   !pathname.startsWith("/works/short-films/") &&
   !pathname.startsWith("/works/photography/");
+const productionAssetOrigin = "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com";
 ---
 
 <!doctype html>
@@ -40,6 +41,8 @@ const isScrollableWorkPage =
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Senri's Personal Homepage" />
     <meta name="theme-color" content="#07081c" />
+    <link rel="dns-prefetch" href="//senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com" />
+    <link rel="preconnect" href={productionAssetOrigin} crossorigin="anonymous" />
     <ClientRouter />
     <link rel="icon" type="image/png" href="/favicon.png" />
     {

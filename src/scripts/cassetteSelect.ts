@@ -165,6 +165,8 @@ function bootCassetteSelect() {
   let workTitleEnterTimer = 0;
   let categorySwapTimer = 0;
   let categoryEnterTimer = 0;
+  let categorySwapRequest = 0;
+  let workSwapRequest = 0;
   let browseCenterFrame = 0;
   let openingPreloadTimer = 0;
   let discOpening = false;
@@ -226,6 +228,7 @@ function bootCassetteSelect() {
   }
 
   function showCategoryTitle(index: number) {
+    categorySwapRequest += 1;
     window.clearTimeout(categorySwapTimer);
     window.clearTimeout(categoryEnterTimer);
     categoryTitleStage?.classList.remove("is-leaving", "is-entering");
@@ -235,27 +238,34 @@ function bootCassetteSelect() {
   function swapCategoryTitle(index: number, direction: number, immediate = false) {
     if (!categoryTitleStage) return;
 
+    const request = ++categorySwapRequest;
     window.clearTimeout(categorySwapTimer);
     window.clearTimeout(categoryEnterTimer);
-    categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
-    categoryTitleStage.classList.remove("is-leaving", "is-entering");
-    if (immediate) {
-      renderCategoryTitle(index);
-      return;
-    }
-    void categoryTitleStage.offsetWidth;
-    categoryTitleStage.classList.add("is-leaving");
-
-    categorySwapTimer = window.setTimeout(() => {
+    void preloadCategoryVisuals(categories[index]).then(() => {
+      if (request !== categorySwapRequest) return;
       if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-      renderCategoryTitle(index);
-      categoryTitleStage.classList.remove("is-leaving");
-      categoryTitleStage.classList.add("is-entering");
-      categoryEnterTimer = window.setTimeout(() => {
+      categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
+      categoryTitleStage.classList.remove("is-leaving", "is-entering");
+      if (immediate) {
+        renderCategoryTitle(index);
+        return;
+      }
+      void categoryTitleStage.offsetWidth;
+      categoryTitleStage.classList.add("is-leaving");
+
+      categorySwapTimer = window.setTimeout(() => {
+        if (request !== categorySwapRequest) return;
         if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-        categoryTitleStage.classList.remove("is-entering");
-      }, 145);
-    }, 105);
+        renderCategoryTitle(index);
+        categoryTitleStage.classList.remove("is-leaving");
+        categoryTitleStage.classList.add("is-entering");
+        categoryEnterTimer = window.setTimeout(() => {
+          if (request !== categorySwapRequest) return;
+          if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
+          categoryTitleStage.classList.remove("is-entering");
+        }, 145);
+      }, 105);
+    });
   }
 
   function clearWorkTitleMotion() {
@@ -627,24 +637,31 @@ function bootCassetteSelect() {
     direction: number,
     immediate = false,
   ) {
+    const work = categories[categoryIndex]?.works[workIndex];
+    if (!work) return;
+    const request = ++workSwapRequest;
     window.clearTimeout(workSwapTimer);
     clearWorkTitleMotion();
-    if (immediate) {
-      caseElement.classList.remove("is-switching", "is-work-retracting");
-      updateTape(caseElement, categoryIndex, workIndex);
-      return;
-    }
-    const directionName = direction > 0 ? "next" : "previous";
-    [categoryTitleStage, titleStage].forEach((stage) => {
-      if (!stage) return;
-      stage.dataset.direction = directionName;
-      stage.classList.add("is-leaving");
+    void preloadWorkDisplayVisuals(work).then(() => {
+      if (request !== workSwapRequest || activeCategoryIndex !== categoryIndex) return;
+      if (immediate) {
+        caseElement.classList.remove("is-switching", "is-work-retracting");
+        updateTape(caseElement, categoryIndex, workIndex);
+        return;
+      }
+      const directionName = direction > 0 ? "next" : "previous";
+      [categoryTitleStage, titleStage].forEach((stage) => {
+        if (!stage) return;
+        stage.dataset.direction = directionName;
+        stage.classList.add("is-leaving");
+      });
+      caseElement.classList.remove("is-switching");
+      caseElement.classList.add("is-work-retracting");
+      workSwapTimer = window.setTimeout(() => {
+        if (request !== workSwapRequest || activeCategoryIndex !== categoryIndex) return;
+        updateTape(caseElement, categoryIndex, workIndex, direction);
+      }, 150);
     });
-    caseElement.classList.remove("is-switching");
-    caseElement.classList.add("is-work-retracting");
-    workSwapTimer = window.setTimeout(() => {
-      updateTape(caseElement, categoryIndex, workIndex, direction);
-    }, 150);
   }
 
   function centerCase(caseElement: HTMLElement, behavior: ScrollBehavior = "smooth") {
@@ -673,6 +690,8 @@ function bootCassetteSelect() {
     if (!caseElement || !category?.works.length) return;
 
     activeCategoryIndex = index;
+    categorySwapRequest += 1;
+    workSwapRequest += 1;
     markBrowseCategory(index);
     activeWorkIndex = Math.min(activeWorkIndex, category.works.length - 1);
 
@@ -696,6 +715,7 @@ function bootCassetteSelect() {
   }
 
   function closeCase() {
+    workSwapRequest += 1;
     window.clearTimeout(workSwapTimer);
     hideWorkTitle();
     activeCategoryIndex = null;
@@ -788,7 +808,6 @@ function bootCassetteSelect() {
 
     activeWorkIndex = nextWorkIndex;
     swapTapeWithRetract(caseElement, activeCategoryIndex, activeWorkIndex, direction, immediate);
-    void preloadWorkDisplayVisuals(nextWork);
   }
 
   function stepCategory(direction: number, distance = 1, immediate = false) {
@@ -798,7 +817,6 @@ function bootCassetteSelect() {
 
     markBrowseCategory(nextIndex);
     swapCategoryTitle(nextIndex, direction, immediate);
-    void preloadCategoryVisuals(nextCategory);
     const caseElement = cases[browseCategoryIndex];
     if (caseElement) centerCase(caseElement, immediate ? "auto" : "smooth");
   }
