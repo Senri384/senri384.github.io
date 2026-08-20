@@ -2542,7 +2542,12 @@ function makeVehicleTexture(kind: VehicleSprite["kind"], paletteIndex: number) {
   return texture;
 }
 
-const generatedVehicleAssetRoot = "/portfolio-assets/vehicles/home-v55";
+const generatedVehicleAssetRoot = import.meta.env.PROD
+  ? [
+      "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com/site-assets",
+      "_astro",
+    ].join("/")
+  : "/portfolio-assets/vehicles/home-v55";
 const generatedVehicleAssetExtension = "webp";
 const obstacleVehicleAssetSlugs = ["sideswipe", "red-alert", "sunstreaker"] as const;
 const playerReturnCenterAssetThreshold = 0.24;
