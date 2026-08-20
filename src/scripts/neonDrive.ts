@@ -152,6 +152,7 @@ if (uiPreviewMode) {
 document.documentElement.dataset.vehicleAssets = "v55";
 const bgmUrl = "/audio/music/game/Perturbator - Miami Disco.mp3";
 const openingAudioUrl = "/audio/music/the touch.mp3";
+const openingAudioMinimumVolume = 0.2;
 const openingAudioVolumeBoost = 1.55;
 const openingAudioDurationMs = 3120;
 const attackHitVariants = [
@@ -3703,15 +3704,16 @@ function syncBgm() {
 function shouldPlayOpeningAudio() {
   return Boolean(
     audio.unlocked &&
-      !audio.muted &&
-      audio.volume > 0 &&
       !bgmStarted &&
       ["arming", "playing"].includes(document.documentElement.dataset.opening ?? ""),
   );
 }
 
 function openingAudioVolume() {
-  return clamp(audio.volume * openingAudioVolumeBoost, 0, 1);
+  // ENTER is an explicit playback gesture. Keep the opening cue audible even
+  // when a previous visit left the persistent Walkman state muted or at zero;
+  // the saved Walkman preference itself remains unchanged after the intro.
+  return clamp(Math.max(audio.volume, openingAudioMinimumVolume) * openingAudioVolumeBoost, 0, 1);
 }
 
 function ensureOpeningAudio() {
