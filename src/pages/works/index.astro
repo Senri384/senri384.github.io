@@ -194,17 +194,18 @@ const cassettePayload = {
     ></canvas>
     <div class="city-select-vhs" aria-hidden="true"></div>
 
+    <button
+      class="cassette-back"
+      type="button"
+      data-cassette-back
+      aria-label="返回卷轴"
+      title="返回卷轴"
+    >
+      <Undo2 size={27} stroke-width={1.8} aria-hidden="true" />
+    </button>
+
     <div class="city-select-content">
       <section class="cassette-carousel disc-archive-carousel" data-cassette-carousel aria-label="作品分类光碟档案匣">
-        <button
-          class="cassette-back"
-          type="button"
-          data-cassette-back
-          aria-label="返回卷轴"
-          title="返回卷轴"
-        >
-          <Undo2 size={27} stroke-width={1.8} aria-hidden="true" />
-        </button>
         <div class="cassette-rail" data-cassette-rail>
           {categories.map((category, index) => {
             const firstWork = category.works[0];

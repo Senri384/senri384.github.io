@@ -90,7 +90,7 @@ function bootCassetteSelect() {
       }
     : parsed.gameCardGeometry;
   const rail = root.querySelector<HTMLElement>("[data-cassette-rail]");
-  const backButton = root.querySelector<HTMLButtonElement>("[data-cassette-back]");
+  const backButton = document.querySelector<HTMLButtonElement>("[data-cassette-back]");
   const titleStage = document.querySelector<HTMLAnchorElement>("[data-work-title-stage]");
   const titleStageMain = titleStage?.querySelector<HTMLImageElement>("[data-work-title-main]");
   const titleStageMainMotion = titleStage?.querySelector<HTMLElement>("[data-work-title-main-motion]");

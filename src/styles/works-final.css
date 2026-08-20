@@ -86,6 +86,7 @@
   position: fixed;
   top: clamp(82px, 8.5vh, 98px);
   right: clamp(18px, 4vw, 54px);
+  z-index: 19;
   width: 40px;
   height: 40px;
   min-height: 0;
@@ -104,6 +105,11 @@
     filter 160ms ease,
     opacity 180ms ease,
     transform 160ms ease;
+}
+
+.city-select-page:has(.cassette-carousel[data-mode="open"]) > .cassette-back {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .city-select-page .cassette-back svg {
@@ -2189,22 +2195,37 @@
   }
 }
 
-/* Final desktop-scale override: keep this after every archive/game-card skin. */
+/* Preserve the approved normal-desktop archive composition and only use the
+   1920x1080 proportional values once they become larger than that baseline. */
 @media (min-width: 921px) {
   .city-select-page {
     --archive-kicker-top: 15svh;
-    --archive-kicker-height: calc(max(1.12rem, min(1.6333vw, 2.9037svh)) * 0.96);
+    --archive-kicker-height: calc(
+      max(
+        clamp(1.12rem, 2.05vw, 1.96rem),
+        min(1.6333vw, 2.9037svh)
+      ) * 0.96
+    );
     --archive-main-top: 69.5svh;
-    --archive-title-height: max(92px, min(6.6667vw, 11.8519svh));
-    --archive-guide-line: max(4px, min(0.2604vw, 0.463svh));
-    --archive-guide-step: max(8px, min(0.5208vw, 0.9259svh));
-    --archive-guide-edge: max(2px, min(0.1302vw, 0.2315svh));
-    --archive-kicker-guide-height: max(27px, min(1.5625vw, 2.7778svh));
+    --archive-title-height: max(
+      clamp(92px, 13.2vh, 128px),
+      min(6.6667vw, 11.8519svh)
+    );
+    --archive-guide-line: max(5px, min(0.2604vw, 0.463svh));
+    --archive-guide-step: max(10px, min(0.5208vw, 0.9259svh));
+    --archive-guide-edge: max(2.5px, min(0.1302vw, 0.2315svh));
+    --archive-kicker-guide-height: max(30px, min(1.5625vw, 2.7778svh));
     --archive-title-guide-height: max(100px, min(6.25vw, 11.1111svh));
   }
 
   .city-select-page .city-select-content {
-    width: min(76.0417vw, 135.1852svh);
+    width: min(
+      100%,
+      max(
+        min(1460px, calc(100vw - 28px)),
+        min(76.0417vw, 135.1852svh)
+      )
+    );
   }
 
   .city-select-page .cassette-carousel {
@@ -2217,37 +2238,57 @@
 
   .city-select-page .cassette-carousel[data-mode="browse"] .cassette-rail {
     padding-top: min(4svh, 7.1111vw);
-    padding-bottom: min(8.8889svh, 15.8025vw);
+    padding-bottom: max(72px, min(8.8889svh, 15.8025vw));
     margin-top: max(-1.1458vw, -2.037svh);
     margin-bottom: max(-1.4583vw, -2.5926svh);
   }
 
   .city-select-page .cassette-rail {
-    grid-auto-columns: max(190px, min(12.3958vw, 22.037svh));
-    gap: max(118px, min(10.3125vw, 18.3333svh));
-    padding-left: calc(50vw - max(95px, min(6.1979vw, 11.0185svh)));
-    padding-right: calc(50vw - max(95px, min(6.1979vw, 11.0185svh)));
+    grid-auto-columns: max(
+      clamp(190px, 15.5vw, 238px),
+      min(12.3958vw, 22.037svh)
+    );
+    gap: max(clamp(118px, 11.5vw, 198px), min(10.3125vw, 18.3333svh));
+    padding-left: calc(
+      50vw - max(clamp(95px, 7.75vw, 119px), min(6.1979vw, 11.0185svh))
+    );
+    padding-right: calc(
+      50vw - max(clamp(95px, 7.75vw, 119px), min(6.1979vw, 11.0185svh))
+    );
   }
 
   .city-select-page .cassette-case {
-    width: max(190px, min(12.3958vw, 22.037svh));
-    height: max(234px, min(15.2604vw, 27.1296svh));
+    width: max(
+      clamp(190px, 15.5vw, 238px),
+      min(12.3958vw, 22.037svh)
+    );
+    height: max(
+      clamp(234px, 19vw, 293px),
+      min(15.2604vw, 27.1296svh)
+    );
   }
 
   .city-select-page .cassette-back {
-    top: min(4.7813vw, 8.5svh);
-    right: max(28px, min(2.8125vw, 5svh));
+    top: calc(
+      max(clamp(4px, 0.65vw, 8px), min(0.4167vw, 0.7407svh))
+      + max(clamp(82px, 7.4vw, 116px), min(6.0417vw, 10.7407svh))
+      + max(12px, min(0.625vw, 1.1111svh))
+    );
+    right: max(clamp(18px, 4vw, 54px), min(2.8125vw, 5svh));
     width: max(40px, min(2.0833vw, 3.7037svh));
     height: max(40px, min(2.0833vw, 3.7037svh));
   }
 
   .city-select-page .category-title-kicker,
   .city-select-page .category-title-hint {
-    width: min(39.5833vw, 70.3704svh);
+    width: min(88vw, max(760px, min(39.5833vw, 70.3704svh)));
   }
 
   .city-select-page .category-title-kicker {
-    font-size: max(1.12rem, min(1.6333vw, 2.9037svh));
+    font-size: max(
+      clamp(1.12rem, 2.05vw, 1.96rem),
+      min(1.6333vw, 2.9037svh)
+    );
   }
 
   .city-select-page .category-title-main-motion,
@@ -2262,17 +2303,25 @@
   .city-select-page .category-title-hint.miami-yellow-motion,
   .city-select-page .work-title-kicker.miami-yellow-motion {
     width: min(
-      calc(max(26px, min(1.7708vw, 3.1481svh)) * var(--miami-yellow-aspect, 7)),
-      min(36.4583vw, 64.8148svh),
+      calc(
+        max(
+          clamp(26px, 3.5vh, 34px),
+          min(1.7708vw, 3.1481svh)
+        ) * var(--miami-yellow-aspect, 7)
+      ),
+      min(62vw, max(700px, min(36.4583vw, 64.8148svh))),
       62vw
     );
-    height: max(26px, min(1.7708vw, 3.1481svh));
-    max-width: min(36.4583vw, 64.8148svh);
+    height: max(clamp(26px, 3.5vh, 34px), min(1.7708vw, 3.1481svh));
+    max-width: min(62vw, max(700px, min(36.4583vw, 64.8148svh)));
   }
 
   .city-select-page .work-title-stage {
     top: var(--archive-main-top);
-    max-width: min(83.3333vw, 148.1481svh);
+    max-width: min(
+      94vw,
+      max(1600px, min(83.3333vw, 148.1481svh))
+    );
     gap: max(5px, min(0.5208vw, 0.9259svh));
   }
 
@@ -2285,8 +2334,14 @@
     position: fixed;
     left: 50%;
     top: 30svh;
-    width: max(260px, min(17.7083vw, 31.4815svh));
-    height: max(350px, min(26.0417vw, 46.2963svh));
+    width: max(
+      clamp(260px, 23vw, 340px),
+      min(17.7083vw, 31.4815svh)
+    );
+    height: max(
+      clamp(350px, 52vh, 500px),
+      min(26.0417vw, 46.2963svh)
+    );
     transform: translate(0, -8%);
   }
 
@@ -2294,25 +2349,37 @@
     top: 36svh;
     right: calc(50% + min(2.0833vw, 3.7037svh));
     left: auto;
-    width: min(27.0833vw, 48.1481svh);
+    width: max(min(520px, 32vw), min(27.0833vw, 48.1481svh));
   }
 
   .city-select-page .work-description-summary {
-    font-size: max(1rem, min(1.1333vw, 2.0148svh));
+    font-size: max(
+      clamp(1rem, 1.42vw, 1.36rem),
+      min(1.1333vw, 2.0148svh)
+    );
   }
 
   .city-select-page .work-description-stage[data-summary-length="long"]
     .work-description-summary {
-    font-size: max(0.88rem, min(0.9333vw, 1.6593svh));
+    font-size: max(
+      clamp(0.88rem, 1.18vw, 1.12rem),
+      min(0.9333vw, 1.6593svh)
+    );
   }
 
   .city-select-page .work-description-stage[data-summary-length="extra-long"]
     .work-description-summary {
-    font-size: max(0.72rem, min(0.7833vw, 1.3926svh));
+    font-size: max(
+      clamp(0.72rem, 0.98vw, 0.94rem),
+      min(0.7833vw, 1.3926svh)
+    );
   }
 
   .city-select-page .work-description-body {
-    margin-top: max(12px, min(1.0417vw, 1.8519svh));
-    font-size: max(0.74rem, min(0.7583vw, 1.3481svh));
+    margin-top: max(clamp(12px, 1.8vh, 20px), min(1.0417vw, 1.8519svh));
+    font-size: max(
+      clamp(0.74rem, 0.9vw, 0.91rem),
+      min(0.7583vw, 1.3481svh)
+    );
   }
 }
