@@ -151,7 +151,13 @@ if (uiPreviewMode) {
 }
 document.documentElement.dataset.vehicleAssets = "v55";
 const bgmUrl = "/audio/music/game/Perturbator - Miami Disco.mp3";
-const openingAudioUrl = "/audio/music/the touch.mp3";
+const openingAudioUrl = import.meta.env.PROD
+  ? [
+      "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com/site-assets",
+      "_astro",
+      "the%20touch.mp3",
+    ].join("/")
+  : "/audio/music/the touch.mp3";
 const openingAudioMinimumVolume = 0.2;
 const openingAudioVolumeBoost = 1.55;
 const openingAudioDurationMs = 3120;
