@@ -4441,6 +4441,7 @@ html[data-debug-hud="hidden"] .hud {
   place-items: stretch;
   overflow: hidden;
   flex: 0 0 auto;
+  box-sizing: border-box;
   aspect-ratio: 1 / 1;
   width: 100%;
   height: auto;
@@ -6426,7 +6427,7 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .detail-page[data-category="photography"] .detail-shell {
-    --photo-sidebar-width: clamp(118px, 13vw, 180px);
+    --photo-sidebar-width: clamp(104px, 10.5vw, 150px);
     display: grid;
     grid-template-columns: var(--photo-sidebar-width) minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
@@ -6447,6 +6448,10 @@ html[data-debug-hud="hidden"] .hud {
     gap: 3px;
     align-self: start;
     margin: 0;
+    transform: translate(
+      max(10px, min(0.625vw, 1.1111svh)),
+      calc(-1 * max(6px, min(0.4167vw, 0.7407svh)))
+    );
   }
 
   .detail-page[data-category="photography"] .photo-main-stage {
@@ -6618,7 +6623,7 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .detail-page[data-category="short-films"] .detail-shell {
-    width: min(100%, max(1120px, min(61.4583vw, 109.2593svh)));
+    width: min(100%, max(1120px, min(72.5vw, 130svh)));
   }
 
   .detail-page[data-category="short-films"] .detail-title {
@@ -6630,7 +6635,7 @@ html[data-debug-hud="hidden"] .hud {
 
   .detail-page[data-category="short-films"] .film-detail-card {
     gap: max(clamp(10px, 1.2vw, 14px), min(0.7292vw, 1.2963svh));
-    max-height: max(620px, min(32.2917vw, 57.4074svh));
+    max-height: max(620px, min(37vw, 66svh));
     padding: max(clamp(8px, 1vw, 12px), min(0.625vw, 1.1111svh));
   }
 
@@ -6673,8 +6678,8 @@ html[data-debug-hud="hidden"] .hud {
 
   .detail-page[data-category="photography"] .detail-shell {
     --photo-sidebar-width: max(
-      clamp(118px, 13vw, 180px),
-      min(9.375vw, 16.6667svh)
+      clamp(104px, 10.5vw, 150px),
+      min(7.8125vw, 13.8889svh)
     );
     grid-template-columns: var(--photo-sidebar-width) minmax(0, 1fr);
     column-gap: max(clamp(10px, 1.3vw, 18px), min(0.9375vw, 1.6667svh));
@@ -6682,5 +6687,11 @@ html[data-debug-hud="hidden"] .hud {
     width: calc(
       100% - max(clamp(52px, 4vw, 68px), min(3.5417vw, 6.2963svh))
     );
+  }
+}
+
+@media (min-width: 761px) and (max-height: 760px) {
+  .detail-page[data-category="photography"] .detail-shell {
+    width: min(calc(100% - clamp(52px, 4vw, 68px)), 164svh);
   }
 }
