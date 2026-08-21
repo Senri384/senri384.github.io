@@ -1,0 +1,47 @@
+/* Final viewport-axis calibration for the archive title stack. */
+.city-select-page {
+  --archive-axis-x: 50%;
+  --archive-horizon-y: 80.7vh;
+  --archive-horizon-y: 80.7svh;
+  --archive-main-top: clamp(
+    470px,
+    calc(var(--archive-horizon-y) - clamp(74px, 11.2svh, 102px)),
+    760px
+  );
+  overflow: visible;
+}
+
+.city-select-page .category-title-kicker,
+.city-select-page .category-title-main-motion,
+.city-select-page .category-title-hint,
+.city-select-page .work-title-stage,
+.city-select-page .cassette-carousel[data-mode="open"] ~ .category-title-stage + .work-title-stage {
+  left: var(--archive-axis-x);
+}
+
+.city-select-page .category-title-stage,
+.city-select-page .category-title-bands {
+  overflow: visible;
+  clip-path: none;
+}
+
+.city-select-page .category-title-bands::after {
+  top: calc(var(--archive-main-top) + 8px);
+  box-sizing: content-box;
+  height: calc(var(--archive-title-height) + 34px);
+  overflow: visible;
+}
+
+@media (max-width: 760px) {
+  .city-select-page {
+    --archive-main-top: clamp(
+      390px,
+      calc(var(--archive-horizon-y) - clamp(68px, 11svh, 92px)),
+      68svh
+    );
+  }
+
+  .city-select-page .category-title-bands::after {
+    height: calc(var(--archive-title-height) + 30px);
+  }
+}

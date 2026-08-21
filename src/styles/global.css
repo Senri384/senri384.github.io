@@ -4147,6 +4147,13 @@ html[data-debug-hud="hidden"] .hud {
   width: min(100%, 1180px);
 }
 
+.works-page.detail-page[data-category="short-films"] {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(93, 252, 255, 0.1), transparent 28rem),
+    radial-gradient(circle at 82% 20%, rgba(255, 79, 216, 0.1), transparent 30rem),
+    linear-gradient(180deg, #07081c 0%, #0b0a27 58%, #12071d 100%);
+}
+
 .detail-page[data-category="short-films"] .detail-header {
   margin-bottom: 10px;
 }
@@ -4166,8 +4173,13 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   padding: clamp(8px, 1vw, 12px);
   border: 1px solid rgba(93, 252, 255, 0.42);
-  background: #000;
-  box-shadow: 0 0 24px rgba(93, 252, 255, 0.08) inset;
+  background:
+    linear-gradient(120deg, rgba(93, 252, 255, 0.06), transparent 42%, rgba(255, 79, 216, 0.07)),
+    rgba(8, 10, 34, 0.84);
+  box-shadow:
+    3px 0 0 rgba(255, 79, 216, 0.22) inset,
+    0 0 24px rgba(93, 252, 255, 0.08) inset,
+    0 16px 38px rgba(1, 2, 16, 0.24);
 }
 
 .film-main-column {
@@ -4191,7 +4203,7 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 1px solid rgba(93, 252, 255, 0.54);
-  background: #000;
+  background: #050717;
   box-shadow: 0 0 18px rgba(93, 252, 255, 0.08);
 }
 
@@ -4214,7 +4226,9 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   min-height: 100%;
   border: 1px dashed rgba(93, 252, 255, 0.38);
-  background: #000;
+  background:
+    linear-gradient(135deg, rgba(93, 252, 255, 0.045), transparent 48%, rgba(255, 79, 216, 0.05)),
+    #050717;
   color: rgba(249, 244, 255, 0.56);
   font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.78rem;
@@ -4335,7 +4349,9 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   padding: 8px 9px 8px 12px;
   border-left: 1px solid rgba(93, 252, 255, 0.62);
-  background: #000;
+  background:
+    linear-gradient(120deg, rgba(93, 252, 255, 0.05), transparent 58%, rgba(255, 79, 216, 0.055)),
+    rgba(8, 10, 34, 0.82);
 }
 
 .film-section-label {
@@ -6439,26 +6455,33 @@ html[data-debug-hud="hidden"] .hud {
     margin-right: auto;
     align-self: start;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .detail-page[data-category="photography"] .detail-header {
     grid-column: 1;
     grid-row: 1;
+    justify-items: center;
     gap: 3px;
     align-self: start;
     margin: 0;
-    transform: translate(
-      max(10px, min(0.625vw, 1.1111svh)),
-      calc(-1 * max(6px, min(0.4167vw, 0.7407svh)))
-    );
+    padding: 0.2em 0 0;
+    overflow: visible;
+    transform: none;
+  }
+
+  .detail-page[data-category="photography"] .detail-header .eyebrow {
+    padding-block: 0.16em 0.08em;
+    overflow: visible;
+    line-height: 1.15;
   }
 
   .detail-page[data-category="photography"] .photo-main-stage {
     grid-column: 2;
     grid-row: 1 / span 2;
+    width: min(100%, 154svh);
     align-self: start;
-    justify-self: stretch;
+    justify-self: start;
   }
 
   .detail-page[data-category="photography"] .photo-media-rail {
@@ -6526,15 +6549,24 @@ html[data-debug-hud="hidden"] .hud {
     height: auto;
     align-self: start;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .detail-page[data-category="photography"] .detail-header {
     grid-column: 1;
     grid-row: 1;
+    justify-items: center;
     gap: 2px;
     margin: 0;
-    padding-left: 0;
+    padding: 0.2em 0 0;
+    overflow: visible;
+    text-align: center;
+  }
+
+  .detail-page[data-category="photography"] .detail-header .eyebrow {
+    padding-block: 0.16em 0.08em;
+    overflow: visible;
+    line-height: 1.15;
   }
 
   .detail-page[data-category="photography"] .detail-title {

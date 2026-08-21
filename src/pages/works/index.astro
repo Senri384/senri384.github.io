@@ -7,6 +7,7 @@ import discCovers from "../../data/disc-covers.json";
 import workCardCopy from "../../data/work-card-copy.json";
 import { Undo2 } from "@lucide/astro";
 import worksFinalStylesUrl from "../../styles/works-final.css?url";
+import worksAxisStylesUrl from "../../styles/works-axis.css?url";
 
 const workMeta = (work: any) => {
   if (work.format === "video") return `短片 / ${work.duration}`;
@@ -183,7 +184,7 @@ const cassettePayload = {
 
 <BaseLayout
   title="作品集 | Senri's Personal Homepage"
-  styles={[worksFinalStylesUrl]}
+  styles={[worksFinalStylesUrl, worksAxisStylesUrl]}
   description="周翔作品集分类入口：游戏策划、游戏拆解、信号文章、原创剧本、短片、影评剧评、游戏经历与摄影。"
 >
   <main class="works-page portfolio-hub city-select-page" data-city-select>
