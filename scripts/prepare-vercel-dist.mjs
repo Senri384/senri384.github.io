@@ -59,7 +59,6 @@ for (const filePath of textAssets) {
     "/portfolio-assets/ui/game-card-system-v12/cases/",
     "/portfolio-assets/ui/game-card-system-v12/cartridges/",
     "/portfolio-assets/ui/game-card-system-v12/insides/",
-    "/portfolio-assets/ui/text/generated-3d/",
   ]) {
     optimized = optimized.replaceAll(hostedRoot, `${cosOrigin}${hostedRoot}`);
   }
