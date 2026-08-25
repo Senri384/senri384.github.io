@@ -201,36 +201,49 @@ html[data-site-gate="redirecting"] .site-header {
   --soundwave-reel-right: 39.35%;
 }
 
-/* Scale the shared desktop header from the same contained 16:9 reference as
-   the page compositions. Pixel caps previously froze the header at 1080p. */
+/* Preserve the approved laptop/desktop header size, then let the contained
+   16:9 scale take over on larger displays. The proportional rule must not
+   shrink an ordinary desktop viewport below the earlier clamp() layout. */
 @media (min-width: 981px) {
   .site-header {
-    --site-header-edge: max(32px, min(2.7083vw, 4.8148svh));
-    top: max(6px, min(0.4167vw, 0.7407svh));
+    --site-header-edge: max(
+      clamp(16px, 3.8vw, 52px),
+      min(2.7083vw, 4.8148svh)
+    );
+    top: max(clamp(4px, 0.65vw, 8px), min(0.4167vw, 0.7407svh));
     gap: max(24px, min(1.6667vw, 2.963svh));
   }
 
   .site-brand {
-    gap: max(8px, min(0.5729vw, 1.0185svh));
-    font-size: max(0.8rem, min(0.8667vw, 1.5407svh));
+    gap: max(clamp(7px, 0.8vw, 11px), min(0.5729vw, 1.0185svh));
+    font-size: max(
+      clamp(0.8rem, 1.18vw, 1.04rem),
+      min(0.8667vw, 1.5407svh)
+    );
   }
 
   .site-brand img {
-    width: max(28px, min(1.9792vw, 3.5185svh));
-    height: max(28px, min(1.9792vw, 3.5185svh));
+    width: max(clamp(28px, 2.5vw, 38px), min(1.9792vw, 3.5185svh));
+    height: max(clamp(28px, 2.5vw, 38px), min(1.9792vw, 3.5185svh));
   }
 
   .site-controls {
-    gap: max(16px, min(1.25vw, 2.2222svh));
+    gap: max(clamp(12px, 1.6vw, 24px), min(1.25vw, 2.2222svh));
   }
 
   .site-nav {
-    gap: max(18px, min(1.5625vw, 2.7778svh));
-    font-size: max(0.74rem, min(0.75vw, 1.3333svh));
+    gap: max(clamp(15px, 2vw, 30px), min(1.5625vw, 2.7778svh));
+    font-size: max(
+      clamp(0.74rem, 1vw, 0.9rem),
+      min(0.75vw, 1.3333svh)
+    );
   }
 
   .soundwave-player {
-    width: max(82px, min(6.0417vw, 10.7407svh));
+    width: max(
+      clamp(82px, 7.4vw, 116px),
+      min(6.0417vw, 10.7407svh)
+    );
   }
 }
 
@@ -4134,6 +4147,13 @@ html[data-debug-hud="hidden"] .hud {
   width: min(100%, 1180px);
 }
 
+.works-page.detail-page[data-category="short-films"] {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(93, 252, 255, 0.1), transparent 28rem),
+    radial-gradient(circle at 82% 20%, rgba(255, 79, 216, 0.1), transparent 30rem),
+    linear-gradient(180deg, #07081c 0%, #0b0a27 58%, #12071d 100%);
+}
+
 .detail-page[data-category="short-films"] .detail-header {
   margin-bottom: 10px;
 }
@@ -4153,8 +4173,13 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   padding: clamp(8px, 1vw, 12px);
   border: 1px solid rgba(93, 252, 255, 0.42);
-  background: #000;
-  box-shadow: 0 0 24px rgba(93, 252, 255, 0.08) inset;
+  background:
+    linear-gradient(120deg, rgba(93, 252, 255, 0.06), transparent 42%, rgba(255, 79, 216, 0.07)),
+    rgba(8, 10, 34, 0.84);
+  box-shadow:
+    3px 0 0 rgba(255, 79, 216, 0.22) inset,
+    0 0 24px rgba(93, 252, 255, 0.08) inset,
+    0 16px 38px rgba(1, 2, 16, 0.24);
 }
 
 .film-main-column {
@@ -4178,7 +4203,7 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 1px solid rgba(93, 252, 255, 0.54);
-  background: #000;
+  background: #050717;
   box-shadow: 0 0 18px rgba(93, 252, 255, 0.08);
 }
 
@@ -4201,7 +4226,9 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   min-height: 100%;
   border: 1px dashed rgba(93, 252, 255, 0.38);
-  background: #000;
+  background:
+    linear-gradient(135deg, rgba(93, 252, 255, 0.045), transparent 48%, rgba(255, 79, 216, 0.05)),
+    #050717;
   color: rgba(249, 244, 255, 0.56);
   font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.78rem;
@@ -4322,7 +4349,9 @@ html[data-debug-hud="hidden"] .hud {
   width: 100%;
   padding: 8px 9px 8px 12px;
   border-left: 1px solid rgba(93, 252, 255, 0.62);
-  background: #000;
+  background:
+    linear-gradient(120deg, rgba(93, 252, 255, 0.05), transparent 58%, rgba(255, 79, 216, 0.055)),
+    rgba(8, 10, 34, 0.82);
 }
 
 .film-section-label {
@@ -4428,6 +4457,7 @@ html[data-debug-hud="hidden"] .hud {
   place-items: stretch;
   overflow: hidden;
   flex: 0 0 auto;
+  box-sizing: border-box;
   aspect-ratio: 1 / 1;
   width: 100%;
   height: auto;
@@ -6413,7 +6443,7 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .detail-page[data-category="photography"] .detail-shell {
-    --photo-sidebar-width: clamp(118px, 13vw, 180px);
+    --photo-sidebar-width: clamp(104px, 10.5vw, 150px);
     display: grid;
     grid-template-columns: var(--photo-sidebar-width) minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
@@ -6425,22 +6455,33 @@ html[data-debug-hud="hidden"] .hud {
     margin-right: auto;
     align-self: start;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .detail-page[data-category="photography"] .detail-header {
     grid-column: 1;
     grid-row: 1;
+    justify-items: center;
     gap: 3px;
     align-self: start;
     margin: 0;
+    padding: 0.2em 0 0;
+    overflow: visible;
+    transform: none;
+  }
+
+  .detail-page[data-category="photography"] .detail-header .eyebrow {
+    padding-block: 0.16em 0.08em;
+    overflow: visible;
+    line-height: 1.15;
   }
 
   .detail-page[data-category="photography"] .photo-main-stage {
     grid-column: 2;
     grid-row: 1 / span 2;
+    width: min(100%, 154svh);
     align-self: start;
-    justify-self: stretch;
+    justify-self: start;
   }
 
   .detail-page[data-category="photography"] .photo-media-rail {
@@ -6508,15 +6549,24 @@ html[data-debug-hud="hidden"] .hud {
     height: auto;
     align-self: start;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .detail-page[data-category="photography"] .detail-header {
     grid-column: 1;
     grid-row: 1;
+    justify-items: center;
     gap: 2px;
     margin: 0;
-    padding-left: 0;
+    padding: 0.2em 0 0;
+    overflow: visible;
+    text-align: center;
+  }
+
+  .detail-page[data-category="photography"] .detail-header .eyebrow {
+    padding-block: 0.16em 0.08em;
+    overflow: visible;
+    line-height: 1.15;
   }
 
   .detail-page[data-category="photography"] .detail-title {
@@ -6542,17 +6592,20 @@ html[data-debug-hud="hidden"] .hud {
 
 }
 
-/* Keep desktop work readers below the proportionally scaled header. Long-form
-   articles retain their readable text measure; one-screen film/photo modules
-   scale as complete compositions from the 1920x1080 reference. */
+/* Keep the previously approved desktop detail sizes as the baseline. Larger
+   displays can keep growing from the 1920x1080 composition, while ordinary
+   laptop/desktop viewports no longer get treated as reduced-scale canvases. */
 @media (min-width: 981px) {
   .detail-page {
-    padding-top: max(132px, min(8.9583vw, 15.9259svh));
+    padding-top: max(
+      clamp(132px, 15vh, 172px),
+      min(8.9583vw, 15.9259svh)
+    );
   }
 
   .detail-back-button {
-    top: max(112px, min(6.75vw, 12svh));
-    right: max(28px, min(2.8125vw, 5svh));
+    top: max(clamp(112px, 12vh, 138px), min(6.75vw, 12svh));
+    right: max(clamp(18px, 4vw, 54px), min(2.8125vw, 5svh));
     width: max(40px, min(2.0833vw, 3.7037svh));
     height: max(40px, min(2.0833vw, 3.7037svh));
   }
@@ -6563,41 +6616,59 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .detail-page .detail-header .eyebrow {
-    font-size: max(0.72rem, min(0.6833vw, 1.2148svh));
+    font-size: max(
+      clamp(0.72rem, 0.84vw, 0.82rem),
+      min(0.6833vw, 1.2148svh)
+    );
   }
 
   .detail-page .detail-title {
-    font-size: max(1.9rem, min(2.2917vw, 4.0741svh));
+    font-size: max(
+      clamp(1.9rem, 3vw, 2.75rem),
+      min(2.2917vw, 4.0741svh)
+    );
   }
 
   .detail-page .detail-title--medium {
-    font-size: max(1.65rem, min(1.875vw, 3.3333svh));
+    font-size: max(
+      clamp(1.65rem, 2.5vw, 2.25rem),
+      min(1.875vw, 3.3333svh)
+    );
   }
 
   .detail-page .detail-title--compact {
-    font-size: max(1.35rem, min(1.5vw, 2.6667svh));
+    font-size: max(
+      clamp(1.35rem, 2.05vw, 1.8rem),
+      min(1.5vw, 2.6667svh)
+    );
   }
 
   .works-page.detail-page[data-category="short-films"] {
     padding-top: calc(
-      max(82px, min(6.0417vw, 10.7407svh))
-      + max(10px, min(0.9375vw, 1.6667svh))
+      max(clamp(82px, 7.4vw, 116px), min(6.0417vw, 10.7407svh))
+      + max(clamp(10px, 1.2vw, 18px), min(0.9375vw, 1.6667svh))
     );
-    padding-bottom: max(10px, min(0.9375vw, 1.6667svh));
+    padding-bottom: max(
+      clamp(10px, 1.3vw, 18px),
+      min(0.9375vw, 1.6667svh)
+    );
   }
 
   .detail-page[data-category="short-films"] .detail-shell {
-    width: min(100%, min(61.4583vw, 109.2593svh));
+    width: min(100%, max(1120px, min(72.5vw, 130svh)));
   }
 
   .detail-page[data-category="short-films"] .detail-title {
-    font-size: max(1.45rem, min(1.75vw, 3.1111svh));
+    font-size: max(
+      clamp(1.45rem, 2.3vw, 2.1rem),
+      min(1.75vw, 3.1111svh)
+    );
   }
 
   .detail-page[data-category="short-films"] .film-detail-card {
-    gap: max(10px, min(0.7292vw, 1.2963svh));
-    max-height: min(32.2917vw, 57.4074svh);
-    padding: max(8px, min(0.625vw, 1.1111svh));
+    gap: max(clamp(10px, 1.2vw, 14px), min(0.7292vw, 1.2963svh));
+    max-height: max(620px, min(37vw, 66svh));
+    padding: max(clamp(8px, 1vw, 12px), min(0.625vw, 1.1111svh));
   }
 
   .detail-page[data-category="short-films"] .film-main-column {
@@ -6609,30 +6680,359 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .detail-page[data-category="short-films"] .film-media-thumb {
-    flex-basis: max(98px, min(7.3958vw, 13.1481svh));
+    flex-basis: max(
+      clamp(98px, 19%, 142px),
+      min(7.3958vw, 13.1481svh)
+    );
   }
 
   .detail-page[data-category="short-films"] .film-showcase-poster {
-    max-height: min(11.4583vw, 20.3704svh);
+    max-height: max(min(27svh, 220px), min(11.4583vw, 20.3704svh));
   }
 
   .detail-page[data-category="short-films"] .film-summary > p:last-child {
-    font-size: max(0.78rem, min(0.7333vw, 1.3037svh));
+    font-size: max(
+      clamp(0.78rem, 0.84vw, 0.88rem),
+      min(0.7333vw, 1.3037svh)
+    );
   }
 
   .works-page.detail-page[data-category="photography"] {
     --photo-page-top: calc(
-      max(82px, min(6.0417vw, 10.7407svh))
-      + max(10px, min(0.9375vw, 1.6667svh))
+      max(clamp(82px, 7.4vw, 116px), min(6.0417vw, 10.7407svh))
+      + max(clamp(10px, 1.2vw, 18px), min(0.9375vw, 1.6667svh))
     );
-    padding-bottom: max(10px, min(0.9375vw, 1.6667svh));
+    padding-bottom: max(
+      clamp(10px, 1.3vw, 18px),
+      min(0.9375vw, 1.6667svh)
+    );
   }
 
   .detail-page[data-category="photography"] .detail-shell {
-    --photo-sidebar-width: max(118px, min(9.375vw, 16.6667svh));
+    --photo-sidebar-width: max(
+      clamp(104px, 10.5vw, 150px),
+      min(7.8125vw, 13.8889svh)
+    );
     grid-template-columns: var(--photo-sidebar-width) minmax(0, 1fr);
-    column-gap: max(10px, min(0.9375vw, 1.6667svh));
-    row-gap: max(8px, min(0.625vw, 1.1111svh));
-    width: calc(100% - max(52px, min(3.5417vw, 6.2963svh)));
+    column-gap: max(clamp(10px, 1.3vw, 18px), min(0.9375vw, 1.6667svh));
+    row-gap: max(clamp(8px, 1.2svh, 12px), min(0.625vw, 1.1111svh));
+    width: calc(
+      100% - max(clamp(52px, 4vw, 68px), min(3.5417vw, 6.2963svh))
+    );
+  }
+}
+
+@media (min-width: 761px) and (max-height: 760px) {
+  .detail-page[data-category="photography"] .detail-shell {
+    width: min(calc(100% - clamp(52px, 4vw, 68px)), 164svh);
+  }
+}
+/* Mobile experience pass. Desktop geometry stays on the rules above. */
+.control-hint-mobile {
+  display: none;
+}
+
+.mobile-experience-notice[hidden] {
+  display: none;
+}
+
+.mobile-experience-notice {
+  width: min(420px, calc(100vw - 32px));
+  padding: 26px 24px 24px;
+  border: 1px solid rgba(93, 252, 255, 0.72);
+  background:
+    linear-gradient(135deg, rgba(93, 252, 255, 0.08), transparent 44%),
+    rgba(4, 7, 24, 0.96);
+  box-shadow:
+    0 0 0 1px rgba(255, 79, 216, 0.28),
+    0 24px 70px rgba(0, 0, 0, 0.72),
+    0 0 36px rgba(93, 252, 255, 0.14);
+  text-align: left;
+}
+
+.mobile-experience-kicker {
+  margin: 0 0 8px;
+  color: var(--cyan);
+  font: 700 0.66rem/1.2 "Courier New", monospace;
+  letter-spacing: 0.16em;
+}
+
+.mobile-experience-notice h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.6rem, 8vw, 2.15rem);
+  line-height: 1.05;
+  text-shadow: 0 0 16px rgba(93, 252, 255, 0.42);
+}
+
+.mobile-experience-notice > p:not(.mobile-experience-kicker) {
+  margin: 18px 0 22px;
+  color: rgba(249, 244, 255, 0.82);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.mobile-experience-notice button {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(93, 252, 255, 0.66);
+  background: rgba(93, 252, 255, 0.1);
+  color: #efffff;
+  font: 800 0.92rem/1 "Microsoft YaHei", sans-serif;
+  box-shadow: inset 0 0 18px rgba(93, 252, 255, 0.06);
+}
+
+@media (max-width: 760px), (pointer: coarse) and (max-width: 1024px), (orientation: landscape) and (max-width: 1024px) and (max-height: 540px) {
+  .site-header {
+    --site-header-edge: max(10px, env(safe-area-inset-left));
+    top: max(8px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+    left: max(10px, env(safe-area-inset-left));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 58px;
+    grid-template-rows: 42px 46px;
+    gap: 5px 10px;
+    align-items: center;
+  }
+
+  .site-brand {
+    grid-column: 1;
+    grid-row: 1;
+    gap: 6px;
+    font-size: clamp(0.58rem, 2.8vw, 0.7rem);
+  }
+
+  .site-brand img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .site-controls {
+    display: contents;
+  }
+
+  .soundwave-player {
+    grid-column: 2;
+    grid-row: 1;
+    width: 58px;
+    justify-self: end;
+    touch-action: manipulation;
+  }
+
+  .soundwave-load,
+  .soundwave-previous,
+  .soundwave-next,
+  .soundwave-volume-control {
+    display: none;
+  }
+
+  .soundwave-toggle {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 9px;
+  }
+
+  .soundwave-hotspot::after,
+  .soundwave-volume {
+    display: none;
+  }
+
+  .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid rgba(93, 252, 255, 0.16);
+    background: rgba(4, 7, 24, 0.58);
+    font-size: clamp(0.68rem, 3.2vw, 0.78rem);
+    backdrop-filter: blur(8px);
+  }
+
+  .site-nav a {
+    display: grid;
+    min-width: 0;
+    min-height: 38px;
+    place-items: center;
+    padding: 0 4px;
+  }
+
+  .site-nav a::after {
+    bottom: 2px;
+  }
+
+  .control-hint-desktop {
+    display: none;
+  }
+
+  .control-hint-mobile {
+    display: inline;
+  }
+
+  .hud-bottom {
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: calc(100% - 24px);
+    gap: 7px;
+  }
+
+  .hud-metrics {
+    right: 12px;
+    bottom: 152px;
+    left: 12px;
+    width: auto;
+  }
+
+  .mode-button {
+    min-height: 42px;
+  }
+
+  .control-hint {
+    max-width: 330px;
+    font-size: 0.62rem;
+    line-height: 1.4;
+  }
+
+  .detail-page {
+    padding-top: 118px;
+  }
+
+  .detail-back-button {
+    top: calc(max(8px, env(safe-area-inset-top)) + 94px);
+    width: 44px;
+    height: 44px;
+  }
+
+  .film-detail-card {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .film-media-rail {
+    gap: 8px;
+  }
+
+  .photo-main-stage {
+    cursor: ew-resize;
+    touch-action: pan-y;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .works-page.detail-page[data-category="photography"] {
+    height: auto;
+    min-height: 100svh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 116px 12px max(18px, env(safe-area-inset-bottom));
+  }
+
+  .detail-page[data-category="photography"] .detail-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+  }
+
+  .detail-page[data-category="photography"] .detail-header {
+    grid-column: 1;
+    grid-row: 1;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .detail-page[data-category="photography"] .photo-main-stage {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    min-height: min(64vw, 360px);
+  }
+
+  .detail-page[data-category="photography"] .photo-media-rail {
+    grid-column: 1;
+    grid-row: 3;
+    height: 78px;
+    padding: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: inline proximity;
+    touch-action: pan-x;
+  }
+
+  .detail-page[data-category="photography"] .photo-media-track {
+    width: max-content;
+    height: 100%;
+    flex-direction: row;
+  }
+
+  .detail-page[data-category="photography"] .photo-media-thumb {
+    width: 72px;
+    height: 72px;
+    aspect-ratio: 1;
+    scroll-snap-align: center;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1024px) and (max-height: 540px) {
+  .site-header {
+    grid-template-columns: minmax(0, 1fr) 52px auto;
+    grid-template-rows: 52px;
+  }
+
+  .site-brand,
+  .soundwave-player,
+  .site-nav {
+    grid-row: 1;
+  }
+
+  .soundwave-player {
+    grid-column: 2;
+    width: 52px;
+  }
+
+  .site-nav {
+    grid-column: 3;
+    width: min(360px, 48vw);
+  }
+
+  .detail-page {
+    padding-top: 76px;
+  }
+}
+
+.photo-touch-controls {
+  position: absolute;
+  inset: 50% 8px auto;
+  z-index: 3;
+  display: none;
+  justify-content: space-between;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.photo-touch-controls button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(93, 252, 255, 0.58);
+  border-radius: 50%;
+  background: rgba(4, 7, 24, 0.72);
+  color: #eaffff;
+  font-size: 1.15rem;
+  pointer-events: auto;
+  backdrop-filter: blur(7px);
+}
+
+@media (max-width: 760px), (pointer: coarse) and (max-width: 1024px), (orientation: landscape) and (max-width: 1024px) and (max-height: 540px) {
+  .photo-touch-controls {
+    display: flex;
+  }
+
+  .resume-jump-nav a {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    padding-block: 8px;
   }
 }

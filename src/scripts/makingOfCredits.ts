@@ -13,8 +13,6 @@ if (root) {
   let touchStartY = 0;
   let measureFrame = 0;
 
-  const clampIndex = (index: number) => Math.min(Math.max(index, 0), passages.length - 1);
-
   const render = () => {
     root.dataset.activeIndex = String(activeIndex);
     if (track) track.style.setProperty("--making-index", String(activeIndex));
@@ -34,10 +32,20 @@ if (root) {
   };
 
   const step = (direction: number) => {
-    const nextIndex = clampIndex(activeIndex + Math.sign(direction));
+    if (passages.length < 2) return;
+    const nextIndex = (activeIndex + Math.sign(direction) + passages.length) % passages.length;
     if (nextIndex === activeIndex) return;
+    const wrapping = Math.abs(nextIndex - activeIndex) > 1;
+    if (wrapping && track) track.dataset.wrapping = "true";
     activeIndex = nextIndex;
     render();
+    if (wrapping && track) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          delete track.dataset.wrapping;
+        });
+      });
+    }
   };
 
   const queueStep = (direction: number) => {

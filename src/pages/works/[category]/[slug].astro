@@ -32,7 +32,11 @@ const portfolioCategories: any[] = [
   ...photoPortfolio.categories,
 ];
 const { work } = Astro.props as any;
-const mediaBaseUrl = String(import.meta.env.PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/+$/, "");
+const productionMediaBaseUrl =
+  "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com";
+const configuredMediaBaseUrl = String(import.meta.env.PUBLIC_MEDIA_BASE_URL ?? "").trim();
+const mediaBaseUrl = (configuredMediaBaseUrl || (import.meta.env.PROD ? productionMediaBaseUrl : ""))
+  .replace(/\/+$/, "");
 const useEdgeOneHls = String(import.meta.env.PUBLIC_EDGEONE_HLS ?? "") === "true";
 const resolveVideoUrl = (source: string) =>
   mediaBaseUrl && source?.startsWith("/") ? `${mediaBaseUrl}${source}` : source;
@@ -260,6 +264,9 @@ const photoMediaItems = isPhotoAlbum
                     data-film-hls={useEdgeOneHls ? resolveHlsUrl(work.video) : undefined}
                   >
                     {!useEdgeOneHls && <source src={resolveVideoUrl(work.video)} type="video/mp4" />}
+                    {!useEdgeOneHls && mediaBaseUrl && (
+                      <source src={work.video} type="video/mp4" />
+                    )}
                     当前浏览器不支持视频播放。
                   </video>
                   <img
@@ -334,6 +341,10 @@ const photoMediaItems = isPhotoAlbum
               fetchpriority="high"
               data-photo-main
             />
+            <div class="photo-touch-controls" aria-label="照片切换">
+              <button type="button" data-photo-previous aria-label="上一张照片">←</button>
+              <button type="button" data-photo-next aria-label="下一张照片">→</button>
+            </div>
           </figure>
 
           <div class="photo-media-rail" data-photo-rail aria-label={`${work.title}照片卷轴`}>
@@ -402,6 +413,7 @@ const photoMediaItems = isPhotoAlbum
                 <figure class="source-video-figure">
                   <video controls playsinline preload="metadata" aria-label={block.caption ?? `${work.title}视频`}>
                     <source src={resolveVideoUrl(block.src)} type="video/mp4" />
+                    {mediaBaseUrl && <source src={block.src} type="video/mp4" />}
                     当前浏览器不支持视频播放。
                   </video>
                   {block.caption && <figcaption>{block.caption}</figcaption>}
@@ -690,12 +702,17 @@ const photoMediaItems = isPhotoAlbum
         const stage = gallery.querySelector("[data-photo-stage]");
         const main = gallery.querySelector("[data-photo-main]");
         const rail = gallery.querySelector("[data-photo-rail]");
+        const previousButton = gallery.querySelector("[data-photo-previous]");
+        const nextButton = gallery.querySelector("[data-photo-next]");
         const thumbs = Array.from(gallery.querySelectorAll("[data-photo-thumb]"));
         if (!(stage instanceof HTMLElement) || !(main instanceof HTMLImageElement) || !thumbs.length) return;
 
         let activeIndex = 0;
         let wheelLocked = false;
         let swapVersion = 0;
+        let gestureStartX = 0;
+        let gestureStartY = 0;
+        let gesturePointerId = null;
 
         const preloadAround = (index) => {
           [-1, 1].forEach((offset) => {
@@ -741,6 +758,29 @@ const photoMediaItems = isPhotoAlbum
 
         thumbs.forEach((thumb, index) => {
           thumb.addEventListener("click", () => showPhoto(index));
+        });
+
+        previousButton?.addEventListener("click", () => showPhoto(activeIndex - 1));
+        nextButton?.addEventListener("click", () => showPhoto(activeIndex + 1));
+
+        stage.addEventListener("pointerdown", (event) => {
+          if (!event.isPrimary || event.target instanceof Element && event.target.closest("button")) return;
+          gesturePointerId = event.pointerId;
+          gestureStartX = event.clientX;
+          gestureStartY = event.clientY;
+        });
+
+        stage.addEventListener("pointerup", (event) => {
+          if (gesturePointerId !== event.pointerId) return;
+          gesturePointerId = null;
+          const deltaX = event.clientX - gestureStartX;
+          const deltaY = event.clientY - gestureStartY;
+          if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+          showPhoto(activeIndex + (deltaX < 0 ? 1 : -1));
+        });
+
+        stage.addEventListener("pointercancel", () => {
+          gesturePointerId = null;
         });
 
         stage.addEventListener("wheel", (event) => {

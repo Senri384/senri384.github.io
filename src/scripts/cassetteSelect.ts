@@ -90,7 +90,10 @@ function bootCassetteSelect() {
       }
     : parsed.gameCardGeometry;
   const rail = root.querySelector<HTMLElement>("[data-cassette-rail]");
-  const backButton = root.querySelector<HTMLButtonElement>("[data-cassette-back]");
+  const backButton = document.querySelector<HTMLButtonElement>("[data-cassette-back]");
+  const mobilePreviousButton = document.querySelector<HTMLButtonElement>("[data-mobile-portfolio-prev]");
+  const mobileNextButton = document.querySelector<HTMLButtonElement>("[data-mobile-portfolio-next]");
+  const mobileStatus = document.querySelector<HTMLElement>("[data-mobile-portfolio-status]");
   const titleStage = document.querySelector<HTMLAnchorElement>("[data-work-title-stage]");
   const titleStageMain = titleStage?.querySelector<HTMLImageElement>("[data-work-title-main]");
   const titleStageMainMotion = titleStage?.querySelector<HTMLElement>("[data-work-title-main-motion]");
@@ -165,14 +168,37 @@ function bootCassetteSelect() {
   let workTitleEnterTimer = 0;
   let categorySwapTimer = 0;
   let categoryEnterTimer = 0;
+  let categorySwapRequest = 0;
+  let workSwapRequest = 0;
   let browseCenterFrame = 0;
   let openingPreloadTimer = 0;
   let discOpening = false;
   let openingQueued = false;
   let openingLeadInTimer = 0;
   let lastWheelInputAt = Number.NEGATIVE_INFINITY;
+  let gestureStartX = 0;
+  let gestureStartY = 0;
+  let gesturePointerId: number | null = null;
+  let suppressClickUntil = 0;
   const discOpeningTimers: number[] = [];
   root.dataset.mode = "browse";
+
+  function updateMobileStatus() {
+    if (!mobileStatus) return;
+    if (activeCategoryIndex === null) {
+      const category = categories[browseCategoryIndex];
+      mobileStatus.textContent = category
+        ? `${browseCategoryIndex + 1} / ${categories.length} · ${category.title}`
+        : "左右滑动切换分类";
+      return;
+    }
+
+    const category = categories[activeCategoryIndex];
+    const work = category?.works[activeWorkIndex];
+    mobileStatus.textContent = work
+      ? `${activeWorkIndex + 1} / ${category.works.length} · ${work.title}`
+      : "左右滑动切换作品";
+  }
 
   function playGameCardOpenSound() {
     let volume = 0.5;
@@ -196,6 +222,7 @@ function bootCassetteSelect() {
     cases.forEach((item, itemIndex) => {
       item.dataset.browseActive = String(itemIndex === index);
     });
+    updateMobileStatus();
   }
 
   function pulseStep() {
@@ -226,6 +253,7 @@ function bootCassetteSelect() {
   }
 
   function showCategoryTitle(index: number) {
+    categorySwapRequest += 1;
     window.clearTimeout(categorySwapTimer);
     window.clearTimeout(categoryEnterTimer);
     categoryTitleStage?.classList.remove("is-leaving", "is-entering");
@@ -235,27 +263,34 @@ function bootCassetteSelect() {
   function swapCategoryTitle(index: number, direction: number, immediate = false) {
     if (!categoryTitleStage) return;
 
+    const request = ++categorySwapRequest;
     window.clearTimeout(categorySwapTimer);
     window.clearTimeout(categoryEnterTimer);
-    categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
-    categoryTitleStage.classList.remove("is-leaving", "is-entering");
-    if (immediate) {
-      renderCategoryTitle(index);
-      return;
-    }
-    void categoryTitleStage.offsetWidth;
-    categoryTitleStage.classList.add("is-leaving");
-
-    categorySwapTimer = window.setTimeout(() => {
+    void preloadCategoryVisuals(categories[index]).then(() => {
+      if (request !== categorySwapRequest) return;
       if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-      renderCategoryTitle(index);
-      categoryTitleStage.classList.remove("is-leaving");
-      categoryTitleStage.classList.add("is-entering");
-      categoryEnterTimer = window.setTimeout(() => {
+      categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
+      categoryTitleStage.classList.remove("is-leaving", "is-entering");
+      if (immediate) {
+        renderCategoryTitle(index);
+        return;
+      }
+      void categoryTitleStage.offsetWidth;
+      categoryTitleStage.classList.add("is-leaving");
+
+      categorySwapTimer = window.setTimeout(() => {
+        if (request !== categorySwapRequest) return;
         if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-        categoryTitleStage.classList.remove("is-entering");
-      }, 145);
-    }, 105);
+        renderCategoryTitle(index);
+        categoryTitleStage.classList.remove("is-leaving");
+        categoryTitleStage.classList.add("is-entering");
+        categoryEnterTimer = window.setTimeout(() => {
+          if (request !== categorySwapRequest) return;
+          if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
+          categoryTitleStage.classList.remove("is-entering");
+        }, 145);
+      }, 105);
+    });
   }
 
   function clearWorkTitleMotion() {
@@ -627,24 +662,31 @@ function bootCassetteSelect() {
     direction: number,
     immediate = false,
   ) {
+    const work = categories[categoryIndex]?.works[workIndex];
+    if (!work) return;
+    const request = ++workSwapRequest;
     window.clearTimeout(workSwapTimer);
     clearWorkTitleMotion();
-    if (immediate) {
-      caseElement.classList.remove("is-switching", "is-work-retracting");
-      updateTape(caseElement, categoryIndex, workIndex);
-      return;
-    }
-    const directionName = direction > 0 ? "next" : "previous";
-    [categoryTitleStage, titleStage].forEach((stage) => {
-      if (!stage) return;
-      stage.dataset.direction = directionName;
-      stage.classList.add("is-leaving");
+    void preloadWorkDisplayVisuals(work).then(() => {
+      if (request !== workSwapRequest || activeCategoryIndex !== categoryIndex) return;
+      if (immediate) {
+        caseElement.classList.remove("is-switching", "is-work-retracting");
+        updateTape(caseElement, categoryIndex, workIndex);
+        return;
+      }
+      const directionName = direction > 0 ? "next" : "previous";
+      [categoryTitleStage, titleStage].forEach((stage) => {
+        if (!stage) return;
+        stage.dataset.direction = directionName;
+        stage.classList.add("is-leaving");
+      });
+      caseElement.classList.remove("is-switching");
+      caseElement.classList.add("is-work-retracting");
+      workSwapTimer = window.setTimeout(() => {
+        if (request !== workSwapRequest || activeCategoryIndex !== categoryIndex) return;
+        updateTape(caseElement, categoryIndex, workIndex, direction);
+      }, 150);
     });
-    caseElement.classList.remove("is-switching");
-    caseElement.classList.add("is-work-retracting");
-    workSwapTimer = window.setTimeout(() => {
-      updateTape(caseElement, categoryIndex, workIndex, direction);
-    }, 150);
   }
 
   function centerCase(caseElement: HTMLElement, behavior: ScrollBehavior = "smooth") {
@@ -673,6 +715,8 @@ function bootCassetteSelect() {
     if (!caseElement || !category?.works.length) return;
 
     activeCategoryIndex = index;
+    categorySwapRequest += 1;
+    workSwapRequest += 1;
     markBrowseCategory(index);
     activeWorkIndex = Math.min(activeWorkIndex, category.works.length - 1);
 
@@ -696,6 +740,7 @@ function bootCassetteSelect() {
   }
 
   function closeCase() {
+    workSwapRequest += 1;
     window.clearTimeout(workSwapTimer);
     hideWorkTitle();
     activeCategoryIndex = null;
@@ -787,8 +832,8 @@ function bootCassetteSelect() {
     if (!nextWork) return;
 
     activeWorkIndex = nextWorkIndex;
+    updateMobileStatus();
     swapTapeWithRetract(caseElement, activeCategoryIndex, activeWorkIndex, direction, immediate);
-    void preloadWorkDisplayVisuals(nextWork);
   }
 
   function stepCategory(direction: number, distance = 1, immediate = false) {
@@ -798,9 +843,19 @@ function bootCassetteSelect() {
 
     markBrowseCategory(nextIndex);
     swapCategoryTitle(nextIndex, direction, immediate);
-    void preloadCategoryVisuals(nextCategory);
     const caseElement = cases[browseCategoryIndex];
     if (caseElement) centerCase(caseElement, immediate ? "auto" : "smooth");
+  }
+
+  function stepCurrent(direction: number) {
+    if (wheelLock || discOpening || openingQueued) return;
+    wheelLock = true;
+    pulseStep();
+    if (activeCategoryIndex === null) stepCategory(direction);
+    else stepWork(direction);
+    window.setTimeout(() => {
+      wheelLock = false;
+    }, activeCategoryIndex === null ? 260 : 320);
   }
 
   cases.forEach((caseElement, index) => {
@@ -822,6 +877,37 @@ function bootCassetteSelect() {
     setBrowseUrl();
   });
   titleStage?.addEventListener("click", playDiscOpening);
+  mobilePreviousButton?.addEventListener("click", () => stepCurrent(-1));
+  mobileNextButton?.addEventListener("click", () => stepCurrent(1));
+
+  if (window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(max-width: 760px)").matches) {
+    root.addEventListener("pointerdown", (event) => {
+      if (!event.isPrimary || discOpening || openingQueued) return;
+      gesturePointerId = event.pointerId;
+      gestureStartX = event.clientX;
+      gestureStartY = event.clientY;
+    });
+
+    root.addEventListener("pointerup", (event) => {
+      if (gesturePointerId !== event.pointerId) return;
+      const deltaX = event.clientX - gestureStartX;
+      const deltaY = event.clientY - gestureStartY;
+      gesturePointerId = null;
+      if (Math.abs(deltaX) < 44 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+      suppressClickUntil = Date.now() + 380;
+      stepCurrent(deltaX < 0 ? 1 : -1);
+    });
+
+    root.addEventListener("pointercancel", () => {
+      gesturePointerId = null;
+    });
+
+    root.addEventListener("click", (event) => {
+      if (Date.now() >= suppressClickUntil) return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, { capture: true });
+  }
 
   root.addEventListener(
     "wheel",

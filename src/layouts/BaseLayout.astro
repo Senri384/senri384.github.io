@@ -27,19 +27,22 @@ const isScrollableWorkPage =
   /^\/works\/[^/]+\/[^/]+\/?$/.test(pathname) &&
   !pathname.startsWith("/works/short-films/") &&
   !pathname.startsWith("/works/photography/");
+const productionAssetOrigin = "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com";
 ---
 
 <!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Senri's Personal Homepage" />
     <meta name="theme-color" content="#07081c" />
+    <link rel="dns-prefetch" href="//senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com" />
+    <link rel="preconnect" href={productionAssetOrigin} crossorigin="anonymous" />
     <ClientRouter />
     <link rel="icon" type="image/png" href="/favicon.png" />
     {
@@ -61,6 +64,7 @@ const isScrollableWorkPage =
     <script is:inline>
       (() => {
         const storageKey = "neon-drive-opening-seen-v1";
+        const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
         const navigationEntry = window.performance.getEntriesByType("navigation")[0];
         const isReload =
           navigationEntry instanceof PerformanceNavigationTiming &&
@@ -74,7 +78,7 @@ const isScrollableWorkPage =
 
         if (!hasSeenOpening && window.location.pathname !== "/") {
           document.documentElement.dataset.siteGate = "redirecting";
-          window.location.replace("/");
+          window.location.replace(`/?introTarget=${encodeURIComponent(currentPath)}`);
           return;
         }
 

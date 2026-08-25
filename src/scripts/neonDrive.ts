@@ -151,7 +151,14 @@ if (uiPreviewMode) {
 }
 document.documentElement.dataset.vehicleAssets = "v55";
 const bgmUrl = "/audio/music/game/Perturbator - Miami Disco.mp3";
-const openingAudioUrl = "/audio/music/the touch.mp3";
+const openingAudioUrl = import.meta.env.PROD
+  ? [
+      "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com/site-assets",
+      "_astro",
+      "the%20touch.mp3",
+    ].join("/")
+  : "/audio/music/the touch.mp3";
+const openingAudioMinimumVolume = 0.2;
 const openingAudioVolumeBoost = 1.55;
 const openingAudioDurationMs = 3120;
 const attackHitVariants = [
@@ -2535,7 +2542,12 @@ function makeVehicleTexture(kind: VehicleSprite["kind"], paletteIndex: number) {
   return texture;
 }
 
-const generatedVehicleAssetRoot = "/portfolio-assets/vehicles/home-v55";
+const generatedVehicleAssetRoot = import.meta.env.PROD
+  ? [
+      "https://senri-homepage-media-1471298053.cos.ap-guangzhou.myqcloud.com/site-assets",
+      "_astro",
+    ].join("/")
+  : "/portfolio-assets/vehicles/home-v55";
 const generatedVehicleAssetExtension = "webp";
 const obstacleVehicleAssetSlugs = ["sideswipe", "red-alert", "sunstreaker"] as const;
 const playerReturnCenterAssetThreshold = 0.24;
@@ -3703,15 +3715,16 @@ function syncBgm() {
 function shouldPlayOpeningAudio() {
   return Boolean(
     audio.unlocked &&
-      !audio.muted &&
-      audio.volume > 0 &&
       !bgmStarted &&
       ["arming", "playing"].includes(document.documentElement.dataset.opening ?? ""),
   );
 }
 
 function openingAudioVolume() {
-  return clamp(audio.volume * openingAudioVolumeBoost, 0, 1);
+  // ENTER is an explicit playback gesture. Keep the opening cue audible even
+  // when a previous visit left the persistent Walkman state muted or at zero;
+  // the saved Walkman preference itself remains unchanged after the intro.
+  return clamp(Math.max(audio.volume, openingAudioMinimumVolume) * openingAudioVolumeBoost, 0, 1);
 }
 
 function ensureOpeningAudio() {
@@ -4154,6 +4167,9 @@ function handleSoundwaveVolume(detail: { volume?: number }) {
 }
 
 function setupEvents() {
+  // Start fetching the short opening cue as soon as the homepage runtime is
+  // ready, so ENTER can begin audio and visuals together on slower networks.
+  ensureOpeningAudio().load();
   window.addEventListener("resize", resizeCanvas);
   window.addEventListener("blur", pauseGame);
   window.addEventListener("focus", resumeGame);

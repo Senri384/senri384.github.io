@@ -14,6 +14,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       data-opening-state="entry"
     >
       <div class="opening-entry" aria-label="Start opening sequence">
+        <section
+          class="mobile-experience-notice"
+          data-mobile-experience-notice
+          aria-labelledby="mobile-experience-title"
+          hidden
+        >
+          <p class="mobile-experience-kicker">MOBILE EXPERIENCE</p>
+          <h1 id="mobile-experience-title">最佳体验提示</h1>
+          <p>本网站包含声音、动画与桌面端互动。建议使用电脑并佩戴耳机体验</p>
+          <button type="button" data-mobile-experience-continue>继续进入</button>
+        </section>
         <button id="opening-enter" class="opening-enter" type="button" disabled autofocus>
           ENTER
         </button>
@@ -73,7 +84,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <button class="mode-button" type="button" data-drive-mode="airing">兜风</button>
         </div>
       </section>
-      <p class="control-hint">← → / A D steer · W/Q/E attack · R reset</p>
+      <p class="control-hint">
+        <span class="control-hint-desktop">← → / A D steer · W/Q/E attack · R reset</span>
+        <span class="control-hint-mobile">左右拖动换道 · 完整竞速操作推荐电脑端</span>
+      </p>
     </section>
   </main>
 
@@ -85,21 +99,35 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       const overlay = document.querySelector("#opening-sequence");
       const enterButton = document.querySelector("#opening-enter");
       const skipButton = document.querySelector("#opening-skip");
+      const mobileNotice = document.querySelector("[data-mobile-experience-notice]");
+      const mobileNoticeContinue = document.querySelector("[data-mobile-experience-continue]");
       if (!(overlay instanceof HTMLElement)) return;
 
       const storageKey = "neon-drive-opening-seen-v1";
+      const mobileNoticeKey = "mobile-experience-notice-seen-v1";
       const params = new URLSearchParams(window.location.search);
+      const requestedTarget = params.get("introTarget");
+      const targetPath =
+        requestedTarget?.startsWith("/") && !requestedTarget.startsWith("//")
+          ? requestedTarget
+          : "";
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let finished = false;
       let fallbackTimer;
       let audioStartTimer;
       let started = false;
       let audioReady = Boolean(window.__neonDriveOpeningAudioReady);
+      let mobileNoticePending = false;
+      let mobileNoticeConfirmed = false;
 
       const enableEnter = () => {
         audioReady = true;
         if (enterButton instanceof HTMLButtonElement) enterButton.disabled = false;
-        enterButton?.focus({ preventScroll: true });
+        if (mobileNoticeConfirmed) {
+          startOpening();
+        } else if (!mobileNoticePending) {
+          enterButton?.focus({ preventScroll: true });
+        }
       };
 
       const signalOpeningGesture = () => {
@@ -114,6 +142,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const revealSite = () => {
         markOpeningSeen();
+        if (targetPath) {
+          document.documentElement.dataset.siteGate = "redirecting";
+          window.location.replace(targetPath);
+          return;
+        }
         document.documentElement.dataset.siteGate = "open";
         window.dispatchEvent(new CustomEvent("opening-complete"));
       };
@@ -189,6 +222,39 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       if ((hasSeenOpening && !isReload) || params.has("skipIntro")) {
         finish(true);
         return;
+      }
+
+      const isMobileExperience =
+        window.matchMedia("(pointer: coarse)").matches ||
+        window.matchMedia("(max-width: 760px)").matches;
+      let hasSeenMobileNotice = false;
+      try {
+        hasSeenMobileNotice = window.sessionStorage.getItem(mobileNoticeKey) === "1";
+      } catch {}
+
+      if (
+        isMobileExperience &&
+        !hasSeenMobileNotice &&
+        mobileNotice instanceof HTMLElement &&
+        mobileNoticeContinue instanceof HTMLButtonElement
+      ) {
+        mobileNoticePending = true;
+        mobileNotice.hidden = false;
+        if (enterButton instanceof HTMLButtonElement) enterButton.hidden = true;
+        document.documentElement.dataset.mobileNotice = "visible";
+        mobileNoticeContinue.focus({ preventScroll: true });
+        mobileNoticeContinue.addEventListener("click", () => {
+          signalOpeningGesture();
+          try {
+            window.sessionStorage.setItem(mobileNoticeKey, "1");
+          } catch {}
+          mobileNoticePending = false;
+          mobileNoticeConfirmed = true;
+          mobileNotice.hidden = true;
+          delete document.documentElement.dataset.mobileNotice;
+          if (enterButton instanceof HTMLButtonElement) enterButton.hidden = false;
+          if (audioReady) startOpening();
+        }, { once: true });
       }
 
       enterButton?.addEventListener("click", startOpening, { once: true });

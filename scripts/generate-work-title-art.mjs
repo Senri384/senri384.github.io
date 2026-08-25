@@ -10,6 +10,7 @@ const outputDir = path.join(projectRoot, "public", "portfolio-assets", "ui", "te
 const onlyCategoryFlagIndex = process.argv.indexOf("--only-category");
 const onlyCategory =
   onlyCategoryFlagIndex >= 0 ? process.argv[onlyCategoryFlagIndex + 1] : null;
+const categoriesOnly = process.argv.includes("--categories-only");
 
 const escapeSvgText = (value) =>
   value
@@ -35,7 +36,10 @@ const mainTitleFont = "Arial Black, Microsoft YaHei, SimHei, Noto Sans SC, sans-
 const latinTitleFont = "Impact, Arial Black, sans-serif";
 const mainTitleUnits = (value) => titleUnits(value) * (isLatinOnlyTitle(value) ? 0.68 : 1);
 const extrusionLayerCount = 24;
-const titleBaseline = 213;
+// Keep the deepest extrusion and outline inside the fixed 310px canvas.
+// The previous baseline let several category silhouettes touch the bottom
+// edge, leaving no safety pixels for rasterisation or browser filtering.
+const titleBaseline = 205;
 const extrusionXPerLayer = 1.5;
 const extrusionYPerLayer = 2.4;
 const titleSkewTransform = "translate(0 155) skewX(-4) translate(0 -155)";
@@ -76,7 +80,12 @@ const createMainTitleSvg = (value) => {
   const height = 310;
   const latinOnly = isLatinOnlyTitle(value);
   const width = Math.max(520, Math.ceil(mainTitleUnits(value) * 220 + 190));
-  const center = width / 2 - 18;
+  // Centre the complete visible silhouette, not only the front text face.
+  // The italic skew and left-running extrusion shift the optical bounds about
+  // 38 source pixels left, so compensate inside the existing padded canvas.
+  // Keeping the canvas dimensions unchanged preserves every responsive aspect
+  // ratio and leaves ample transparent padding on both sides.
+  const center = width / 2 + 20;
   const text = escapeSvgText(value);
   const fontSize = value.startsWith("说真的") ? 190 : 210;
   const titleGroupAttributes = `font-family="${latinOnly ? latinTitleFont : mainTitleFont}" font-size="${fontSize}" font-style="italic" font-weight="900" letter-spacing="${latinOnly ? 4 : 0}"`;
@@ -369,9 +378,11 @@ const allCategories = [
   ...filmPortfolio.categories,
   ...photoPortfolio.categories,
 ];
-const works = onlyCategory
-  ? allWorks.filter((work) => work.category === onlyCategory)
-  : allWorks;
+const works = categoriesOnly
+  ? []
+  : onlyCategory
+    ? allWorks.filter((work) => work.category === onlyCategory)
+    : allWorks;
 const categories = onlyCategory
   ? allCategories.filter((category) => category.slug === onlyCategory)
   : allCategories;

@@ -7,6 +7,7 @@ import discCovers from "../../data/disc-covers.json";
 import workCardCopy from "../../data/work-card-copy.json";
 import { Undo2 } from "@lucide/astro";
 import worksFinalStylesUrl from "../../styles/works-final.css?url";
+import worksAxisStylesUrl from "../../styles/works-axis.css?url";
 
 const workMeta = (work: any) => {
   if (work.format === "video") return `短片 / ${work.duration}`;
@@ -86,7 +87,7 @@ const titleAspect = (value: string) =>
 const hintAspect = (value: string) =>
   Number((Math.max(420, Math.ceil(titleUnits(value) * 66 + 100)) / 126).toFixed(4));
 
-const titleAssetRevision = "20260816-layout-copy-v21";
+const titleAssetRevision = "20260822-optical-center-v22";
 const generatedTitleAsset = (filename: string) =>
   `/portfolio-assets/ui/text/generated-3d/${filename}?v=${titleAssetRevision}`;
 
@@ -183,7 +184,7 @@ const cassettePayload = {
 
 <BaseLayout
   title="作品集 | Senri's Personal Homepage"
-  styles={[worksFinalStylesUrl]}
+  styles={[worksFinalStylesUrl, worksAxisStylesUrl]}
   description="周翔作品集分类入口：游戏策划、游戏拆解、信号文章、原创剧本、短片、影评剧评、游戏经历与摄影。"
 >
   <main class="works-page portfolio-hub city-select-page" data-city-select>
@@ -194,17 +195,18 @@ const cassettePayload = {
     ></canvas>
     <div class="city-select-vhs" aria-hidden="true"></div>
 
+    <button
+      class="cassette-back"
+      type="button"
+      data-cassette-back
+      aria-label="返回卷轴"
+      title="返回卷轴"
+    >
+      <Undo2 size={27} stroke-width={1.8} aria-hidden="true" />
+    </button>
+
     <div class="city-select-content">
       <section class="cassette-carousel disc-archive-carousel" data-cassette-carousel aria-label="作品分类光碟档案匣">
-        <button
-          class="cassette-back"
-          type="button"
-          data-cassette-back
-          aria-label="返回卷轴"
-          title="返回卷轴"
-        >
-          <Undo2 size={27} stroke-width={1.8} aria-hidden="true" />
-        </button>
         <div class="cassette-rail" data-cassette-rail>
           {categories.map((category, index) => {
             const firstWork = category.works[0];
@@ -233,8 +235,7 @@ const cassettePayload = {
                       class="game-card-category-rack"
                       src={gameCardCategory.gameCardRackImage}
                       alt=""
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchpriority={index === 0 ? "high" : "low"}
+                      loading={index < 2 ? "eager" : "lazy"}
                     />
                   )}
                   <span class="cassette-face">
@@ -266,8 +267,7 @@ const cassettePayload = {
                         data-cassette-image
                         src={firstGameCardWork?.caseImage}
                         alt=""
-                        loading={index === 0 ? "eager" : "lazy"}
-                        fetchpriority={index === 0 ? "high" : "low"}
+                        loading={index < 2 ? "eager" : "lazy"}
                       />
                     )}
                     {!firstWork && <img data-cassette-image alt="" hidden />}
@@ -278,6 +278,17 @@ const cassettePayload = {
           })}
         </div>
       </section>
+      <nav class="portfolio-mobile-controls" aria-label="手机端作品切换">
+        <button type="button" data-mobile-portfolio-prev aria-label="上一个">
+          <span aria-hidden="true">←</span>
+          <small>上一个</small>
+        </button>
+        <p data-mobile-portfolio-status aria-live="polite">左右滑动或使用按钮切换</p>
+        <button type="button" data-mobile-portfolio-next aria-label="下一个">
+          <small>下一个</small>
+          <span aria-hidden="true">→</span>
+        </button>
+      </nav>
       <aside
         class="work-description-stage"
         data-work-description-stage

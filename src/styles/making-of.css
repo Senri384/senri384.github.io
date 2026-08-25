@@ -54,9 +54,14 @@
   will-change: transform;
 }
 
+.making-of-track[data-wrapping="true"] {
+  transition: none;
+}
+
 .making-of-passage {
   --line-distance: 4;
   --line-direction: 0;
+  --passage-scale: calc(1 - min(var(--line-distance), 4) * 0.06);
   margin: 0 auto;
   width: min(760px, 100%);
   color: rgba(255, 255, 255, calc(0.72 - min(var(--line-distance), 4) * 0.13));
@@ -65,9 +70,10 @@
   line-height: 1.9;
   text-align: center;
   text-wrap: balance;
+  transform-origin: center;
   transform:
     translateY(calc(var(--line-direction) * min(var(--line-distance), 3) * 2px))
-    scale(calc(1 - min(var(--line-distance), 4) * 0.026));
+    scale(var(--passage-scale));
   transition:
     color 360ms ease,
     opacity 360ms ease,
@@ -75,8 +81,8 @@
 }
 
 .making-of-passage[data-active="true"] {
+  --passage-scale: 1.18;
   color: #fff;
-  font-size: clamp(1.12rem, 1.72vw, 1.38rem);
   text-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
 }
 
@@ -97,8 +103,13 @@
 
   .making-of-passage,
   .making-of-passage[data-active="true"] {
+    width: 88%;
     font-size: clamp(0.96rem, 4vw, 1.12rem);
     line-height: 1.75;
+  }
+
+  .making-of-passage[data-active="true"] {
+    --passage-scale: 1.12;
   }
 }
 
