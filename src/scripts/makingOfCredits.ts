@@ -7,10 +7,8 @@ if (root) {
     Math.max(Number(root.dataset.initialIndex || 0), 0),
     Math.max(0, passages.length - 1),
   );
-  let locked = false;
-  let unlockTimer = 0;
   let wheelRemainder = 0;
-  let pendingSteps = 0;
+  let lastStepAt = 0;
   let touchStartY = 0;
   let measureFrame = 0;
 
@@ -51,22 +49,10 @@ if (root) {
 
   const queueStep = (direction: number) => {
     if (!direction) return;
-    const normalizedDirection = Math.sign(direction);
-    if (locked) {
-      pendingSteps = Math.max(-3, Math.min(3, pendingSteps + normalizedDirection));
-      return;
-    }
-    locked = true;
-    step(normalizedDirection);
-    window.clearTimeout(unlockTimer);
-    unlockTimer = window.setTimeout(() => {
-      locked = false;
-      if (pendingSteps) {
-        const pendingDirection = Math.sign(pendingSteps);
-        pendingSteps -= pendingDirection;
-        queueStep(pendingDirection);
-      }
-    }, 170);
+    const now = window.performance.now();
+    if (now - lastStepAt < 120) return;
+    lastStepAt = now;
+    step(Math.sign(direction));
   };
 
   root.addEventListener(
@@ -77,11 +63,8 @@ if (root) {
       const threshold = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 1 : 42;
       if (Math.abs(wheelRemainder) >= threshold) {
         const direction = wheelRemainder > 0 ? 1 : -1;
-        const requestedSteps = Math.min(3, Math.floor(Math.abs(wheelRemainder) / threshold));
-        wheelRemainder -= direction * requestedSteps * threshold;
-        for (let index = 0; index < requestedSteps; index += 1) {
-          queueStep(direction);
-        }
+        wheelRemainder = 0;
+        queueStep(direction);
       }
     },
     { passive: false },
