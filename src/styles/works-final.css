@@ -343,19 +343,32 @@
 }
 
 .city-select-page .work-description-summary {
-  color: #fff1a6;
+  box-sizing: border-box;
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.3em 0.48em 0.34em 0.58em;
+  overflow: hidden;
+  color: #f4ffff;
+  border-left: 3px solid rgba(93, 252, 255, 0.92);
+  background: linear-gradient(
+    90deg,
+    rgba(35, 4, 24, 0.82),
+    rgba(69, 7, 36, 0.48) 72%,
+    rgba(69, 7, 36, 0.04)
+  );
+  box-shadow: inset 0 0 14px rgba(93, 252, 255, 0.05);
   font-family: var(--font-ui-pixel);
   font-size: clamp(1rem, 1.42vw, 1.36rem);
-  font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0.015em;
+  text-overflow: ellipsis;
+  text-rendering: geometricPrecision;
   white-space: nowrap;
-  -webkit-text-stroke: 0.65px #210009;
-  transform: skewX(-4deg);
+  -webkit-text-stroke: 0.18px rgba(13, 1, 10, 0.82);
   text-shadow:
-    2px 2px 0 #7d1835,
-    4px 4px 0 rgba(30, 0, 10, 0.88),
-    0 0 5px rgba(255, 230, 103, 0.18);
+    1px 1px 0 rgba(22, 0, 12, 0.96),
+    0 0 7px rgba(93, 252, 255, 0.24);
 }
 
 .city-select-page .work-description-stage[data-summary-length="long"]
