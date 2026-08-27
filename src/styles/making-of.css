@@ -1,11 +1,3 @@
-@font-face {
-  font-family: "Fusion Pixel 12px";
-  src: url("/fonts/fusion-pixel-12px-zh-hans.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-}
-
 .making-of-page {
   position: relative;
   display: grid;
@@ -73,7 +65,7 @@
   margin: 0 auto;
   width: min(760px, 100%);
   color: rgba(255, 255, 255, calc(0.72 - min(var(--line-distance), 4) * 0.13));
-  font-family: "Fusion Pixel 12px", "Microsoft YaHei", ui-monospace, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(1rem, 1.55vw, 1.22rem);
   line-height: 1.9;
   text-align: center;
@@ -95,7 +87,7 @@
 }
 
 .making-of-quote {
-  font-family: "Fusion Pixel 12px", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-ui-pixel);
   font-style: normal;
 }
 

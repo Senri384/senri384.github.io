@@ -36,6 +36,7 @@ const { section } = Astro.props;
     <button class="soundwave-hotspot soundwave-volume-control" type="button" data-player-action="volume" data-player-tooltip="滚轮调节音量" aria-label="滚轮调节音量"></button>
   </div>
   <output class="soundwave-volume" aria-live="polite">VOL 20</output>
+  <output class="soundwave-track-title" aria-live="polite"></output>
 </aside>
 
 <script is:inline data-astro-rerun>
@@ -49,6 +50,7 @@ const { section } = Astro.props;
     const toggleButton = root.querySelector('[data-player-action="toggle"]');
     const volumeButton = root.querySelector('[data-player-action="volume"]');
     const volumeOutput = root.querySelector(".soundwave-volume");
+    const trackTitleOutput = root.querySelector(".soundwave-track-title");
     const section = root.dataset.section || "game";
     const stateKey = "soundwave-player-state-v3";
     const audioSettingsKey = "neon-drive-audio-settings";
@@ -151,6 +153,7 @@ const { section } = Astro.props;
     let playing = shouldResumeSameSection;
     let transition = Promise.resolve();
     let toastTimer = 0;
+    let trackTitleTimer = 0;
     let volumeTooltipTimer = 0;
     let envelopeFrame = 0;
     const lidSounds = {
@@ -164,6 +167,25 @@ const { section } = Astro.props;
 
     const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
     const currentTrack = () => playlist[trackIndex];
+    const currentTrackTitle = () => {
+      const filename = currentTrack().split("/").pop() || currentTrack();
+      try {
+        return decodeURIComponent(filename).replace(/\.mp3$/i, "");
+      } catch {
+        return filename.replace(/\.mp3$/i, "");
+      }
+    };
+    const showTrackTitle = () => {
+      if (!(trackTitleOutput instanceof HTMLOutputElement)) return;
+      trackTitleOutput.value = currentTrackTitle();
+      root.classList.remove("is-showing-track-title");
+      void trackTitleOutput.offsetWidth;
+      root.classList.add("is-showing-track-title");
+      window.clearTimeout(trackTitleTimer);
+      trackTitleTimer = window.setTimeout(() => {
+        root.classList.remove("is-showing-track-title");
+      }, 3400);
+    };
     const fadeSecondsForDuration = () => {
       if (!localAudio || !Number.isFinite(localAudio.duration) || localAudio.duration <= 0) return 2.2;
       return Math.max(0.8, Math.min(4, localAudio.duration * 0.08, localAudio.duration / 3));
@@ -403,6 +425,7 @@ const { section } = Astro.props;
       if (section === "game") {
         emit("play", { src: currentTrack(), volume, trackIndex });
         setPlaying(true);
+        showTrackTitle();
         save();
         return;
       }
@@ -415,6 +438,7 @@ const { section } = Astro.props;
         await localAudio.play();
         setPlaying(true);
         startEnvelope();
+        showTrackTitle();
       } catch {
         setPlaying(false);
         stopEnvelope();
@@ -443,7 +467,10 @@ const { section } = Astro.props;
       emit("track", { src: currentTrack(), volume, trackIndex, autoplay: true });
       save();
       if (localAudio) await play();
-      else setPlaying(true);
+      else {
+        setPlaying(true);
+        showTrackTitle();
+      }
     };
 
     const loadOnly = () => {
@@ -495,6 +522,7 @@ const { section } = Astro.props;
       playFromGame: async () => {
         if (!loaded) await swapCassette(false);
         setPlaying(true);
+        showTrackTitle();
         save();
       },
       pause,

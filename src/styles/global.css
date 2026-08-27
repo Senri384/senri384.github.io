@@ -1,4 +1,7 @@
 :root {
+  --font-ui-pixel: "Fusion Pixel 12px", "Microsoft YaHei", ui-monospace, monospace;
+  --font-reading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   color-scheme: dark;
   --ink: #f9f4ff;
   --muted: rgba(249, 244, 255, 0.68);
@@ -11,9 +14,7 @@
   --cyan: #5dfcff;
   --bg: #07081c;
   --opening-duration: 4.95s;
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-ui-pixel);
 }
 
 * {
@@ -30,6 +31,14 @@ body {
 
 body {
   overflow-x: hidden;
+}
+
+@font-face {
+  font-family: "Fusion Pixel 12px";
+  src: url("/fonts/fusion-pixel-12px-zh-hans.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
 }
 
 @font-face {
@@ -71,7 +80,7 @@ html[data-site-gate="redirecting"] body {
   align-items: center;
   gap: clamp(7px, 0.8vw, 11px);
   color: #eaffff;
-  font-family: "Oxanium", "Arial Narrow", "Segoe UI", sans-serif;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(0.8rem, 1.18vw, 1.04rem);
   font-weight: 600;
   line-height: 1;
@@ -121,7 +130,7 @@ html[data-site-gate="redirecting"] body {
   background: transparent;
   box-shadow: none;
   backdrop-filter: none;
-  font-family: "Courier New", "Microsoft YaHei", ui-monospace, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(0.74rem, 1vw, 0.9rem);
   line-height: 1;
   white-space: nowrap;
@@ -352,7 +361,7 @@ html[data-site-gate="redirecting"] .soundwave-player {
     0 0 0 1px rgba(255, 79, 216, 0.26),
     0 0 13px rgba(93, 252, 255, 0.28);
   color: #eaffff;
-  font: 700 0.56rem/1 "Courier New", ui-monospace, monospace;
+  font: 700 0.56rem/1 var(--font-ui-pixel);
   letter-spacing: 0;
   text-align: center;
   text-shadow:
@@ -468,12 +477,58 @@ html[data-site-gate="redirecting"] .soundwave-player {
   border: 1px solid rgba(123, 238, 255, 0.5);
   background: rgba(3, 7, 25, 0.78);
   color: #dffcff;
-  font: 700 0.62rem/1 "Courier New", monospace;
+  font: 700 0.62rem/1 var(--font-ui-pixel);
   letter-spacing: 0.08em;
   opacity: 0;
   transform: translate(-50%, 5px);
   transition: opacity 120ms ease, transform 120ms ease;
   pointer-events: none;
+}
+
+.soundwave-track-title {
+  --soundwave-track-title-x: -50%;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  z-index: 6;
+  display: block;
+  width: max-content;
+  max-width: min(390px, 34vw);
+  margin: 0;
+  overflow: hidden;
+  color: #bffbff;
+  font: 700 clamp(0.52rem, 0.66vw, 0.66rem)/1.3 var(--font-ui-pixel);
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-shadow:
+    0 0 7px rgba(93, 252, 255, 0.88),
+    0 0 15px rgba(93, 252, 255, 0.42),
+    1px 1px 0 rgba(3, 5, 17, 0.9);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(var(--soundwave-track-title-x), -3px);
+}
+
+.soundwave-player.is-showing-track-title .soundwave-track-title {
+  animation: soundwave-track-title-reveal 3.4s ease both;
+}
+
+@keyframes soundwave-track-title-reveal {
+  0% {
+    opacity: 0;
+    transform: translate(var(--soundwave-track-title-x), -3px);
+  }
+  15%,
+  72% {
+    opacity: 1;
+    transform: translate(var(--soundwave-track-title-x), 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--soundwave-track-title-x), 3px);
+  }
 }
 
 .soundwave-player.is-showing-volume .soundwave-volume {
@@ -551,7 +606,7 @@ html[data-site-gate="redirecting"] .soundwave-player {
 .resume-status {
   margin: 0;
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(0.68rem, 1.2vw, 0.86rem);
   letter-spacing: 0.12em;
 }
@@ -690,7 +745,7 @@ input {
   color: var(--cyan);
   background: rgba(12, 2, 14, 0.68);
   cursor: pointer;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
   opacity: 0;
   pointer-events: none;
@@ -1493,7 +1548,7 @@ input {
   color: rgba(249, 244, 255, 0.72);
   background: rgba(2, 3, 14, 0.54);
   cursor: pointer;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
   letter-spacing: 0;
   box-shadow: 0 0 14px rgba(93, 252, 255, 0.14);
@@ -1657,7 +1712,7 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
 .icon-button,
 .volume-control,
 .combo-hud {
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   letter-spacing: 0;
 }
 
@@ -1710,7 +1765,7 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
 .metric strong {
   display: block;
   margin-top: 1px;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.98rem;
   line-height: 1.05;
 }
@@ -1769,7 +1824,7 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
 .mode-title {
   margin: 0;
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
   font-weight: 700;
 }
@@ -1789,7 +1844,7 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
   background: rgba(7, 8, 28, 0.38);
   box-shadow: none;
   cursor: pointer;
-  font-family: "Arial Black", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-family: var(--font-ui-pixel);
   font-size: 0.98rem;
   font-weight: 900;
   transition:
@@ -2045,7 +2100,7 @@ html[data-debug-hud="hidden"] .hud {
 .back-link {
   display: inline-block;
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.9rem;
 }
 
@@ -2055,7 +2110,7 @@ html[data-debug-hud="hidden"] .hud {
   justify-content: flex-end;
   gap: 7px;
   color: rgba(249, 244, 255, 0.72);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2098,7 +2153,7 @@ html[data-debug-hud="hidden"] .hud {
   border: 1px solid rgba(255, 179, 71, 0.28);
   background: rgba(8, 10, 34, 0.48);
   color: var(--muted);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2177,7 +2232,7 @@ html[data-debug-hud="hidden"] .hud {
 .work-type {
   margin: 0;
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.76rem;
 }
 
@@ -2197,7 +2252,7 @@ html[data-debug-hud="hidden"] .hud {
   border: 1px solid rgba(93, 252, 255, 0.22);
   color: rgba(249, 244, 255, 0.78);
   background: rgba(7, 8, 28, 0.45);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
 }
 
@@ -2220,7 +2275,7 @@ html[data-debug-hud="hidden"] .hud {
 .extract-panel h4 {
   margin: 0;
   color: var(--amber);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2236,7 +2291,7 @@ html[data-debug-hud="hidden"] .hud {
   gap: 10px;
   align-items: center;
   color: var(--ink);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.8rem;
 }
 
@@ -2361,7 +2416,7 @@ html[data-debug-hud="hidden"] .hud {
   border: 1px solid rgba(255, 179, 71, 0.22);
   color: rgba(249, 244, 255, 0.76);
   background: rgba(255, 179, 71, 0.08);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.7rem;
   line-height: 1.35;
 }
@@ -2407,7 +2462,7 @@ html[data-debug-hud="hidden"] .hud {
 }
 
 .link-list span {
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.76rem;
 }
 
@@ -2432,7 +2487,7 @@ html[data-debug-hud="hidden"] .hud {
 
 .experience-grid span {
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2470,7 +2525,7 @@ html[data-debug-hud="hidden"] .hud {
 .experience-table th {
   color: var(--cyan);
   background: rgba(93, 252, 255, 0.08);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2486,7 +2541,7 @@ html[data-debug-hud="hidden"] .hud {
 .experience-table td:nth-child(1),
 .experience-table td:nth-child(2) {
   color: rgba(249, 244, 255, 0.62);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2513,7 +2568,7 @@ html[data-debug-hud="hidden"] .hud {
 .archive-count,
 .card-meta {
   color: rgba(249, 244, 255, 0.58);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2628,7 +2683,7 @@ html[data-debug-hud="hidden"] .hud {
   border: 1px solid rgba(93, 252, 255, 0.22);
   color: rgba(249, 244, 255, 0.72);
   background: rgba(7, 8, 28, 0.48);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.76rem;
 }
 
@@ -2726,15 +2781,21 @@ html[data-debug-hud="hidden"] .hud {
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.9rem;
 }
 
 .reader p {
   margin: 0;
   color: rgba(249, 244, 255, 0.82);
+  font-family: var(--font-reading);
   font-size: 1.02rem;
   line-height: 1.95;
+}
+
+.reader li,
+.reader blockquote {
+  font-family: var(--font-reading);
 }
 
 .content-table-wrap {
@@ -2760,7 +2821,7 @@ html[data-debug-hud="hidden"] .hud {
 .content-table th {
   color: var(--cyan);
   background: rgba(93, 252, 255, 0.08);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -2982,7 +3043,7 @@ html[data-debug-hud="hidden"] .hud {
   color: var(--cyan);
   background: rgba(12, 2, 14, 0.68);
   cursor: pointer;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
   opacity: 0;
   pointer-events: none;
@@ -3210,6 +3271,12 @@ html[data-debug-hud="hidden"] .hud {
     animation: none;
   }
 
+  .soundwave-player.is-showing-track-title .soundwave-track-title {
+    animation: none;
+    opacity: 1;
+    transform: translate(var(--soundwave-track-title-x), 0);
+  }
+
   .scanline-layer,
   .noise-layer {
     opacity: 0.06;
@@ -3296,7 +3363,7 @@ html[data-debug-hud="hidden"] .hud {
 .work-type,
 .reader .source-page,
 .content-table th {
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   letter-spacing: 0;
 }
 
@@ -3392,7 +3459,7 @@ html[data-debug-hud="hidden"] .hud {
 
 .card-index {
   color: var(--amber);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 1.9rem;
   font-weight: 700;
   line-height: 1;
@@ -3539,7 +3606,7 @@ html[data-debug-hud="hidden"] .hud {
   width: max-content;
   max-width: 100%;
   margin-inline: auto;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   text-align: center;
 }
 
@@ -3751,7 +3818,7 @@ html[data-debug-hud="hidden"] .hud {
   gap: 10px;
   min-height: 40px;
   color: #8ffdf0;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
 }
 
 .dwarf-flow-route header span {
@@ -3804,7 +3871,7 @@ html[data-debug-hud="hidden"] .hud {
   max-width: 100%;
   margin: 24px auto 0 !important;
   color: #ffd37e !important;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem !important;
   text-align: center;
 }
@@ -3890,7 +3957,7 @@ html[data-debug-hud="hidden"] .hud {
 
 .source-figure figcaption {
   color: rgba(249, 244, 255, 0.62);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
   line-height: 1.65;
   text-align: center;
@@ -3911,7 +3978,7 @@ html[data-debug-hud="hidden"] .hud {
 
 .source-video-figure figcaption {
   color: rgba(249, 244, 255, 0.62);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -3948,7 +4015,7 @@ html[data-debug-hud="hidden"] .hud {
   padding: 6px 8px;
   color: rgba(249, 244, 255, 0.86);
   background: rgba(5, 8, 23, 0.78);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.7rem;
   opacity: 0;
   transition: opacity 0.18s ease;
@@ -3988,7 +4055,7 @@ html[data-debug-hud="hidden"] .hud {
   color: var(--cyan);
   background: rgba(5, 8, 23, 0.8);
   cursor: pointer;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.76rem;
 }
 
@@ -4237,7 +4304,7 @@ html[data-debug-hud="hidden"] .hud {
     linear-gradient(135deg, rgba(93, 252, 255, 0.045), transparent 48%, rgba(255, 79, 216, 0.05)),
     #050717;
   color: rgba(249, 244, 255, 0.56);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.78rem;
 }
 
@@ -4311,7 +4378,7 @@ html[data-debug-hud="hidden"] .hud {
 }
 
 .film-thumb-placeholder {
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
 }
 
 .film-thumb-placeholder {
@@ -4364,7 +4431,7 @@ html[data-debug-hud="hidden"] .hud {
 .film-section-label {
   margin: 0;
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1;
@@ -4584,6 +4651,7 @@ html[data-debug-hud="hidden"] .hud {
   max-width: 760px;
   margin: 2px auto 14px;
   color: rgba(249, 244, 255, 0.58);
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
   line-height: 1.65;
   text-align: center;
@@ -5485,7 +5553,7 @@ html[data-debug-hud="hidden"] .hud {
 .cassette-meta,
 .tape-position,
 .tape-copy small {
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   letter-spacing: 0;
 }
 
@@ -5745,7 +5813,7 @@ html[data-debug-hud="hidden"] .hud {
   color: var(--cyan);
   background: rgba(12, 2, 14, 0.68);
   cursor: pointer;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.72rem;
   opacity: 0;
   pointer-events: none;
@@ -6301,7 +6369,7 @@ html[data-debug-hud="hidden"] .hud {
 .detail-page .detail-header .eyebrow {
   margin: 0;
   color: var(--cyan);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(0.72rem, 0.84vw, 0.82rem);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -6760,7 +6828,7 @@ html[data-debug-hud="hidden"] .hud {
 .mobile-experience-kicker {
   margin: 0 0 8px;
   color: var(--cyan);
-  font: 700 0.66rem/1.2 "Courier New", monospace;
+  font: 700 0.66rem/1.2 var(--font-ui-pixel);
   letter-spacing: 0.16em;
 }
 
@@ -6785,7 +6853,7 @@ html[data-debug-hud="hidden"] .hud {
   border: 1px solid rgba(93, 252, 255, 0.66);
   background: rgba(93, 252, 255, 0.1);
   color: #efffff;
-  font: 800 0.92rem/1 "Microsoft YaHei", sans-serif;
+  font: 800 0.92rem/1 var(--font-ui-pixel);
   box-shadow: inset 0 0 18px rgba(93, 252, 255, 0.06);
 }
 
@@ -6824,6 +6892,16 @@ html[data-debug-hud="hidden"] .hud {
     width: 58px;
     justify-self: end;
     touch-action: manipulation;
+  }
+
+  .soundwave-track-title {
+    --soundwave-track-title-x: 0;
+    top: calc(100% + 17px);
+    right: 0;
+    left: auto;
+    max-width: min(280px, 74vw);
+    font-size: 0.52rem;
+    text-align: right;
   }
 
   .soundwave-load,

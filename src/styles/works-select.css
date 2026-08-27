@@ -1833,7 +1833,7 @@
 .city-select-page .cassette-carousel[data-mode="open"] .tape-copy span:not(.tape-position) {
   max-width: 330px;
   color: rgba(255, 241, 191, 0.92);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(0.72rem, 0.94vw, 0.95rem);
   line-height: 1.28;
   text-transform: uppercase;
@@ -1842,7 +1842,7 @@
 .city-select-page .cassette-carousel[data-mode="open"] .tape-position,
 .city-select-page .cassette-carousel[data-mode="open"] .tape-copy small {
   color: #ffe66c;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(0.62rem, 0.74vw, 0.78rem);
   text-transform: uppercase;
   text-shadow:

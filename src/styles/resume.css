@@ -73,7 +73,7 @@ body:has(.resume-document) .site-header {
 .resume-eyebrow {
   margin: 0 0 10px;
   color: var(--cyan);
-  font: 600 0.72rem/1.4 "Courier New", ui-monospace, monospace;
+  font: 600 0.72rem/1.4 var(--font-ui-pixel);
   letter-spacing: 0.16em;
 }
 
@@ -97,7 +97,7 @@ body:has(.resume-document) .site-header {
   margin: 22px 0 0;
   padding: 0;
   color: rgba(249, 244, 255, 0.78);
-  font-family: "Courier New", "Microsoft YaHei", monospace;
+  font-family: var(--font-ui-pixel);
   font-size: 0.88rem;
   list-style: none;
 }
@@ -135,7 +135,7 @@ body:has(.resume-document) .site-header {
   max-height: 186px;
   gap: 3px;
   overflow: auto;
-  font: 600 0.72rem/1.2 "Courier New", "Microsoft YaHei", monospace;
+  font: 600 0.72rem/1.2 var(--font-ui-pixel);
   letter-spacing: 0.06em;
   text-align: right;
 }
@@ -193,7 +193,7 @@ body:has(.resume-document) .site-header {
 
 .resume-section-heading span {
   color: var(--hot);
-  font: 600 0.68rem/1 "Courier New", monospace;
+  font: 600 0.68rem/1 var(--font-ui-pixel);
 }
 
 .resume-section-heading h2 {
@@ -207,7 +207,7 @@ body:has(.resume-document) .site-header {
   margin: 0;
   overflow: hidden;
   color: rgba(93, 252, 255, 0.54);
-  font: 600 0.64rem/1 "Courier New", monospace;
+  font: 600 0.64rem/1 var(--font-ui-pixel);
   letter-spacing: 0.14em;
   text-align: right;
   white-space: nowrap;
@@ -261,7 +261,7 @@ body:has(.resume-document) .site-header {
   display: block;
   margin-bottom: 5px;
   color: var(--cyan);
-  font: 700 0.7rem/1.2 "Courier New", "Microsoft YaHei", monospace;
+  font: 700 0.7rem/1.2 var(--font-ui-pixel);
   letter-spacing: 0.08em;
 }
 
@@ -270,7 +270,7 @@ body:has(.resume-document) .site-header {
 .resume-entry-head time {
   margin-bottom: 0;
   color: var(--cyan);
-  font: 600 0.76rem/1.5 "Courier New", "Microsoft YaHei", monospace;
+  font: 600 0.76rem/1.5 var(--font-ui-pixel);
 }
 
 .resume-entry-meta {
@@ -395,7 +395,7 @@ body:has(.resume-document) .site-header {
 .resume-section-note {
   margin: 0 0 12px !important;
   color: var(--dim) !important;
-  font: 0.72rem/1.4 "Courier New", "Microsoft YaHei", monospace !important;
+  font: 0.72rem/1.4 var(--font-ui-pixel) !important;
   text-align: right;
 }
 
@@ -462,7 +462,7 @@ body:has(.resume-document) .site-header {
 
 .resume-honor-list span {
   color: var(--hot);
-  font: 600 0.72rem/1.8 "Courier New", monospace;
+  font: 600 0.72rem/1.8 var(--font-ui-pixel);
 }
 
 @media (max-width: 800px) {
