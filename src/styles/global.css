@@ -202,10 +202,10 @@ html[data-site-gate="redirecting"] .site-header {
 }
 
 .soundwave-player[data-section="easter"] {
-  --soundwave-reel-top: 40.15%;
+  --soundwave-reel-top: 40.27%;
   --soundwave-reel-size: 5.2%;
-  --soundwave-reel-left: 35.2%;
-  --soundwave-reel-right: 37.65%;
+  --soundwave-reel-left: 35.94%;
+  --soundwave-reel-right: 36.3%;
 }
 
 /* Preserve the approved laptop/desktop header size, then let the contained

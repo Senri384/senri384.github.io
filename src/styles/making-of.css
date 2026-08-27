@@ -50,7 +50,7 @@
   align-content: start;
   gap: clamp(18px, 3.6svh, 32px);
   transform: translateY(calc(-1 * var(--making-offset)));
-  transition: transform 520ms cubic-bezier(0.2, 0.84, 0.22, 1);
+  transition: transform 300ms cubic-bezier(0.2, 0.84, 0.22, 1);
   will-change: transform;
 }
 
@@ -75,9 +75,9 @@
     translateY(calc(var(--line-direction) * min(var(--line-distance), 3) * 2px))
     scale(var(--passage-scale));
   transition:
-    color 360ms ease,
-    opacity 360ms ease,
-    transform 520ms cubic-bezier(0.2, 0.84, 0.22, 1);
+    color 220ms ease,
+    opacity 220ms ease,
+    transform 300ms cubic-bezier(0.2, 0.84, 0.22, 1);
 }
 
 .making-of-passage[data-active="true"] {
@@ -93,16 +93,20 @@
 
 .making-of-passage[data-passage-kind="title"] {
   color: rgba(116, 241, 255, calc(0.82 - min(var(--line-distance), 4) * 0.12));
+  font-size: clamp(1.1rem, 1.72vw, 1.34rem);
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
+  text-indent: 0;
   text-shadow: 0 0 18px rgba(80, 224, 255, 0.22);
 }
 
 .making-of-passage[data-passage-kind="section"] {
-  color: rgba(255, 202, 102, calc(0.82 - min(var(--line-distance), 4) * 0.12));
+  color: rgba(116, 241, 255, calc(0.82 - min(var(--line-distance), 4) * 0.12));
+  font-size: clamp(1.06rem, 1.65vw, 1.28rem);
   font-weight: 700;
-  letter-spacing: 0.045em;
-  text-shadow: 0 0 15px rgba(255, 171, 64, 0.18);
+  letter-spacing: normal;
+  text-indent: 0;
+  text-shadow: 0 0 15px rgba(80, 224, 255, 0.2);
 }
 
 .making-of-passage[data-passage-kind="title"][data-active="true"] {
@@ -113,10 +117,10 @@
 }
 
 .making-of-passage[data-passage-kind="section"][data-active="true"] {
-  color: #ffd78a;
+  color: #b8f8ff;
   text-shadow:
-    0 0 9px rgba(255, 203, 112, 0.62),
-    0 0 22px rgba(255, 155, 58, 0.26);
+    0 0 9px rgba(114, 240, 255, 0.68),
+    0 0 22px rgba(80, 224, 255, 0.3);
 }
 
 .making-of-reader:focus-visible {
@@ -143,6 +147,14 @@
 
   .making-of-passage[data-active="true"] {
     --passage-scale: 1.12;
+  }
+
+  .making-of-passage[data-passage-kind="title"] {
+    font-size: clamp(1.05rem, 4.45vw, 1.23rem);
+  }
+
+  .making-of-passage[data-passage-kind="section"] {
+    font-size: clamp(1.01rem, 4.2vw, 1.18rem);
   }
 }
 
