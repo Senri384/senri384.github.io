@@ -357,15 +357,65 @@ const renderMainTitleWebp = async (
     .png()
     .toBuffer();
 
+  // The CSS centres the complete image canvas, so asymmetric transparent
+  // padding would still make the visible title look offset. Measure the final
+  // silhouette and translate every matching layer by the same amount before
+  // upscaling. This keeps the face/volume masks registered with the artwork
+  // while giving short, long, Chinese, and Latin titles a true visual centre.
+  const { data: titlePixels, info: titleInfo } = await rawPixels(pixelRaster);
+  let visibleLeft = pixelWidth;
+  let visibleRight = -1;
+  for (let y = 0; y < pixelHeight; y += 1) {
+    for (let x = 0; x < pixelWidth; x += 1) {
+      const alpha = titlePixels[(y * pixelWidth + x) * titleInfo.channels + 3];
+      if (alpha === 0) continue;
+      visibleLeft = Math.min(visibleLeft, x);
+      visibleRight = Math.max(visibleRight, x);
+    }
+  }
+  const horizontalShift =
+    visibleRight >= visibleLeft
+      ? Math.round((pixelWidth - 1) / 2 - (visibleLeft + visibleRight) / 2)
+      : 0;
+  const shiftRasterHorizontally = async (raster, shift) => {
+    if (shift === 0) return raster;
+    const { data, info } = await rawPixels(raster);
+    const shifted = Buffer.alloc(pixelWidth * pixelHeight * info.channels);
+    const sourceX = Math.max(0, -shift);
+    const targetX = Math.max(0, shift);
+    const copyWidth = pixelWidth - Math.abs(shift);
+    for (let y = 0; y < pixelHeight; y += 1) {
+      const sourceStart = (y * pixelWidth + sourceX) * info.channels;
+      const targetStart = (y * pixelWidth + targetX) * info.channels;
+      data.copy(
+        shifted,
+        targetStart,
+        sourceStart,
+        sourceStart + copyWidth * info.channels,
+      );
+    }
+    return sharp(shifted, {
+      raw: { width: pixelWidth, height: pixelHeight, channels: info.channels },
+    })
+      .png()
+      .toBuffer();
+  };
+  const [centeredPixelRaster, centeredFaceMask, centeredVolumeMask] =
+    await Promise.all([
+      shiftRasterHorizontally(pixelRaster, horizontalShift),
+      shiftRasterHorizontally(cleanFaceMask, horizontalShift),
+      shiftRasterHorizontally(cleanVolumeMask, horizontalShift),
+    ]);
+
   const writeRaster = (raster, outputPath) =>
     sharp(raster)
       .resize({ width: outputWidth, height: outputHeight, kernel: sharp.kernel.nearest })
       .webp({ lossless: true, alphaQuality: 100, effort: 5 })
       .toFile(outputPath);
 
-  const outputs = [writeRaster(pixelRaster, targetPath)];
-  if (faceMaskTargetPath) outputs.push(writeRaster(cleanFaceMask, faceMaskTargetPath));
-  if (volumeMaskTargetPath) outputs.push(writeRaster(cleanVolumeMask, volumeMaskTargetPath));
+  const outputs = [writeRaster(centeredPixelRaster, targetPath)];
+  if (faceMaskTargetPath) outputs.push(writeRaster(centeredFaceMask, faceMaskTargetPath));
+  if (volumeMaskTargetPath) outputs.push(writeRaster(centeredVolumeMask, volumeMaskTargetPath));
   await Promise.all(outputs);
 };
 
