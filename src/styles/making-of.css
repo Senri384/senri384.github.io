@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Fusion Pixel 12px";
+  src: url("/fonts/fusion-pixel-12px-zh-hans.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
 .making-of-page {
   position: relative;
   display: grid;
@@ -65,7 +73,7 @@
   margin: 0 auto;
   width: min(760px, 100%);
   color: rgba(255, 255, 255, calc(0.72 - min(var(--line-distance), 4) * 0.13));
-  font-family: "Courier New", "Microsoft YaHei", ui-monospace, monospace;
+  font-family: "Fusion Pixel 12px", "Microsoft YaHei", ui-monospace, monospace;
   font-size: clamp(1rem, 1.55vw, 1.22rem);
   line-height: 1.9;
   text-align: center;
@@ -87,7 +95,7 @@
 }
 
 .making-of-quote {
-  font-family: "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  font-family: "Fusion Pixel 12px", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
   font-style: normal;
 }
 
@@ -123,6 +131,34 @@
     0 0 22px rgba(80, 224, 255, 0.3);
 }
 
+.making-of-passage[data-passage-kind="thanks"] {
+  width: 100%;
+  color: rgba(116, 241, 255, calc(0.82 - min(var(--line-distance), 4) * 0.12));
+  font-size: clamp(4.5rem, 12vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: normal;
+  text-indent: 0;
+  text-shadow:
+    0 0 10px rgba(114, 240, 255, 0.74),
+    0 0 28px rgba(80, 224, 255, 0.46),
+    0 0 62px rgba(58, 173, 255, 0.3);
+}
+
+.making-of-passage[data-passage-kind="thanks"][data-active="true"] {
+  color: #c8fbff;
+}
+
+.making-of-page[data-active-kind="thanks"] .making-of-passage:not([data-active="true"]) {
+  opacity: 0;
+}
+
+html[data-making-of-finale="true"] .site-header {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .making-of-reader:focus-visible {
   outline: 1px solid rgba(255, 255, 255, 0.42);
   outline-offset: 12px;
@@ -155,6 +191,12 @@
 
   .making-of-passage[data-passage-kind="section"] {
     font-size: clamp(1.01rem, 4.2vw, 1.18rem);
+  }
+
+  .making-of-passage[data-passage-kind="thanks"] {
+    width: 100%;
+    font-size: clamp(3.4rem, 19vw, 6.4rem);
+    line-height: 1;
   }
 }
 

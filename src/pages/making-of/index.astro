@@ -9,6 +9,7 @@ const mainHeadings = new Set([
 ]);
 
 const getPassageKind = (passage: string) => {
+  if (passage === "THANKS") return "thanks";
   if (mainHeadings.has(passage)) return "title";
   if (/^(?:[一二三四五]、|结语：)/.test(passage)) return "section";
   return "body";

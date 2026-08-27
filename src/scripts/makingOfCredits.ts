@@ -13,7 +13,10 @@ if (root) {
   let measureFrame = 0;
 
   const render = () => {
+    const activeKind = passages[activeIndex]?.dataset.passageKind || "body";
     root.dataset.activeIndex = String(activeIndex);
+    root.dataset.activeKind = activeKind;
+    document.documentElement.dataset.makingOfFinale = String(activeKind === "thanks");
     if (track) track.style.setProperty("--making-index", String(activeIndex));
     passages.forEach((passage, index) => {
       const distance = Math.abs(index - activeIndex);
