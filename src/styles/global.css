@@ -201,6 +201,13 @@ html[data-site-gate="redirecting"] .site-header {
   --soundwave-reel-right: 39.35%;
 }
 
+.soundwave-player[data-section="easter"] {
+  --soundwave-reel-top: 40.15%;
+  --soundwave-reel-size: 5.2%;
+  --soundwave-reel-left: 35.2%;
+  --soundwave-reel-right: 37.65%;
+}
+
 /* Preserve the approved laptop/desktop header size, then let the contained
    16:9 scale take over on larger displays. The proportional rule must not
    shrink an ordinary desktop viewport below the earlier clamp() layout. */

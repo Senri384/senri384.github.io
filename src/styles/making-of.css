@@ -86,6 +86,39 @@
   text-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
 }
 
+.making-of-quote {
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  font-style: normal;
+}
+
+.making-of-passage[data-passage-kind="title"] {
+  color: rgba(116, 241, 255, calc(0.82 - min(var(--line-distance), 4) * 0.12));
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 18px rgba(80, 224, 255, 0.22);
+}
+
+.making-of-passage[data-passage-kind="section"] {
+  color: rgba(255, 202, 102, calc(0.82 - min(var(--line-distance), 4) * 0.12));
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-shadow: 0 0 15px rgba(255, 171, 64, 0.18);
+}
+
+.making-of-passage[data-passage-kind="title"][data-active="true"] {
+  color: #b8f8ff;
+  text-shadow:
+    0 0 9px rgba(114, 240, 255, 0.72),
+    0 0 25px rgba(80, 224, 255, 0.34);
+}
+
+.making-of-passage[data-passage-kind="section"][data-active="true"] {
+  color: #ffd78a;
+  text-shadow:
+    0 0 9px rgba(255, 203, 112, 0.62),
+    0 0 22px rgba(255, 155, 58, 0.26);
+}
+
 .making-of-reader:focus-visible {
   outline: 1px solid rgba(255, 255, 255, 0.42);
   outline-offset: 12px;

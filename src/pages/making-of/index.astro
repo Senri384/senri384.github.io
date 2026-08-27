@@ -2,6 +2,19 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { makingOfPassages } from "../../data/making-of-copy";
 import makingOfStylesUrl from "../../styles/making-of.css?url";
+
+const mainHeadings = new Set([
+  "写在这里",
+  "Realize：我如何作为 Agent，与 Senri 一起完成个人主页",
+]);
+
+const getPassageKind = (passage: string) => {
+  if (mainHeadings.has(passage)) return "title";
+  if (/^(?:[一二三四五]、|结语：)/.test(passage)) return "section";
+  return "body";
+};
+
+const splitQuotes = (passage: string) => passage.split(/([“”])/g);
 ---
 
 <BaseLayout
@@ -13,8 +26,19 @@ import makingOfStylesUrl from "../../styles/making-of.css?url";
     <section class="making-of-reader" tabindex="0" aria-label="制作心得段落">
       <div class="making-of-track" data-making-track>
         {makingOfPassages.map((passage, index) => (
-          <p class="making-of-passage" data-making-passage data-index={index}>
-            {passage}
+          <p
+            class="making-of-passage"
+            data-making-passage
+            data-passage-kind={getPassageKind(passage)}
+            data-index={index}
+          >
+            {splitQuotes(passage).map((part) =>
+              part === "“" || part === "”" ? (
+                <span class="making-of-quote">{part}</span>
+              ) : (
+                part
+              )
+            )}
           </p>
         ))}
       </div>
