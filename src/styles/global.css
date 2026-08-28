@@ -1786,29 +1786,17 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
 }
 
 .combo-hud strong {
-  display: flex;
-  align-items: center;
+  display: block;
+  color: #ff1744;
+  font-family: Impact, Haettenschweiler, "Arial Narrow", sans-serif;
   font-size: clamp(3.6rem, 8vw, 6.4rem);
+  font-weight: 900;
   line-height: 0.86;
-}
-
-.combo-glyph {
-  width: 0.68em;
-  height: 1em;
-  flex: 0 0 0.68em;
-  background-image: url("/portfolio-assets/ui/text/combo-impact-pixel.webp");
-  background-position: calc(var(--combo-glyph-index) * 10%) 50%;
-  background-repeat: no-repeat;
-  background-size: 1100% 100%;
-  image-rendering: pixelated;
-  filter:
-    drop-shadow(0 0 2px rgba(255, 255, 255, 0.46))
-    drop-shadow(0 0 9px rgba(255, 0, 51, 0.76))
-    drop-shadow(0 0 20px rgba(255, 23, 68, 0.52));
-}
-
-.combo-glyph + .combo-glyph {
-  margin-left: -0.12em;
+  -webkit-text-stroke: clamp(1px, 0.18vw, 2px) rgba(255, 23, 68, 0.95);
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.36),
+    0 0 22px rgba(255, 0, 51, 0.72),
+    0 0 38px rgba(255, 23, 68, 0.48);
 }
 
 .combo-hud.is-popping strong {
@@ -7048,66 +7036,28 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .mobile-attack-controls button {
-    position: relative;
     display: grid;
-    grid-template-rows: 1fr auto;
     place-items: center;
-    gap: 1px;
     min-width: 0;
-    min-height: 48px;
-    padding: 4px 3px 3px;
-    overflow: hidden;
-    border: 0;
-    border-radius: 2px;
-    background:
-      linear-gradient(135deg, rgba(93, 252, 255, 0.15), transparent 42%),
-      rgba(4, 7, 24, 0.78);
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid rgba(93, 252, 255, 0.48);
+    border-radius: 0;
+    background: rgba(4, 7, 24, 0.62);
     color: var(--cyan);
-    clip-path: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%, 0 7px);
-    box-shadow:
-      inset 0 0 0 1px rgba(93, 252, 255, 0.54),
-      inset 0 -3px 0 rgba(255, 79, 216, 0.42),
-      0 0 12px rgba(93, 252, 255, 0.08);
+    box-shadow: inset 0 -2px 0 rgba(255, 79, 216, 0.28);
     touch-action: manipulation;
-  }
-
-  .mobile-attack-controls button::before,
-  .mobile-attack-controls button::after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    width: 4px;
-    height: 4px;
-    border-top: 1px solid currentColor;
-  }
-
-  .mobile-attack-controls button::before {
-    left: 5px;
-    border-left: 1px solid currentColor;
-  }
-
-  .mobile-attack-controls button::after {
-    right: 5px;
-    border-right: 1px solid currentColor;
   }
 
   .mobile-attack-controls button:active {
     color: #ffffff;
-    background:
-      linear-gradient(135deg, rgba(255, 79, 216, 0.25), transparent 48%),
-      rgba(9, 12, 40, 0.92);
+    background: rgba(93, 252, 255, 0.12);
     transform: translateY(1px);
   }
 
   .mobile-attack-controls .command-arrow {
-    font: 800 1.25rem/0.9 var(--font-ui-pixel);
-    text-shadow: 0 0 7px rgba(93, 252, 255, 0.9);
-  }
-
-  .mobile-attack-controls .command-label {
-    color: rgba(249, 244, 255, 0.58);
-    font: 700 0.38rem/1 var(--font-ui-pixel);
-    letter-spacing: 0.04em;
+    font: 800 1.3rem/1 var(--font-ui-pixel);
+    text-shadow: 0 0 6px rgba(93, 252, 255, 0.72);
   }
 
   .mobile-attack-controls .attack-left {

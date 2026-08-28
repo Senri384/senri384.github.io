@@ -29,7 +29,7 @@ def make_senri() -> None:
     mask = title_mask("SENRI'S")
     fill = Image.new("RGBA", mask.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(fill)
-    stripe = ((247, 255, 255, 255), (102, 247, 255, 245), (48, 151, 190, 210), (223, 255, 255, 250))
+    stripe = ((255, 255, 255, 255), (218, 255, 255, 255), (148, 246, 255, 245), (238, 255, 255, 255))
     for y in range(mask.height):
         draw.line((0, y, mask.width, y), fill=stripe[(y // 7) % len(stripe)])
     outlined_art(mask, fill, (239, 255, 255, 230), 2).save(
@@ -41,12 +41,12 @@ def make_homepage() -> None:
     mask = title_mask("HOMEPAGE")
     stops = (
         (255, 255, 255, 255),
-        (176, 244, 255, 255),
-        (73, 117, 220, 255),
-        (12, 24, 76, 255),
-        (235, 248, 255, 255),
-        (126, 105, 216, 255),
-        (26, 8, 48, 255),
+        (226, 255, 255, 255),
+        (178, 247, 255, 255),
+        (121, 221, 239, 255),
+        (232, 255, 255, 255),
+        (192, 214, 255, 255),
+        (151, 128, 224, 255),
     )
     fill = Image.new("RGBA", mask.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(fill)
@@ -61,28 +61,7 @@ def make_homepage() -> None:
     )
 
 
-def make_combo_glyphs() -> None:
-    glyphs = "0123456789X"
-    cell_width, cell_height, scale = 48, 64, 4
-    font = ImageFont.truetype(str(FONT), size=60)
-    low = Image.new("RGBA", (cell_width * len(glyphs), cell_height), (0, 0, 0, 0))
-    for index, glyph in enumerate(glyphs):
-        mask = Image.new("L", (cell_width, cell_height), 0)
-        bounds = font.getbbox(glyph)
-        x = (cell_width - (bounds[2] - bounds[0])) // 2 - bounds[0]
-        y = (cell_height - (bounds[3] - bounds[1])) // 2 - bounds[1]
-        ImageDraw.Draw(mask).text((x, y), glyph, font=font, fill=255)
-        # A hard threshold keeps the original Impact skeleton but converts its
-        # curves into deliberate low-resolution pixel steps.
-        mask = mask.point(lambda value: 255 if value >= 96 else 0)
-        low.paste((255, 23, 68, 255), (index * cell_width, 0), mask)
-    low.resize((low.width * scale, low.height * scale), Image.Resampling.NEAREST).save(
-        OUTPUT / "combo-impact-pixel.webp", "WEBP", lossless=True, method=6
-    )
-
-
 if __name__ == "__main__":
     OUTPUT.mkdir(parents=True, exist_ok=True)
     make_senri()
     make_homepage()
-    make_combo_glyphs()

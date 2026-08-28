@@ -3407,25 +3407,6 @@ function drawComboOverlay() {
   return;
 }
 
-function syncComboGlyphs(count: number) {
-  const target = readout.comboValue;
-  if (!target) return;
-  const value = `${count}X`;
-  if (target.dataset.comboValue === value) return;
-  target.dataset.comboValue = value;
-  target.setAttribute("aria-label", value);
-  target.replaceChildren(
-    ...Array.from(value, (glyph) => {
-      const span = document.createElement("span");
-      span.className = "combo-glyph";
-      span.setAttribute("aria-hidden", "true");
-      const index = glyph === "X" ? 10 : Number.parseInt(glyph, 10);
-      span.style.setProperty("--combo-glyph-index", String(index));
-      return span;
-    }),
-  );
-}
-
 function drawScorePopups() {
   if (scorePopups.length === 0) return;
 
@@ -3648,7 +3629,7 @@ function updateHud() {
     readout.combo.hidden = !showCombo;
     readout.combo.classList.toggle("is-popping", showCombo && state.comboFlashTimer > 0);
   }
-  syncComboGlyphs(state.comboCount);
+  if (readout.comboValue) readout.comboValue.textContent = `${state.comboCount}X`;
 }
 
 function setStatus(value: string) {
