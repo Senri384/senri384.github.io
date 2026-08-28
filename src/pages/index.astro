@@ -85,15 +85,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
       <section class="mobile-attack-controls" aria-label="移动与三向攻击">
-        <button class="attack-left" type="button" data-drive-attack="left" aria-label="向左前方攻击"><span class="pixel-arrow" aria-hidden="true"></span></button>
-        <button class="attack-front" type="button" data-drive-attack="front" aria-label="向前攻击"><span class="pixel-arrow" aria-hidden="true"></span></button>
-        <button class="attack-right" type="button" data-drive-attack="right" aria-label="向右前方攻击"><span class="pixel-arrow" aria-hidden="true"></span></button>
-        <button class="steer-left" type="button" data-drive-steer="left" aria-label="向左换道"><span class="pixel-arrow" aria-hidden="true"></span></button>
-        <button class="steer-right" type="button" data-drive-steer="right" aria-label="向右换道"><span class="pixel-arrow" aria-hidden="true"></span></button>
+        <button class="attack-left" type="button" data-drive-attack="left" aria-label="向左前方攻击"><span class="command-arrow" aria-hidden="true">↖</span><span class="command-label">LEFT ATK</span></button>
+        <button class="attack-front" type="button" data-drive-attack="front" aria-label="向前攻击"><span class="command-arrow" aria-hidden="true">↑</span><span class="command-label">FRONT ATK</span></button>
+        <button class="attack-right" type="button" data-drive-attack="right" aria-label="向右前方攻击"><span class="command-arrow" aria-hidden="true">↗</span><span class="command-label">RIGHT ATK</span></button>
+        <button class="steer-left" type="button" data-drive-steer="left" aria-label="向左换道"><span class="command-arrow" aria-hidden="true">←</span><span class="command-label">STEER</span></button>
+        <button class="steer-right" type="button" data-drive-steer="right" aria-label="向右换道"><span class="command-arrow" aria-hidden="true">→</span><span class="command-label">STEER</span></button>
       </section>
       <p class="control-hint">
         <span class="control-hint-desktop">← → / A D steer · W/Q/E attack · R reset</span>
-        <span class="control-hint-mobile">← → 换道 · ↖ ↑ ↗ 三向攻击 · 同样支持划屏</span>
+        <span class="control-hint-mobile">← → steer · ↖ ↑ ↗ attack · swipe supported</span>
       </p>
     </section>
   </main>

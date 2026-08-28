@@ -1786,21 +1786,29 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
 }
 
 .combo-hud strong {
-  display: block;
-  color: #ff1744;
-  font-family: var(--font-ui-pixel);
+  display: flex;
+  align-items: center;
   font-size: clamp(3.6rem, 8vw, 6.4rem);
-  font-weight: 900;
   line-height: 0.86;
-  -webkit-text-stroke: clamp(1px, 0.18vw, 2px) rgba(255, 23, 68, 0.95);
-  text-shadow:
-    -0.055em 0 0 currentColor,
-    0.055em 0 0 currentColor,
-    0 -0.04em 0 currentColor,
-    0 0.04em 0 currentColor,
-    0 0 8px rgba(255, 255, 255, 0.36),
-    0 0 22px rgba(255, 0, 51, 0.72),
-    0 0 38px rgba(255, 23, 68, 0.48);
+}
+
+.combo-glyph {
+  width: 0.68em;
+  height: 1em;
+  flex: 0 0 0.68em;
+  background-image: url("/portfolio-assets/ui/text/combo-impact-pixel.webp");
+  background-position: calc(var(--combo-glyph-index) * 10%) 50%;
+  background-repeat: no-repeat;
+  background-size: 1100% 100%;
+  image-rendering: pixelated;
+  filter:
+    drop-shadow(0 0 2px rgba(255, 255, 255, 0.46))
+    drop-shadow(0 0 9px rgba(255, 0, 51, 0.76))
+    drop-shadow(0 0 20px rgba(255, 23, 68, 0.52));
+}
+
+.combo-glyph + .combo-glyph {
+  margin-left: -0.12em;
 }
 
 .combo-hud.is-popping strong {
@@ -6870,6 +6878,40 @@ html[data-debug-hud="hidden"] .hud {
 }
 
 @media (max-width: 760px), (pointer: coarse) and (max-width: 1024px), (orientation: landscape) and (max-width: 1024px) and (max-height: 540px) {
+  .opening-senri,
+  .opening-portfolio {
+    height: 1.08em;
+    overflow: hidden;
+    color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-clip: border-box;
+    text-indent: -9999px;
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0;
+  }
+
+  .opening-senri {
+    width: 3.35em;
+    background-image: url("/portfolio-assets/ui/text/opening-senri-impact.webp");
+    filter:
+      drop-shadow(0 0 4px rgba(255, 255, 255, 0.72))
+      drop-shadow(0 0 16px rgba(93, 252, 255, 0.82))
+      drop-shadow(0 0 28px rgba(93, 252, 255, 0.52));
+  }
+
+  .opening-portfolio {
+    width: 4.55em;
+    font-size: clamp(3rem, 17vw, 5.9rem);
+    background-image: url("/portfolio-assets/ui/text/opening-homepage-impact.webp");
+    filter:
+      drop-shadow(0 0 4px rgba(255, 255, 255, 0.34))
+      drop-shadow(0 0 15px rgba(93, 252, 255, 0.62))
+      drop-shadow(0 0 25px rgba(255, 79, 216, 0.34));
+  }
+
   .site-header {
     --site-header-edge: max(10px, env(safe-area-inset-left));
     top: max(8px, env(safe-area-inset-top));
@@ -7006,56 +7048,82 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .mobile-attack-controls button {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    place-items: center;
+    gap: 1px;
     min-width: 0;
-    min-height: 42px;
-    border: 1px solid rgba(93, 252, 255, 0.46);
-    background: rgba(4, 7, 24, 0.66);
-    color: #eaffff;
-    font-size: 0;
-    box-shadow: inset 0 -2px 0 rgba(255, 79, 216, 0.28);
+    min-height: 48px;
+    padding: 4px 3px 3px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 2px;
+    background:
+      linear-gradient(135deg, rgba(93, 252, 255, 0.15), transparent 42%),
+      rgba(4, 7, 24, 0.78);
+    color: var(--cyan);
+    clip-path: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%, 0 7px);
+    box-shadow:
+      inset 0 0 0 1px rgba(93, 252, 255, 0.54),
+      inset 0 -3px 0 rgba(255, 79, 216, 0.42),
+      0 0 12px rgba(93, 252, 255, 0.08);
     touch-action: manipulation;
   }
 
-  .mobile-attack-controls .pixel-arrow {
-    display: block;
-    width: 22px;
-    height: 16px;
-    margin: auto;
-    background: currentColor;
-    clip-path: polygon(0 37.5%, 58% 37.5%, 58% 0, 100% 50%, 58% 100%, 58% 62.5%, 0 62.5%);
-    filter: drop-shadow(0 0 5px rgba(93, 252, 255, 0.72));
+  .mobile-attack-controls button::before,
+  .mobile-attack-controls button::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    width: 4px;
+    height: 4px;
+    border-top: 1px solid currentColor;
+  }
+
+  .mobile-attack-controls button::before {
+    left: 5px;
+    border-left: 1px solid currentColor;
+  }
+
+  .mobile-attack-controls button::after {
+    right: 5px;
+    border-right: 1px solid currentColor;
+  }
+
+  .mobile-attack-controls button:active {
+    color: #ffffff;
+    background:
+      linear-gradient(135deg, rgba(255, 79, 216, 0.25), transparent 48%),
+      rgba(9, 12, 40, 0.92);
+    transform: translateY(1px);
+  }
+
+  .mobile-attack-controls .command-arrow {
+    font: 800 1.25rem/0.9 var(--font-ui-pixel);
+    text-shadow: 0 0 7px rgba(93, 252, 255, 0.9);
+  }
+
+  .mobile-attack-controls .command-label {
+    color: rgba(249, 244, 255, 0.58);
+    font: 700 0.38rem/1 var(--font-ui-pixel);
+    letter-spacing: 0.04em;
   }
 
   .mobile-attack-controls .attack-left {
     grid-area: attack-left;
   }
 
-  .mobile-attack-controls .attack-left .pixel-arrow {
-    transform: rotate(-135deg);
-  }
-
   .mobile-attack-controls .attack-front {
     grid-area: attack-front;
-  }
-
-  .mobile-attack-controls .attack-front .pixel-arrow {
-    transform: rotate(-90deg);
   }
 
   .mobile-attack-controls .attack-right {
     grid-area: attack-right;
   }
 
-  .mobile-attack-controls .attack-right .pixel-arrow {
-    transform: rotate(-45deg);
-  }
-
   .mobile-attack-controls .steer-left {
     grid-area: steer-left;
-  }
-
-  .mobile-attack-controls .steer-left .pixel-arrow {
-    transform: rotate(180deg);
   }
 
   .mobile-attack-controls .steer-right {
@@ -7067,8 +7135,8 @@ html[data-debug-hud="hidden"] .hud {
   }
 
   .control-hint {
-    max-width: 330px;
-    font-size: 0.62rem;
+    max-width: 350px;
+    font-size: 0.58rem;
     line-height: 1.4;
   }
 
