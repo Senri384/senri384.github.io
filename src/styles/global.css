@@ -1794,6 +1794,10 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
   line-height: 0.86;
   -webkit-text-stroke: clamp(1px, 0.18vw, 2px) rgba(255, 23, 68, 0.95);
   text-shadow:
+    -0.055em 0 0 currentColor,
+    0.055em 0 0 currentColor,
+    0 -0.04em 0 currentColor,
+    0 0.04em 0 currentColor,
     0 0 8px rgba(255, 255, 255, 0.36),
     0 0 22px rgba(255, 0, 51, 0.72),
     0 0 38px rgba(255, 23, 68, 0.48);

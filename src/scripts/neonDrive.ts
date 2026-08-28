@@ -3441,6 +3441,17 @@ function drawScorePopups() {
 
     ctx.globalAlpha = alpha;
     ctx.font = `900 ${fontSize}px "Fusion Pixel 12px", "Microsoft YaHei", monospace`;
+    // Fusion Pixel has a fixed weight. Repainting it by fractions of one
+    // 12px-grid cell adds real pixel columns/rows without changing the popup
+    // animation, palette or glow treatment.
+    const pixelStep = fontSize / 12;
+    const fillPixelText = (value: string, drawX: number, drawY: number) => {
+      ctx.fillText(value, drawX - pixelStep * 0.55, drawY);
+      ctx.fillText(value, drawX + pixelStep * 0.55, drawY);
+      ctx.fillText(value, drawX, drawY - pixelStep * 0.38);
+      ctx.fillText(value, drawX, drawY + pixelStep * 0.38);
+      ctx.fillText(value, drawX, drawY);
+    };
     if (afterimage > 0) {
       const trailGap = fontSize * afterimage;
       const layers = [
@@ -3455,7 +3466,7 @@ function drawScorePopups() {
         ctx.strokeStyle = `rgba(2, 4, 18, ${0.58 * afterimage})`;
         ctx.strokeText(text, x, y + layer.dy);
         ctx.fillStyle = layer.color;
-        ctx.fillText(text, x, y + layer.dy);
+        fillPixelText(text, x, y + layer.dy);
       });
     }
     ctx.shadowColor = `rgba(12, 5, 32, ${0.9 * alpha})`;
@@ -3467,16 +3478,16 @@ function drawScorePopups() {
     ctx.strokeStyle = `rgba(255, 255, 255, ${0.55 * alpha})`;
     ctx.strokeText(text, x, y);
     ctx.fillStyle = `rgba(118, 247, 255, ${alpha})`;
-    ctx.fillText(text, x, y);
+    fillPixelText(text, x, y);
     ctx.shadowColor = `rgba(93, 252, 255, ${0.58 * alpha * glowBoost})`;
     ctx.shadowBlur = 12 * glowBoost;
     ctx.fillStyle = `rgba(218, 255, 255, ${clamp(0.45 * alpha + exitFlash * 0.42, 0, 1)})`;
-    ctx.fillText(text, x, y - fontSize * 0.015);
+    fillPixelText(text, x, y - fontSize * 0.015);
     if (exitFlash > 0) {
       ctx.shadowColor = `rgba(255, 255, 255, ${0.72 * exitFlash})`;
       ctx.shadowBlur = 24 * exitFlash;
       ctx.fillStyle = `rgba(255, 255, 255, ${0.38 * exitFlash})`;
-      ctx.fillText(text, x, y);
+      fillPixelText(text, x, y);
     }
   });
 
