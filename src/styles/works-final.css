@@ -2724,7 +2724,7 @@
   .city-select-page .cassette-carousel[data-mode="open"]
     .disc-archive-case[data-game-card-category="true"][data-position="active"] {
     position: absolute;
-    top: -275px !important;
+    top: -119px !important;
     left: 50%;
     width: min(172px, 47vw);
     height: min(350px, 43svh);

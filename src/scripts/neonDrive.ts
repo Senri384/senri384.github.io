@@ -118,6 +118,7 @@ const readout = {
   modeSelect: document.querySelector<HTMLElement>("#mode-select"),
   modeButtons: Array.from(document.querySelectorAll<HTMLButtonElement>("[data-drive-mode]")),
   attackButtons: Array.from(document.querySelectorAll<HTMLButtonElement>("[data-drive-attack]")),
+  steerButtons: Array.from(document.querySelectorAll<HTMLButtonElement>("[data-drive-steer]")),
 };
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -831,7 +832,7 @@ function playerVehicleWorldWidth() {
 }
 
 function obstacleVehicleWorldWidth() {
-  return playerVehicleWorldWidth() * lerp(0.78, 0.9, responsiveDriveAmount());
+  return playerVehicleWorldWidth() * lerp(1, 0.9, responsiveDriveAmount());
 }
 
 function worldToScreenY(x: number, y: number, z: number) {
@@ -3308,7 +3309,7 @@ function updateVehicleSprites() {
       String(roadScene.playerVehicle.texture.userData.assetUrl ?? "legacy-canvas");
     setVehicleWheelFrame(roadScene.playerVehicle, playerAssetVariant === "normal" ? wheelFrame : 0);
     const generatedSideLanePlayerScale = lerp(1.02, 0.74 * 0.9, responsiveDriveAmount());
-    const generatedCenterLanePlayerScale = lerp(1.25, 0.74, responsiveDriveAmount());
+    const generatedCenterLanePlayerScale = lerp(1, 0.74, responsiveDriveAmount());
     const sideLaneGeneratedScale = 1.092;
     const centerLaneGeneratedScale = 1.12;
     const sideLanePlayerWidth = playerVehicleWorldWidth() * generatedSideLanePlayerScale * sideLaneGeneratedScale;
@@ -3365,8 +3366,11 @@ function updateVehicleSprites() {
 
     const sideLaneAmount = clamp(Math.abs(obstacle.laneIndex - 1), 0, 1);
     const generatedObstacleLaneScale = lerp(1.12, 1.092, sideLaneAmount);
+    const mobileObstacleScale = lerp(1, 1.02, sideLaneAmount);
+    const generatedObstacleScale = lerp(mobileObstacleScale, 0.74, responsiveDriveAmount());
     const widthWorld =
-      obstacleVehicleWorldWidth() * (vehicle.usesGeneratedAsset ? 0.74 * generatedObstacleLaneScale : 1);
+      obstacleVehicleWorldWidth() *
+      (vehicle.usesGeneratedAsset ? generatedObstacleScale * generatedObstacleLaneScale : 1);
     const heightWorld = vehicleHeightWorld(vehicle, widthWorld);
     const z = screenYToWorldZAtY(obstacle.trackY, heightWorld * 0.5);
     const wreckTransform = obstacleWreckTransform(obstacle);
@@ -3436,7 +3440,7 @@ function drawScorePopups() {
     const glowBoost = 1 + exitFlash * 1.9;
 
     ctx.globalAlpha = alpha;
-    ctx.font = `900 ${fontSize}px Impact, "Arial Black", "Courier New", monospace`;
+    ctx.font = `900 ${fontSize}px "Fusion Pixel 12px", "Microsoft YaHei", monospace`;
     if (afterimage > 0) {
       const trailGap = fontSize * afterimage;
       const layers = [
@@ -4277,6 +4281,15 @@ function setupEvents() {
       if (direction !== "left" && direction !== "front" && direction !== "right") return;
       void unlockAudio();
       attackTarget(direction);
+    });
+  });
+
+  readout.steerButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const direction = button.dataset.driveSteer;
+      if (direction !== "left" && direction !== "right") return;
+      void unlockAudio();
+      shiftLane(direction === "left" ? -1 : 1);
     });
   });
 

@@ -161,7 +161,8 @@ html[data-site-gate="redirecting"] .site-header {
   height: 1px;
   background: var(--cyan);
   box-shadow: 0 0 8px rgba(93, 252, 255, 0.82);
-  transition: right 160ms ease, left 160ms ease;
+  opacity: 0;
+  transition: right 160ms ease, left 160ms ease, opacity 120ms ease;
 }
 
 .site-nav a:hover,
@@ -179,6 +180,7 @@ html[data-site-gate="redirecting"] .site-header {
 .site-nav a[aria-current="page"]::after {
   right: 0;
   left: 0;
+  opacity: 1;
 }
 
 .soundwave-player {
@@ -1786,7 +1788,7 @@ html[data-site-gate="open"] .opening-sequence[data-opening-state="entry"] {
 .combo-hud strong {
   display: block;
   color: #ff1744;
-  font-family: Impact, Haettenschweiler, "Arial Narrow", sans-serif;
+  font-family: var(--font-ui-pixel);
   font-size: clamp(3.6rem, 8vw, 6.4rem);
   font-weight: 900;
   line-height: 0.86;
@@ -6992,18 +6994,68 @@ html[data-debug-hud="hidden"] .hud {
   html[data-drive-state="running"][data-drive-mode="race"] .mobile-attack-controls {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    width: min(330px, 100%);
-    gap: 8px;
+    grid-template-areas:
+      "attack-left attack-front attack-right"
+      "steer-left . steer-right";
+    width: min(220px, 72vw);
+    gap: 6px;
   }
 
   .mobile-attack-controls button {
-    min-height: 44px;
+    min-width: 0;
+    min-height: 42px;
     border: 1px solid rgba(93, 252, 255, 0.46);
     background: rgba(4, 7, 24, 0.66);
     color: #eaffff;
-    font: 800 0.72rem/1 var(--font-ui-pixel);
+    font-size: 0;
     box-shadow: inset 0 -2px 0 rgba(255, 79, 216, 0.28);
     touch-action: manipulation;
+  }
+
+  .mobile-attack-controls .pixel-arrow {
+    display: block;
+    width: 22px;
+    height: 16px;
+    margin: auto;
+    background: currentColor;
+    clip-path: polygon(0 37.5%, 58% 37.5%, 58% 0, 100% 50%, 58% 100%, 58% 62.5%, 0 62.5%);
+    filter: drop-shadow(0 0 5px rgba(93, 252, 255, 0.72));
+  }
+
+  .mobile-attack-controls .attack-left {
+    grid-area: attack-left;
+  }
+
+  .mobile-attack-controls .attack-left .pixel-arrow {
+    transform: rotate(-135deg);
+  }
+
+  .mobile-attack-controls .attack-front {
+    grid-area: attack-front;
+  }
+
+  .mobile-attack-controls .attack-front .pixel-arrow {
+    transform: rotate(-90deg);
+  }
+
+  .mobile-attack-controls .attack-right {
+    grid-area: attack-right;
+  }
+
+  .mobile-attack-controls .attack-right .pixel-arrow {
+    transform: rotate(-45deg);
+  }
+
+  .mobile-attack-controls .steer-left {
+    grid-area: steer-left;
+  }
+
+  .mobile-attack-controls .steer-left .pixel-arrow {
+    transform: rotate(180deg);
+  }
+
+  .mobile-attack-controls .steer-right {
+    grid-area: steer-right;
   }
 
   .mode-button {
