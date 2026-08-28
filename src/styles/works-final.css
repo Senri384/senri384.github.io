@@ -712,10 +712,6 @@
   transform: translateY(clamp(20px, 3.2vh, 40px));
 }
 
-.soundwave-player[data-section="works"] {
-  top: clamp(60%, 66vh, 72%);
-}
-
 .city-select-page .cassette-category-title {
   display: none;
 }
@@ -1113,10 +1109,6 @@
 @media (max-width: 760px) {
   .city-select-page .cassette-carousel[data-mode="browse"] {
     transform: translateY(32px);
-  }
-
-  .soundwave-player[data-section="works"] {
-    top: 69%;
   }
 
   .city-select-page .category-title-stage {
@@ -2598,13 +2590,17 @@
 
   .city-select-page .cassette-carousel,
   .city-select-page .cassette-carousel[data-mode="browse"] {
-    height: calc(100svh - 58px);
-    transform: translateY(58px);
+    height: calc(100svh - 66px);
+    transform: translateY(56px);
   }
 
   .city-select-page .cassette-rail {
     padding-top: 4px;
     padding-bottom: 68px;
+  }
+
+  .city-select-page .disc-archive-case[data-browse-active="true"] {
+    transform: translateY(-16px) scale(0.68) !important;
   }
 
   .city-select-page .category-title-kicker {
@@ -2641,8 +2637,8 @@
   }
 
   .city-select-page .cassette-carousel[data-mode="open"] {
-    height: calc(100svh - 58px);
-    transform: translateY(58px);
+    height: calc(100svh - 66px);
+    transform: translateY(56px);
   }
 
   .city-select-page .cassette-carousel[data-mode="open"]
@@ -2684,7 +2680,7 @@
   }
 
   .city-select-page .cassette-carousel[data-mode="browse"] {
-    transform: translateY(78px);
+    transform: translateY(0);
   }
 
   .city-select-page .cassette-rail {
@@ -2694,7 +2690,7 @@
   }
 
   .city-select-page .category-title-kicker {
-    top: 112px;
+    top: 144px;
   }
 
   .city-select-page .category-title-main-motion,
@@ -2703,7 +2699,7 @@
   }
 
   .city-select-page .category-title-main-motion {
-    top: 76svh !important;
+    top: 69svh !important;
   }
 
   .city-select-page .category-title-hint,
@@ -2759,8 +2755,8 @@
 
   .city-select-page .cassette-carousel,
   .city-select-page .cassette-carousel[data-mode="browse"] {
-    height: calc(100svh - 58px);
-    transform: translateY(58px);
+    height: calc(100svh - 66px);
+    transform: translateY(56px);
   }
 
   .city-select-page .cassette-rail {
@@ -2782,8 +2778,8 @@
   }
 
   .city-select-page .cassette-carousel[data-mode="open"] {
-    height: calc(100svh - 58px);
-    transform: translateY(58px);
+    height: calc(100svh - 66px);
+    transform: translateY(56px);
   }
 
   .city-select-page .cassette-carousel[data-mode="open"]

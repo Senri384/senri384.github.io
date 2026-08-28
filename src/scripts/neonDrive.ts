@@ -117,6 +117,7 @@ const readout = {
   metricLabels: Array.from(document.querySelectorAll<HTMLElement>(".hud-metrics .metric span")),
   modeSelect: document.querySelector<HTMLElement>("#mode-select"),
   modeButtons: Array.from(document.querySelectorAll<HTMLButtonElement>("[data-drive-mode]")),
+  attackButtons: Array.from(document.querySelectorAll<HTMLButtonElement>("[data-drive-attack]")),
 };
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -342,6 +343,11 @@ const openingAudioNodes: AudioNode[] = [];
 const openingAudioSources: AudioScheduledSourceNode[] = [];
 let pointerActive = false;
 let pointerLastShiftX = 0;
+let pointerStartX = 0;
+let pointerStartY = 0;
+let pointerLastX = 0;
+let pointerLastY = 0;
+let pointerAttackGesture = false;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(56, 1, 0.1, 260);
@@ -504,6 +510,9 @@ function resizeCanvas() {
   renderer.setPixelRatio(dpr);
   renderer.setSize(width, height, false);
   camera.aspect = width / height;
+  // A phone's narrow canvas needs a wider perspective to keep all three
+  // equally-sized lanes (and a full vehicle in either side lane) in frame.
+  camera.fov = lerp(68, 56, clamp((camera.aspect - 0.64) / 0.72, 0, 1));
   camera.updateProjectionMatrix();
 }
 
@@ -764,6 +773,14 @@ function attackTarget(direction: AttackDirection) {
   const targetLane = player.laneIndex + laneDelta;
   if (targetLane < 0 || targetLane > 2) return;
 
+  canvas.dataset.lastAttackDirection = direction;
+
+  // Always show the attack motion after a valid input. Previously a miss had
+  // no visual response, which made both keyboard and touch input look broken.
+  state.attackTimer = attackDuration;
+  state.attackCooldown = 0.34;
+  state.attackLaneOffset = laneDelta;
+
   const target = obstacles
     .filter((obstacle) => {
       if (obstacle.wreckedByAttack) return false;
@@ -783,16 +800,18 @@ function attackTarget(direction: AttackDirection) {
   const attackScore = registerAttackScore();
   target.attackScore = attackScore;
   createScorePopup(target, attackScore);
-  state.attackTimer = attackDuration;
-  state.attackCooldown = 0.34;
-  state.attackLaneOffset = laneDelta;
   playEffect("attackHit");
 }
 
+function responsiveLaneSpread() {
+  return lerp(2 / 3, Math.abs(config.lanes[2]), responsiveDriveAmount());
+}
+
 function laneOffset(lanePosition: number) {
-  const lower = Math.floor(clamp(lanePosition, 0, config.lanes.length - 1));
-  const upper = Math.ceil(clamp(lanePosition, 0, config.lanes.length - 1));
-  return lerp(config.lanes[lower], config.lanes[upper], lanePosition - lower);
+  const lanePositions = [-responsiveLaneSpread(), 0, responsiveLaneSpread()];
+  const lower = Math.floor(clamp(lanePosition, 0, lanePositions.length - 1));
+  const upper = Math.ceil(clamp(lanePosition, 0, lanePositions.length - 1));
+  return lerp(lanePositions[lower], lanePositions[upper], lanePosition - lower);
 }
 
 function laneToWorldX(lanePosition: number) {
@@ -804,11 +823,11 @@ function responsiveDriveAmount() {
 }
 
 function driveLaneWidth() {
-  return lerp(4.8, worldScene.roadWidth, responsiveDriveAmount());
+  return worldScene.roadWidth;
 }
 
 function playerVehicleWorldWidth() {
-  return lerp(1.36, 3.08, responsiveDriveAmount());
+  return lerp(1.76, 3.08, responsiveDriveAmount());
 }
 
 function obstacleVehicleWorldWidth() {
@@ -3288,8 +3307,8 @@ function updateVehicleSprites() {
     canvas.dataset.playerVehicleAsset =
       String(roadScene.playerVehicle.texture.userData.assetUrl ?? "legacy-canvas");
     setVehicleWheelFrame(roadScene.playerVehicle, playerAssetVariant === "normal" ? wheelFrame : 0);
-    const generatedSideLanePlayerScale = 0.74 * 0.9;
-    const generatedCenterLanePlayerScale = 0.74;
+    const generatedSideLanePlayerScale = lerp(1.02, 0.74 * 0.9, responsiveDriveAmount());
+    const generatedCenterLanePlayerScale = lerp(1.25, 0.74, responsiveDriveAmount());
     const sideLaneGeneratedScale = 1.092;
     const centerLaneGeneratedScale = 1.12;
     const sideLanePlayerWidth = playerVehicleWorldWidth() * generatedSideLanePlayerScale * sideLaneGeneratedScale;
@@ -4252,25 +4271,61 @@ function setupEvents() {
     });
   });
 
+  readout.attackButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const direction = button.dataset.driveAttack;
+      if (direction !== "left" && direction !== "front" && direction !== "right") return;
+      void unlockAudio();
+      attackTarget(direction);
+    });
+  });
+
   canvas.addEventListener("pointerdown", async (event) => {
     pointerActive = true;
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    pointerLastX = event.clientX;
+    pointerLastY = event.clientY;
     pointerLastShiftX = event.clientX;
+    pointerAttackGesture = false;
     canvas.setPointerCapture(event.pointerId);
     await unlockAudio();
   });
 
   canvas.addEventListener("pointermove", (event) => {
     if (!pointerActive) return;
+    pointerLastX = event.clientX;
+    pointerLastY = event.clientY;
+    const totalX = event.clientX - pointerStartX;
+    const totalY = event.clientY - pointerStartY;
+    if (totalY < -24 && Math.abs(totalY) > Math.abs(totalX) * 0.72) {
+      pointerAttackGesture = true;
+      return;
+    }
+    if (pointerAttackGesture) return;
     updatePointerLane(event.clientX);
   });
 
   canvas.addEventListener("pointerup", (event) => {
+    pointerLastX = event.clientX;
+    pointerLastY = event.clientY;
+    const deltaX = pointerLastX - pointerStartX;
+    const deltaY = pointerLastY - pointerStartY;
+    const upwardThreshold = Math.max(54, height * 0.07);
+    if ((pointerAttackGesture || deltaY <= -upwardThreshold) && deltaY <= -upwardThreshold) {
+      const diagonalThreshold = Math.max(32, Math.abs(deltaY) * 0.28);
+      const direction: AttackDirection =
+        deltaX < -diagonalThreshold ? "left" : deltaX > diagonalThreshold ? "right" : "front";
+      attackTarget(direction);
+    }
     pointerActive = false;
+    pointerAttackGesture = false;
     canvas.releasePointerCapture(event.pointerId);
   });
 
   canvas.addEventListener("pointercancel", () => {
     pointerActive = false;
+    pointerAttackGesture = false;
   });
 
 }

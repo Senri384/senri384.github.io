@@ -266,31 +266,32 @@ function bootCassetteSelect() {
     const request = ++categorySwapRequest;
     window.clearTimeout(categorySwapTimer);
     window.clearTimeout(categoryEnterTimer);
-    void preloadCategoryVisuals(categories[index]).then(() => {
+    // Do not block the visible title on the heavier WebGL face/volume masks.
+    // The static title swaps immediately; flow masks hydrate in the background.
+    void preloadCategoryVisuals(categories[index]);
+    if (request !== categorySwapRequest) return;
+    if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
+    categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
+    categoryTitleStage.classList.remove("is-leaving", "is-entering");
+    if (immediate) {
+      renderCategoryTitle(index);
+      return;
+    }
+    void categoryTitleStage.offsetWidth;
+    categoryTitleStage.classList.add("is-leaving");
+
+    categorySwapTimer = window.setTimeout(() => {
       if (request !== categorySwapRequest) return;
       if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-      categoryTitleStage.dataset.direction = direction > 0 ? "next" : "previous";
-      categoryTitleStage.classList.remove("is-leaving", "is-entering");
-      if (immediate) {
-        renderCategoryTitle(index);
-        return;
-      }
-      void categoryTitleStage.offsetWidth;
-      categoryTitleStage.classList.add("is-leaving");
-
-      categorySwapTimer = window.setTimeout(() => {
+      renderCategoryTitle(index);
+      categoryTitleStage.classList.remove("is-leaving");
+      categoryTitleStage.classList.add("is-entering");
+      categoryEnterTimer = window.setTimeout(() => {
         if (request !== categorySwapRequest) return;
         if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-        renderCategoryTitle(index);
-        categoryTitleStage.classList.remove("is-leaving");
-        categoryTitleStage.classList.add("is-entering");
-        categoryEnterTimer = window.setTimeout(() => {
-          if (request !== categorySwapRequest) return;
-          if (activeCategoryIndex !== null || root.dataset.mode === "open") return;
-          categoryTitleStage.classList.remove("is-entering");
-        }, 145);
-      }, 105);
-    });
+        categoryTitleStage.classList.remove("is-entering");
+      }, 145);
+    }, 105);
   }
 
   function clearWorkTitleMotion() {

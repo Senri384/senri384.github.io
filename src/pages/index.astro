@@ -84,9 +84,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <button class="mode-button" type="button" data-drive-mode="airing">兜风</button>
         </div>
       </section>
+      <section class="mobile-attack-controls" aria-label="三向攻击">
+        <button type="button" data-drive-attack="left" aria-label="向左攻击">左攻</button>
+        <button type="button" data-drive-attack="front" aria-label="向前攻击">前攻</button>
+        <button type="button" data-drive-attack="right" aria-label="向右攻击">右攻</button>
+      </section>
       <p class="control-hint">
         <span class="control-hint-desktop">← → / A D steer · W/Q/E attack · R reset</span>
-        <span class="control-hint-mobile">左右拖动换道 · 完整竞速操作推荐电脑端</span>
+        <span class="control-hint-mobile">左右拖动换道 · 上划 / 左上划 / 右上划攻击</span>
       </p>
     </section>
   </main>
